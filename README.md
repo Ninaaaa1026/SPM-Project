@@ -11,7 +11,7 @@ You will need a text editor to do the development. If you already have one insta
 
 ## Install Python 3.6
 * Download the latest Python 3 here: https://www.python.org/downloads/
-* Python 3 documentation: https://docs.python.org/3.5/reference/index.html
+* Documentation: https://docs.python.org/3.5/reference/index.html
 
 After installation, open terminal and type `python3` to verify that Python is working. If you see output similar to the following, your Python is installed successfully.
 ```sh
@@ -22,3 +22,21 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> quit()
 ```
 Type `quit()` to quit the Python shell.
+
+## Install Django 2.0.4
+
+### Prerequisites
+#### Verify pip
+Open terminal and type `pip3 --version` to verify if pip is installed, if you see output similar to the following, skip this step.
+```
+aos112:~ LeonVincii$ pip3 --version
+pip 9.0.1 from /Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages (python 3.6)
+```
+
+> Virtualenv is a tool for creating isolated Python environment to prevent potential interferences of different versions of packages installed on the same machine. Django only works within virtual environments. Before installing Django, you need to install virtualenv.
+
+
+
+
+* Download the latest Django here: https://www.djangoproject.com/
+* Documentation: https://docs.djangoproject.com/en/2.0/
