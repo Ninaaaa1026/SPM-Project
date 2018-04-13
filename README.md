@@ -11,6 +11,7 @@ You will need a text editor to do the development. If you already have one insta
 
 ## Install Python 3.6
 Download the latest Python 3 here: https://www.python.org/downloads/
+
 Python 3 documentation: https://docs.python.org/3.5/reference/index.html
 
 After installation, open terminal and type `python3` to verify that Python is working. If you see output similar to the following, your Python is installed successfully.
