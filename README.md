@@ -81,6 +81,63 @@ pip3 install -U pip
 > Note: If you have both Python 2 and Python 3 installed on your machine, make sure to replace every `python` command to `python3`, and `pip` command to `pip3`.
 
 #### 3. Django
+
+> Note: Django can only be installed or used within virtualenvs, before you type the commands for installing Django via pip, please make sure one of the virtualenv is activatied. You can see a pair of parentheses containing the name of the virtualenv before your terminal prompt if one is properly activated.
+
+> The following example shows the terminal output for creating a virtualenv, deactivating and re-activating the virtualenv.
+
+> Note: The following commands are working with virtualenvwrapper, if you don't use virtualenvwrapper, the way to manage (create and activate) virtualenvs may change.
+
+```
+# ==============================================================================
+# Creating a new virtualenv called env_django via virtualenvwrapper.
+# ------------------------------------------------------------------------------
+# Note that now there is no parentheses before the prompt.
+# ==============================================================================
+aos112:~ LeonVincii$ mkvirtualenv env_django
+Using base prefix '/Library/Frameworks/Python.framework/Versions/3.6'
+New python executable in /Users/LeonVincii/Envs/env_django/bin/python3.6
+Also creating executable in /Users/LeonVincii/Envs/env_django/bin/python
+Installing setuptools, pip, wheel...done.
+virtualenvwrapper.user_scripts creating /Users/LeonVincii/Envs/env_django/bin/predeactivate
+virtualenvwrapper.user_scripts creating /Users/LeonVincii/Envs/env_django/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /Users/LeonVincii/Envs/env_django/bin/preactivate
+virtualenvwrapper.user_scripts creating /Users/LeonVincii/Envs/env_django/bin/postactivate
+virtualenvwrapper.user_scripts creating /Users/LeonVincii/Envs/env_django/bin/get_env_details
+Error: deactivate must be sourced. Run 'source deactivate'
+instead of 'deactivate'.
+
+(env_django) aos112:~ LeonVincii$ 
+
+# ==============================================================================
+# Now the virtualenv is activated.
+# Note that (env_django) appears before the prompt.
+# Django should be installed within a virtualenv.
+# ==============================================================================
+
+# ==============================================================================
+# Deactivate an activated virtualenv.
+# ==============================================================================
+(env_django) aos112:~ LeonVincii$ deactivate
+
+# ==============================================================================
+# Now (env_django) disappears, meaning that you are back to the global env.
+# ==============================================================================
+aos112:~ LeonVincii$
+
+# ==============================================================================
+# Reactivate a virtualenv via virtualenvwrapper
+# ------------------------------------------------------------------------------
+# The parentheses will appear again after virtualenv being activated again.
+# You should install Django when you see there is a pair of parentheses before \
+# the your terminal prompt.
+# ==============================================================================
+aos112:~ LeonVincii$ workon env_django
+Error: deactivate must be sourced. Run 'source deactivate'
+instead of 'deactivate'.
+
+(env_django) aos112:~ LeonVincii$ 
+```
 * Download the latest Django here: https://www.djangoproject.com/
 * Documentation: https://docs.djangoproject.com/en/2.0/
 
