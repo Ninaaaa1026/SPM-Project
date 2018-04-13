@@ -3,7 +3,7 @@
 ## Knowledge Preparation
 This section sums up all the required skills in a typical web development cycle. You don't need to rush yourself on all of them at this stage, nor get yourself overwhelmed. Just be aware of these technologies and keep youself upgraded day by day and you will be fine!
 
-> Essential
+> Essential:
 
 * Web app architecture (clear about what is front-end and what is back-end)
 * Programming skill
@@ -16,7 +16,13 @@ This section sums up all the required skills in a typical web development cycle.
 * Bootstrap (front-end framework)
 * Database design and integration
 * (Django) View, Model, Template concepts
+* (Django) HTTPResponses (how front-end and back-end communicate)
+
+> Advanced (for interests, probably not needed in this project)
+
 * Website deployment
+* RESTful architecture
+* Websocket
 
 ## Text Editor
 You will need a text editor to do the development. If you already have one installed on your machine, ignore this step. Some of the popular text editors are listed below.
