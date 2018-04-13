@@ -43,8 +43,13 @@ python3 -m pip install -U pip
 > MacOS/Linux
 
 ```
-pip install -U pip
+pip3 install -U pip
 ```
+
+#### Virtualenv
+* Install Virtualenv: https://virtualenv.pypa.io/en/stable/installation/
+
+> Note: If you have both Python 2 and Python 3 installed on your machine, make sure to replace every `python` command to `python3`, and `pip` command to `pip3`.
 
 > Virtualenv is a tool for creating isolated Python environment to prevent potential interferences of different versions of packages installed on the same machine. Django only works within virtual environments. Before installing Django, you need to install virtualenv.
 
