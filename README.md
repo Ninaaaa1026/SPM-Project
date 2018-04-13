@@ -24,6 +24,8 @@ This section sums up all the required skills in a typical web development cycle.
 * RESTful architecture
 * Websocket
 
+# Environment Setup
+
 ## Text Editor
 You will need a text editor to do the development. If you already have one installed on your machine, ignore this step. Some of the popular text editors are listed below.
 
