@@ -25,8 +25,7 @@ Type `quit()` to quit the Python shell.
 
 ## Install Django 2.0.4
 
-### Prerequisites
-#### Verify pip
+#### 1. Verify pip
 Open terminal and type `pip3 --version` to verify if pip is installed, if you see output similar to the following, your pip is working properly.
 ```
 aos112:~ LeonVincii$ pip3 --version
@@ -46,14 +45,15 @@ python3 -m pip install -U pip
 pip3 install -U pip
 ```
 
-#### Virtualenv
+#### 2. Virtualenv
 * Install Virtualenv: https://virtualenv.pypa.io/en/stable/installation/
+* (Optional but highly recommended) Install Virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
 * How to use Virtualenv: https://virtualenv.pypa.io/en/stable/userguide/
 
 > Virtualenv is a tool for creating isolated Python environment to prevent potential interferences of different versions of packages installed on the same machine. Django only works within virtual environments. Before installing Django, you need to install virtualenv.
 
 > Note: If you have both Python 2 and Python 3 installed on your machine, make sure to replace every `python` command to `python3`, and `pip` command to `pip3`.
 
-#### Django
+#### 3. Django
 * Download the latest Django here: https://www.djangoproject.com/
 * Documentation: https://docs.djangoproject.com/en/2.0/
