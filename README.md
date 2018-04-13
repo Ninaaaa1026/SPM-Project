@@ -57,3 +57,9 @@ pip3 install -U pip
 #### 3. Django
 * Download the latest Django here: https://www.djangoproject.com/
 * Documentation: https://docs.djangoproject.com/en/2.0/
+
+## Install Git
+* Install git from here: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+* (Optional) Install a git GUI, you only need to choose one:
+    * Sourcetree: https://www.sourcetreeapp.com/
+    * Gitkraken: https://www.gitkraken.com/
