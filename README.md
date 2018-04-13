@@ -130,7 +130,7 @@ aos112:~ LeonVincii$
 # ------------------------------------------------------------------------------
 # The parentheses will appear again after virtualenv being activated again.
 # You should install Django when you see there is a pair of parentheses before \
-# the your terminal prompt.
+# your terminal prompt.
 # ==============================================================================
 aos112:~ LeonVincii$ workon env_django
 Error: deactivate must be sourced. Run 'source deactivate'
@@ -138,7 +138,7 @@ instead of 'deactivate'.
 
 (env_django) aos112:~ LeonVincii$ 
 ```
-* Download the latest Django here: https://www.djangoproject.com/
+* Install the latest Django: https://www.djangoproject.com/
 * Documentation: https://docs.djangoproject.com/en/2.0/
 
 ## Install Git
