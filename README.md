@@ -20,6 +20,7 @@ This section sums up all the required skills in a typical web development cycle.
 
 > Advanced (for interests, probably not needed in this project)
 
+* AJAX
 * Website deployment
 * RESTful architecture
 * Websocket
