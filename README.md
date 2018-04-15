@@ -36,6 +36,11 @@ You will need a text editor to do the development. If you already have one insta
 * Sublime: https://www.sublimetext.com/
 * Notepad++ (Windows only): https://notepad-plus-plus.org/download/v7.5.6.html
 
+> Alternatively, you may prefer using an IDE for the development, IDEs provide conveniences in terms of linking libraries and syntax highlight, but they also come with a penalty of sizes and startup time. For Django projects, you can use PyCharm as the alternative IDE. You will need to purchase a license or activate a free license with your university email for a fixed time. You can access to PyCharm following the link below.
+
+* PyCharm: https://www.jetbrains.com/pycharm/
+* Obtain a free student license: https://www.jetbrains.com/student/
+
 ## Install Python 3.6
 * Download the latest Python 3 here: https://www.python.org/downloads/
 * Documentation: https://docs.python.org/3.5/reference/index.html
