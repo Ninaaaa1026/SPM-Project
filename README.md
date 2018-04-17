@@ -14,6 +14,7 @@ This section sums up all the required skills in a typical web development cycle.
 > Fundamental
 
 * Bootstrap (front-end framework)
+* jQuery
 * Database design and integration
 * (Django) View, Model, Template concepts
 * (Django) HTTPResponses (how front-end and back-end communicate)
