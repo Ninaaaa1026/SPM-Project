@@ -4,15 +4,40 @@
 <html lang="en">
 <head>
 	{% include 'bootstrap.html' %}
-	<title>
-		{% block title %}
-
-		{% endblock title %}
-	</title>
+  <title>
+    {% block title %}{% endblock %}
+  </title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}"/>
+  <script src="{% static 'js/utils.js' %}"></script>
+  {% block loads %}{% endblock %}
 </head>
 <body>
-{% block body %}
-
-{% endblock body %}
+  {% block body %}
+    <div id="background" class="container-fluid">
+    {% csrf_token %}
+      {% block navigation_bar %}
+        <nav id="navbar" class="navbar navbar-custom fixed-top navbar-expand-sm row justify-content-center">
+          <div class="navbar_content row justify-content-between">
+            <div>
+              <a class="navbar-brand" href="/"><span class="logo_letter"><i class="fas fa-paw"></i> Tom's Dog Grooming</span></a>
+            </div>
+            <div id="nav_menu" class="navbar-collapse collapse align-self-center">
+              <ul class="nav navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="/signin">Sign In</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/signup">Sign Up</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      {% endblock %}
+      <div id="base_content_container">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  {% endblock %}
 </body>
 </html>
