@@ -151,5 +151,5 @@ instead of 'deactivate'.
 ## Install Git
 * Install git from here: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 * (Optional) Install a git GUI, you only need to choose one:
-    * Sourcetree: https://www.sourcetreeapp.com/
+    * Sourcetree (recommended): https://www.sourcetreeapp.com/
     * Gitkraken: https://www.gitkraken.com/
