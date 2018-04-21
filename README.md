@@ -45,10 +45,8 @@ Use PyCharm as an ideal Django development tool.
 
 #### 1. Virtualenv
 * Install Virtualenv: https://virtualenv.pypa.io/en/stable/installation/
-* (Optional but highly recommended) Install Virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
+* (Optional) Install Virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
 * How to use Virtualenv: https://virtualenv.pypa.io/en/stable/userguide/
-
-> Virtualenv is a tool for creating isolated Python environment to prevent potential interferences of different versions of packages installed on the same machine. Django only works within virtual environments. Before installing Django, you need to install virtualenv.
 
 > Note: If you have both Python 2 and Python 3 installed on your machine, make sure to replace every `python` command to `python3`, and `pip` command to `pip3`.
 
@@ -63,3 +61,89 @@ Use PyCharm as an ideal Django development tool.
 * Install git from here: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 * (Optional) Install a git GUI:
     * Sourcetree (recommended): https://www.sourcetreeapp.com/
+
+# Django Quick Guide
+
+This quick guide can only be used as a reference or reminder in the development, it cannot replace the documentation of Django.
+
+Django Documentation: https://docs.djangoproject.com/en/2.0/
+
+## Run Django Development Server
+
+1. Activate the virtualenv in which the Django installs;
+2. `cd` into the root directory of a Django project and run `python manage.py runserver [ip:port]`.
+
+> Note: The root directory is where `manage.py` locates; If ip address and port are left blank, the server will be run on `localhost:8000`.
+
+## Database Migrations
+
+After the database being connected to the backend, every changes commited in the Django model (recall that Django models are data structures that stored in the database) will not be reflected in the database until you migrate it. To migrate the changes to the database, follow the steps below.
+
+1. run `python manage.py makemigrations`, and then
+2. run `python manage.py migrate`.
+
+> Note: Step 1 is not optional! You MUST run `makemigrations` before you `migrate`.
+
+## Django Template Languages
+
+Django supports a set of template languages to be used in conjunction of HTMLs to dynamically create web pages with ease. Imperatives are encapsulated in `{% %}` and template variables are encapsulated in `{{ }}`.
+
+#### Template Inheritance
+Django supports template inheritance by adding `{% extends %}` imperative at the beginning of the template and override a block with `{% block %}` imperatives.
+
+> base.html
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title> Base </title>
+</head>
+<body>
+  <p> Text 1 </p>
+  {% block body %}
+    <p id="para1"> Text 2 </p>
+  {% endblock %}
+</body>
+</html>
+```
+
+> inherit.html
+
+```
+{% extends 'base.html' %}
+
+{% block body %}
+  <p id="para2"> Text 3 </p>
+{% endblock %}
+```
+> Result: base.html will display Text 1 and Text 2, inherit.html will display Text 1 and Text 3. Other parts are the same.
+> Note: inherit.html will not have the `<p>` tag with its `id=para1`, insteadly, it will only have `<p id="para2">`. So it's not only the text that changed, it's the whole component that changed.
+
+#### Template `if`
+Syntax: `{% if %}` ... `{% endif %}`
+
+> The following example checks if the template variable `avatar` is `null`, if it is `null`, setup a random generated avatar for the user, otherwise use user's avatar.
+
+```
+<div id="user_avatar_container" class="avatar_container left_btn">
+  {% if not avatar %}
+    <img class="avatar_img" src="https://api.adorable.io/avatars/50/{{ username }}"/>
+  {% else %}
+    <img class="avatar_img" src={{ avatar }}/>
+  {% endif %}
+</div>
+```
+
+#### Template `for`
+Syntax: `{% for %}` ... `{% endfor %}`
+
+> The following example creates a number of `div` components for user contacts.
+
+```
+{% for contact_obj in user_contacts %}
+  <div id="bulletin_contact" class="bulletin_contacts contact_container">
+    ...
+  </div>
+{% endfor %}
+```
