@@ -4,12 +4,12 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from .validators import *
 
 
-SHORT = 50
-BRIEF = 100
-MEDIUM = 150
-LONG_BRIEF = 200
-LONG = 400
-VERY_LONG = 1000
+SHORT       = 50
+BRIEF       = 100
+MEDIUM      = 150
+LONG_BRIEF  = 200
+LONG        = 400
+VERY_LONG   = 1000
 
 
 class CustomUserManager(BaseUserManager):
@@ -58,13 +58,17 @@ class User(AbstractUser):
     objects = CustomUserManager()
 
 class Contact(models.Model):
-    user = models.ForeignKey(User, related_name = 'contact_user',on_delete=models.CASCADE)
-    mobile = models.IntegerField(validators = [phoneNumber_validator],null = True, blank = True)
-    homePhoneNumber = models.IntegerField(validators = [phoneNumber_validator], null = True, blank = True)
-    workPhoneNumber = models.IntegerField(validators = [phoneNumber_validator], null = True, blank = True)
+    CONTACT_TYPE = (
+        ('mobile', 'Mobile'),
+        ('home'  , 'Home'  ),
+        ('work'  , 'Work'  )
+    )
+    user            = models.ForeignKey     (User, on_delete = models.CASCADE)
+    contact_type    = models.CharField      (max_length = SHORT, choices = CONTACT_TYPE)
+    mobile          = models.CharField      (max_length = SHORT, null = True, blank = True)
 
 class Dog(models.Model):
-    DOGTYPE=(
+    DOG_TYPE = (
         ('0','Affenpinscher'),
         ('1','Afghan Hound'),
         ('2','Airedale Terrier'),
@@ -279,28 +283,28 @@ class Dog(models.Model):
         ('212','Yorkshire Terrier'),
         ('213','Others')
     )
-    dog_name = models.CharField(max_length = SHORT)
-    breed = models.CharField(max_length = SHORT, choices = DOGTYPE)
-    date_of_birth= models.DateField()
-    owner = models.ForeignKey(User, related_name = 'user_dog',on_delete=models.CASCADE)
+    owner           = models.ForeignKey     (User, on_delete = models.CASCADE)
+    dog_name        = models.CharField      (max_length = SHORT)
+    breed           = models.CharField      (max_length = SHORT, choices = DOG_TYPE)
+    date_of_birth   = models.DateField      ()
 
 class Appointment(models.Model):
-    GROOMTYPE=(
+    GROOM_TYPE = (
         ('1', 'wash only'),
         ('2', 'wash and nail clipping'),
         ('3','deluxe grooming')
     )
 
-    PAYSTATUS=(
+    PAY_STATUS = (
         ('1', 'Paid'),
         ('2', 'To be paid')
     )
 
-    subscriber = models.ForeignKey(User,related_name = 'appointment_user',on_delete=models.CASCADE)
-    groom_dog = models.ForeignKey(Dog,related_name = 'appointment_dog',on_delete=models.CASCADE)
-    groom_type = models.CharField(max_length = SHORT,choices = GROOMTYPE)
-    order_price = models.DecimalField(max_digits=5, decimal_places=2)
-    payment_status = models.CharField(max_length = SHORT,choices = PAYSTATUS)
-    comment = models.CharField(max_length = LONG,null=True,blank=True)
-    create_datetime = models.DateTimeField(auto_now_add = True)
-    appointment_datetime = models.DateTimeField()
+    subscriber              = models.ForeignKey     (User, on_delete = models.CASCADE)
+    groom_dog               = models.ForeignKey     (Dog , on_delete = models.CASCADE)
+    groom_type              = models.CharField      (max_length = SHORT, choices = GROOM_TYPE)
+    order_price             = models.DecimalField   (max_digits = 5    , decimal_places = 2)
+    payment_status          = models.CharField      (max_length = SHORT, choices = PAY_STATUS)
+    comment                 = models.CharField      (max_length = LONG , null = True, blank = True)
+    appointment_datetime    = models.DateTimeField  ()
+    create_datetime         = models.DateTimeField  (auto_now_add = True)

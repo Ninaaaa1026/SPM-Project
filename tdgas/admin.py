@@ -34,3 +34,6 @@ class UserAdmin(UserAdmin):
     ordering      = ('email',)
 
 # Register your models below.
+admin.site.register(Contact)
+admin.site.register(Dog)
+admin.site.register(Appointment)
