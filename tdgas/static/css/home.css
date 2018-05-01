@@ -30,8 +30,12 @@
     height: 100%;
 }
 
+#head_row {
+    position: relative;
+}
+
 #home_slide_row {
-    /*padding-top: 50px;*/
+    
 }
 #home_slide {
     width: 100%;
@@ -52,6 +56,12 @@
 
 #make_appointment_row {
     padding: 60px;
+}
+
+#signin_block {
+    position: absolute;
+    right: 1em;
+    height: 100%;
 }
 
 @font-face {
