@@ -46,8 +46,8 @@
 }
 .fancy_btn:active {
     background-color: #4daa99;
-    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 0 40px rgba(85, 188, 169, 0.8);
+    -moz-box-shadow: 0 0 40px rgba(85, 188, 169, 0.8);
     box-shadow: 0 0 40px rgba(85, 188, 169, 0.8);
 }
 
