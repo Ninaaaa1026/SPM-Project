@@ -65,7 +65,7 @@ class Contact(models.Model):
     )
     user            = models.ForeignKey     (User, on_delete = models.CASCADE)
     contact_type    = models.CharField      (max_length = SHORT, choices = CONTACT_TYPE)
-    mobile          = models.CharField      (max_length = SHORT, null = True, blank = True)
+    phone_number    = models.CharField      (max_length = SHORT, null = True, blank = True)
 
 class Dog(models.Model):
     DOG_TYPE = (
