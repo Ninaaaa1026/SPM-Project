@@ -16,26 +16,27 @@
     <div id="background" class="container-fluid">
     {% csrf_token %}
       {% block navigation_bar %}
-        <nav id="navbar" class="navbar navbar-custom fixed-top navbar-expand-sm row justify-content-center">
-          <div class="navbar_content row justify-content-between">
-            <div>
-              <a class="navbar-brand" href="/"><span class="logo_letter"><i class="fas fa-paw"></i>Tom's Dog Grooming</span></a>
-            </div>
-            <div id="nav_menu" class="navbar-collapse collapse align-self-center">
-              <ul class="nav navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="/signin">Sign In</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/signup">Sign Up</a>
-                </li>
-              </ul>
-            </div>
+        <div id="head_row" class="row justify-content-center">
+          <h2 class="logo">Tom's Dog Grooming</h2>
+          <div id="signin_block" class="row align-items-center">
+            {% if not firstname %}
+              <div id="registration_entry">
+                <a href="signin">Sign In</a> &nbsp;|&nbsp;
+                <a href="signup">Sign Up</a>
+              </div>
+            {% endif %}
+            {% if firstname %}
+              <div id="profile_entry">
+                <p style="margin: 0">Welcome, </p><a href="profile">{{ firstname }}</a>
+              </div>
+            {% endif %}
           </div>
-        </nav>
+        </div>
       {% endblock %}
       <div id="base_content_container">
-        {% block content %}{% endblock %}
+        {% block content %}
+          {% block cap_content %}{% endblock %}
+        {% endblock %}
       </div>
     </div>
   {% endblock %}

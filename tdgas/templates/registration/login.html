@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title> Sign In </title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %} Sign In {% endblock %}
+
+{% block navigation_bar %}{% endblock %}
+
+{% block body %}
+  <div class="row justify-content-center align-items-center" style="width: 100vw;height: 100vh;background-color: whitesmoke">
+    <div class="card shadow" style="width: 18rem;min-width: 500px;background-color: white">
+      <div class="card-body" style="padding: 0">
+        <div style="padding: 20px">
+          <h2 style="font-family: 'logo_font';font-size: 40px; margin: 0">Tom's Dog Grooming <span><i class="fas fa-paw" style="font-size: 15px"></i></span> Login</h2>
+        </div>
+        <div class="row breadcrumb_wrapper justify-content-center" style="width: 100%">
+          <ol class="breadcrumb row" style="width: 800px;padding-left: 20px;padding-right: 20px">
+            <li class="breadcrumb-item"><a href="/">Back</a></li>
+          </ol>
+        </div>
+        <div class="card-body" style="padding: 20px">
+          <form id="sign_in_form" method="post" action="{% url 'login' %}"> {% csrf_token %}
+            <div class="row justify-content-between">
+              <div class="row justify-content-between">
+                <h5 class="form_required">E-mail:</h5>
+                <input class="form_input" name="email" type="email" title="E-mail" autocomplete="off" required style="font-size: large">
+                <h5 class="form_required">Password:</h5>
+                <input class="form_input" name="password" type="password" title="Password" autocomplete="off" required style="font-size: large">
+              </div>
+            </div>
+            <button type="submit" class="btn fancy_btn submit" value="Submit" style="width: 100%; margin-top: 30px">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

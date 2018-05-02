@@ -7,14 +7,7 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
 {% endblock %}
 
-{% block body %}
-  <div id="head_row" class="row justify-content-center">
-    <h1 id="logo">Tom's Dog Grooming</h1>
-    <div id="signin_block" class="row align-items-center">
-      <a href="signin">Sign In</a>
-      <a href="signup">Sign Up</a>
-    </div>
-  </div>
+{% block content %}
   <div id="home_slide_row" class="row justify-content-center">
     <div id="home_slide" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
@@ -34,7 +27,7 @@
     </div>
   </div>
   <div id="make_appointment_row" class="row justify-content-center">
-    <button id="appointment_btn" class="btn btn-primary">
+    <button id="appointment_btn" class="btn fancy_btn">
       Make an appointment!
     </button>
   </div>

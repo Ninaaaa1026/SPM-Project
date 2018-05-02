@@ -6,10 +6,7 @@ from .models import *
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = [
-            email
-            first_name
-        ]
+        fields = []
 
 
 class ContactForm(forms.ModelForm):

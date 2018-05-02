@@ -1,26 +1,3 @@
-#appointment_btn {
-    font-family: "blackhand_font";
-    font-size: 30px;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    background-color: #55BCA9;
-    -webkit-box-shadow: 0 0 20px rgba(85, 188, 169, 0.5);
-    -moz-box-shadow: 0 0 20px rgba(85, 188, 169, 0.5);
-    box-shadow: 0 0 20px rgba(85, 188, 169, 0.5);
-}
-#appointment_btn:hover {
-    -webkit-box-shadow: 0 0 40px rgba(85, 188, 169, 0.8);
-    -moz-box-shadow: 0 0 40px rgba(85, 188, 169, 0.8);
-    box-shadow: 0 0 40px rgba(85, 188, 169, 0.8);
-}
-#appointment_btn:active {
-    background-color: #4daa99;
-    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0 40px rgba(85, 188, 169, 0.8);
-}
-
 .carousel-inner {
     width: 100%;
     height: 100%;
@@ -30,13 +7,6 @@
     height: 100%;
 }
 
-#head_row {
-    position: relative;
-}
-
-#home_slide_row {
-    
-}
 #home_slide {
     width: 100%;
     height: 60vh;
@@ -46,12 +16,6 @@
     height: 100%;
     object-fit: cover;
     object-position: 50% 50%;
-}
-
-#logo {
-    font-family: "logo_font";
-    padding: 20px;
-    font-size: 60px;
 }
 
 #make_appointment_row {
@@ -64,12 +28,3 @@
     height: 100%;
 }
 
-@font-face {
-    font-family: "logo_font";
-    src: url(/static/res/lets-bake-muffins.regular.ttf) format("truetype");
-}
-
-@font-face {
-    font-family: "blackhand_font";
-    src: url(/static/res/blackhand-trial.regular.ttf) format("truetype");
-}
