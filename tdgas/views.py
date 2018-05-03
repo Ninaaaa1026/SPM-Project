@@ -8,7 +8,6 @@ def home_view(request):
     firstname = ''
     if request.user.is_authenticated:
         firstname = request.user.first_name
-    print('firstname = ', firstname)
     return render(request, 'home.html', {'firstname': firstname})
 
 def signin_view(request):
