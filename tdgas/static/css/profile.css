@@ -1,0 +1,17 @@
+.section_input {
+    height: 28px;
+}
+.section_input:invalid {
+    color: #C8C8C8;
+}
+
+[type="date"] {
+    background:#fff url(../icons/calendar.svg)  99% 50% no-repeat;
+    background-size: 1rem 1rem;
+}
+[type="date"]::-webkit-inner-spin-button {
+    display: none;
+}
+[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
