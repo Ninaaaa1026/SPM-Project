@@ -1,11 +1,28 @@
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from django.http import HttpResponse, HttpResponseRedirect
 from .forms import *
 from .models import *
 
 def home_view(request):
-    return render(request, 'home.html') #{'firstname': request.user.first_name})
+    firstname = ''
+    if request.user.is_authenticated:
+        firstname = request.user.first_name
+    print('firstname = ', firstname)
+    return render(request, 'home.html', {'firstname': firstname})
+
+def signin_view(request):
+    error = ''
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(username = email, password = password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect('/')
+        else:
+            error = 'Email or password not valid.'
+    return render(request, 'registration/login.html', {'error': error})
 
 def signup_view(request):
     if request.method == 'GET':
@@ -42,9 +59,3 @@ def contact_dogs_view(request, username):
             contact.save()
 
         return render(request, 'user_profile.html')
-
-def signin_view(request,first_name):
-    if request.method =='POST':
-        #authenticate and return to home page
-
-        return render(request, 'home.html', {firstname:first_name})

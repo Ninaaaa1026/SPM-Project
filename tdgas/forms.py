@@ -18,7 +18,6 @@ class UserForm(forms.ModelForm):
             'address_country'
         ]
 
-
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
