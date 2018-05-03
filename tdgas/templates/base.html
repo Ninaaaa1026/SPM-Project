@@ -24,10 +24,9 @@
                 <a href="signin">Sign In</a> &nbsp;|&nbsp;
                 <a href="signup">Sign Up</a>
               </div>
-            {% endif %}
-            {% if firstname %}
-              <div id="profile_entry">
-                <p style="margin: 0">Welcome, </p><a href="profile">{{ firstname }}</a>
+            {% else %}
+              <div id="profile_entry" class="row">
+                <p style="margin: 0">Welcome,</p>&nbsp;<a href="profile">{{ firstname }}</a>
               </div>
             {% endif %}
           </div>
