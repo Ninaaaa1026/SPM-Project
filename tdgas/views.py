@@ -1,10 +1,10 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
-from .forms import *
-from .models import *
+from django.contrib.auth            import login, authenticate
+from django.contrib.auth.decorators import login_required
+from django.http                    import HttpResponseRedirect
+from django.shortcuts               import render
 
-from .models import DOG_TYPE
+from .forms                         import *
+from .models                        import *
 
 def home_view(request):
     firstname = ''
@@ -29,6 +29,7 @@ def signup_view(request):
     if request.method == 'GET':
         return render(request, 'registration/register.html', {})
 
+@login_required
 def profile_view(request):
     if request.method == 'GET':
         dog_breeds = DOG_TYPE
@@ -37,6 +38,7 @@ def profile_view(request):
     if request.method == 'POST':
         pass
 
+@login_required
 def dog_add_view(request):
     if request.method == 'POST':
         pass
@@ -59,6 +61,7 @@ def dog_add_view(request):
         else:
             return render(request, 'registration/register.html', {})
 
+@login_required
 def contact_dogs_view(request, username):
     if request.method == 'GET':
         return render(request, 'registration/update.html',{})
