@@ -6,22 +6,23 @@ from .models import *
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = []
+        fields = '__all__'
 
 
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = []
+        fields = '__all__'
 
 
 class DogForm(forms.ModelForm):
     class Meta:
         model = Dog
-        fields = []
+        fields = '__all__'
 
 
 class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = []
+
