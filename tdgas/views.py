@@ -35,7 +35,7 @@ def profile_view(request):
         dog_breeds = DOG_TYPE
         return render(request, 'user_profile.html', {'firstname': request.user.first_name,
                                                      'breeds'   : dog_breeds})
-    if request.method == 'POST':
+    elif request.method == 'POST':
         pass
 
 @login_required
