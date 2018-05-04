@@ -29,9 +29,11 @@ def signup_view(request):
     if request.method == 'GET':
         return render(request, 'registration/register.html', {})
 
+@login_required
 def profile_view(request):
      return render(request, 'profile.html', {})
 
+@login_required
 def profile_update_view(request):
     if request.method == 'POST':
         user = request.POST.get("username")
@@ -48,7 +50,7 @@ def profile_update_view(request):
         else:
             profile.errors
 
-
+@login_required
 def contact_update_view(request):
     if request.method == 'POST':
         action = request.POST.get('action')
@@ -80,7 +82,8 @@ def contact_update_view(request):
                 p.delete()
             else:
                 contact.errors
-
+                
+@login_required
 def dog_update_view(request):
     if request.method == 'POST':
         action = request.POST.get('action')
