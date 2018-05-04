@@ -29,49 +29,90 @@ def signup_view(request):
     if request.method == 'GET':
         return render(request, 'registration/register.html', {})
 
-@login_required
 def profile_view(request):
-    if request.method == 'GET':
-        dog_breeds = DOG_TYPE
-        return render(request, 'user_profile.html', {'firstname': request.user.first_name,
-                                                     'breeds'   : dog_breeds})
-    elif request.method == 'POST':
-        pass
+     return render(request, 'profile.html', {})
 
-@login_required
-def dog_add_view(request):
+def profile_update_view(request):
     if request.method == 'POST':
-        pass
-    elif request.method == 'POST':
-        signup_form = UserForm(request.POST)
-        if signup_form.is_valid():
-            newuser = signup_form.save()
-            email = signup_form.cleaned_data.get('email')
-            password = signup_form.cleaned_data.get('password')
-            firstname = signup_form.cleaned_data.get('first_name')
-            lastname = signup_form.cleaned_data.get('last_name')
-            
-            authenticate(email=email,password=password)
-            login(request,newuser)
-            #CustomUserManager.create_user(email,password)
-            newuser = User(email=email, last_name=lastname, first_name=firstname, address_street=signup_form.cleaned_data['street_address'])
-            newuser.save()
-
-            return render(request, 'registration/update.html',{}) #HttpResponseRedirect('/', {'email':email})
+        user = request.POST.get("username")
+        profile = UserForm(request.POST)
+        if profile.is_valid():
+            p = User.objects.get(username = user)
+            p.first_name = profile.cleaned_data['first_name']
+            p.last_name = profile.cleaned_data['last_name']
+            p.address_street = profile.cleaned_data['address_street']
+            p.address_suburb = profile.cleaned_data['address_suburb']
+            p.address_state = profile.cleaned_data['address_state']
+            p.address_postcode = profile.cleaned_data['address_postcode']
+            p.save()
         else:
-            return render(request, 'registration/register.html', {})
+            profile.errors
 
-@login_required
-def contact_dogs_view(request, username):
-    if request.method == 'GET':
-        return render(request, 'registration/update.html',{})
-    elif request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            number = form.cleaned_data.get('number')
-            ctype = form.cleaned_data.get('contact_type')
-            contact = Contact(phone_number=number, contact_type=ctype)
-            #check user in system and override 
-            contact.save()
 
-        return render(request, 'user_profile.html')
+def contact_update_view(request):
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'add':
+            contact = ContactForm(request.POST)
+            if contact.is_valid():
+                p = Contact()
+                p.user = contact.cleaned_data['user']
+                p.contact_type = contact.cleaned_data['contact_type']
+                p.phone_number = contact.cleaned_data['phone_number']
+                p.save()
+            else:
+                contact.errors
+        elif action == 'update':
+            contact = ContactForm(request.POST)
+            contact_id = contact.cleaned_data['id']
+            if contact.is_valid():
+                p = Contact.objects.get(id = contact_id)
+                p.contact_type = contact.cleaned_data['contact_type']
+                p.phone_number = contact.cleaned_data['phone_number']
+                p.save()
+            else:
+                contact.errors
+        else:
+            contact = ContactForm(request.POST)
+            contact_id = contact.cleaned_data['id']
+            if contact.is_valid():
+                p = Contact.objects.get(id=contact_id)
+                p.delete()
+            else:
+                contact.errors
+
+def dog_update_view(request):
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'add':
+            dog = DogForm(request.POST)
+            if dog.is_valid():
+                p = Dog()
+                p.owner = dog.cleaned_data['owner']
+                p.dog_name = dog.cleaned_data['dog_name']
+                p.breed = dog.cleaned_data['breed']
+                p.date_of_birth = dog.cleaned_data['date_of_birth']
+                p.save()
+            else:
+                dog.errors
+        elif action == 'update':
+            dog = DogForm(request.POST)
+            dog_id = dog.cleaned_data.get('id')
+            if dog.is_valid():
+                p = Dog.objects.get(id = dog_id)
+                p.owner = dog.cleaned_data['owner']
+                p.dog_name = dog.cleaned_data['dog_name']
+                p.breed = dog.cleaned_data['breed']
+                p.date_of_birth = dog.cleaned_data['date_of_birth']
+                p.save()
+            else:
+                dog.errors
+        else:
+            dog = DogForm(request.POST)
+            dog_id = dog.cleaned_data.get('id')
+            if dog.is_valid():
+                p = Dog.objects.get(id = dog_id)
+                p.delete()
+            else:
+                dog.errors
+
