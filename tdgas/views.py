@@ -1,3 +1,5 @@
+from datetime                       import datetime
+
 from django.contrib.auth            import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http                    import HttpResponseRedirect
@@ -28,6 +30,20 @@ def signin_view(request):
 def signup_view(request):
     if request.method == 'GET':
         return render(request, 'registration/register.html', {})
+    elif request.method == 'POST':
+        user_form = UserForm(request.POST)
+        if user_form.is_valid():
+            new_user = User.objects.create(email       = user_form.cleaned_data['email'     ],
+                                           password    = user_form.cleaned_data['password'  ],
+                                           first_name  = user_form.cleaned_data['first_name'],
+                                           last_name   = user_form.cleaned_data['last_name' ],
+                                           date_joined = datetime.now())
+            login(request, new_user)
+            return HttpResponseRedirect('/')
+        else:
+            return render(request, 'registration/register.html', {'errors': user_form.errors})
+
+### Review progress ###
 
 @login_required
 def profile_view(request):

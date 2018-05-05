@@ -1,7 +1,7 @@
-from django.db import models
+from django.db                  import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
-from .validators import *
+from .validators                import *
 
 
 SHORT       = 50
@@ -231,13 +231,19 @@ class CustomUserManager(BaseUserManager):
 
     use_in_migrations = True
 
-    def create_user(self, email, password = None):
+    def create_user(self, email, password = None, first_name = None, last_name = None):
         if not email:
             raise ValueError('Users must have a valid e-mail address.')
         user = self.model(
             email = self.normalize_email(email)
         )
         user.set_password(password)
+        if not first_name:
+            raise ValueError('Users must enter firstname.')
+        user.first_name = first_name
+        if not last_name:
+            raise ValueError('Users must enter lastname.' )
+        user.last_name  = last_name
         user.save(self._db)
         return user
 
