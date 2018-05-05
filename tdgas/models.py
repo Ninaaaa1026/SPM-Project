@@ -309,6 +309,12 @@ class Appointment(models.Model):
         ('2', 'To be paid')
     )
 
+    APPOINTMENT_STATUS = (
+        ('TE', 'To be executed'),
+        ('DE', 'During execution'),
+        ('FIN', 'Finished')
+    )
+
     subscriber              = models.ForeignKey     (User, on_delete = models.CASCADE)
     groom_dog               = models.ForeignKey     (Dog , on_delete = models.CASCADE)
     groom_type              = models.CharField      (max_length = SHORT, choices = GROOM_TYPE)
@@ -317,3 +323,4 @@ class Appointment(models.Model):
     comment                 = models.CharField      (max_length = LONG , null = True, blank = True)
     appointment_datetime    = models.DateTimeField  ()
     create_datetime         = models.DateTimeField  (auto_now_add = True)
+    appointment_statue = models.CharField(max_length=SHORT, choices=APPOINTMENT_STATUS)

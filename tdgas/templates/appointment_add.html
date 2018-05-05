@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Appointment {% endblock %}
+
+{% block loads %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}"/>
+{% endblock %}
+
+{% block navigation_bar %}
+<div class="row justify-content-center" style="width: 100%; padding: 0">
+  <div class="row justify-content-between" style="width: 800px; padding: 0">
+    <div class="col-12" style="padding: 0">
+      <h2 class="logo">Tom's Dog Grooming <span><i class="fas fa-paw" style="font-size: 30px"></i></span> Appointment</h2>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block cap_content %}
+<div class="row breadcrumb_wrapper justify-content-center" style="width: 100%">
+  <ol class="breadcrumb row" style="width: 800px;padding-left: 20px;padding-right: 20px">
+    <li class="breadcrumb-item"><a href="/">Back</a></li>
+  </ol>
+</div>
+<div class="row justify-content-center" style="width: 100%; padding: 30px 0">
+  <div class="row justify-content-between" style="width: 800px; padding: 0 20px">
+    <div class="col-12" style="padding: 0">
+      <form id="sign_up_form" method="post" action="{% url 'signup' %}"> {% csrf_token %}
+        <div class="row align-items-start" style="height: 25%"><h3>{{ user.first_name }}</h3></div>
+        <div class="row justify-content-between">
+          <div class="row justify-content-between">
+            <h5 class="form_required">Dogs:</h5>
+            <div class="row" style="width: 100%;height: 75%">
+              {% if dogs %}
+              {% for dog in dogs %}
+                <label for="dogChoice1">{{ dog.name }}
+                  <input id="radioButton" type="radio" name="dog" value="{{ dog.id }}">
+                </label>
+              {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <h5 class="form_required">Groom type:</h5>
+        <select class="form_input section_input" name="groom_type" title="groom_type" required>
+          <option value="" disabled selected>Groom type</option>
+          <option value="1">Wash only</option>
+          <option value="2">Wash and nail clipping</option>
+          <option value="3">Deluxe grooming</option>
+        </select>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
