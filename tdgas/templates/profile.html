@@ -35,6 +35,10 @@
             <div class="row align-items-start" style="height: 25%">
               <h3>{{ user.first_name }}</h3>
               <div class="modify_btn btn_trans btn" style="display: none"><i class="modify_icon fas fa-edit"></i></div>
+              <div class="update_btn_container row align-items-center" style="height: 100%;display: none">
+                <button class="user_update_btn btn">Save</button>
+                <button class="user_update_cancel_btn btn">Cancel</button>
+              </div>
             </div>
             <div class="row" style="width: 100%;height: 75%">
               {% if contacts %}
@@ -80,19 +84,17 @@
         </div>
         <div id="user_profile_update_form" style="margin-top: 20px;display: none">
           <div class="row justify-content-between" style="width: 100%">
-            <input style="width: 49.5%" class="profile_form" name="first_name" type="text" title="First name"
+            <input id="firstname_input" style="width: 49.5%" class="profile_form" name="first_name" type="text" title="First name"
                    placeholder="First name" autocomplete="off" value="{{ user.first_name }}">
-            <input style="width: 49.5%" class="profile_form" name="last_name" type="text" title="Last name"
+            <input id="lastname_input" style="width: 49.5%" class="profile_form" name="last_name" type="text" title="Last name"
                    placeholder="Last name" autocomplete="off" value="{{ user.last_name }}">
-            <input class="profile_form" name="street_address" type="text" title="Street address"
+            <input id="addr_street_input" class="profile_form" name="street_address" type="text" title="Street"
                    placeholder="Street address" autocomplete="off" value="{{ user.address_street }}">
-            <input class="profile_form" name="street_address2" type="text" title="Street address 2"
-                   placeholder="Street address 2" autocomplete="off" value="{{ user.address_suburb }}">
-            <input style="width: 49.5%" class="profile_form" name="suburb" type="text" title="Suburb" placeholder="Suburb"
+            <input id="addr_suburb_input" style="width: 49.5%" class="profile_form" name="suburb" type="text" title="Suburb" placeholder="Suburb"
                    autocomplete="off" value="{{ user.address_suburb }}">
-            <input style="width: 49.5%" class="profile_form" name="state" type="text" title="State" placeholder="State"
+            <input id="addr_state_input" style="width: 49.5%" class="profile_form" name="state" type="text" title="State" placeholder="State"
                    autocomplete="off" value="{{ user.address_state }}">
-            <input style="width: 49.5%" class="profile_form" name="postal" type="text" title="Postal" placeholder="Postal"
+            <input id="addr_postal_input" style="width: 49.5%" class="profile_form" name="postal" type="text" title="Postal" placeholder="Postal"
                    autocomplete="off" value="{{ user.address_postcode }}">
             <select style="width: 49.5%" class="profile_form profile_form_selection" name="country" title="Country">
               <option value="AU">Australia</option>
