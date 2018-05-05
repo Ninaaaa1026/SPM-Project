@@ -23,6 +23,14 @@
 }
 .faicon {
     margin-top: 3px;
+    color: #3da6c8;
+}
+
+.section {
+    padding: 20px 0;
+}
+.section + .section {
+    border-top: thin dotted #8bc8c8;
 }
 
 .section_input {
