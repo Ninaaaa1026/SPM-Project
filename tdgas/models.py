@@ -282,6 +282,9 @@ class Contact(models.Model):
     contact_type    = models.CharField      (max_length = SHORT, choices = CONTACT_TYPE)
     phone_number    = models.CharField      (max_length = SHORT, null = True, blank = True)
 
+    def __str__(self):
+        return self.user.email + ' - ' + self.contact_type
+
 class Dog(models.Model):
     owner           = models.ForeignKey     (User, on_delete = models.CASCADE)
     dog_name        = models.CharField      (max_length = SHORT)

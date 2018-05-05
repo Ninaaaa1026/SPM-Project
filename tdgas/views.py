@@ -15,9 +15,9 @@ def home_view(request):
 def signin_view(request):
     error = ''
     if request.method == 'POST':
-        email = request.POST.get('email')
+        email    = request.POST.get('email')
         password = request.POST.get('password')
-        user = authenticate(username = email, password = password)
+        user     = authenticate(username = email, password = password)
         if user is not None:
             login(request, user)
             return HttpResponseRedirect('/')
@@ -31,7 +31,10 @@ def signup_view(request):
 
 @login_required
 def profile_view(request):
-     return render(request, 'profile.html', {})
+    user     = User.objects.get(email__exact = request.user.email)
+    contacts = Contact.objects.filter(user = user)
+    dogs     = Dog.objects.filter(owner = user)
+    return render(request, 'profile.html', {'user': user, 'contacts': contacts, 'dogs': dogs})
 
 @login_required
 def profile_update_view(request):

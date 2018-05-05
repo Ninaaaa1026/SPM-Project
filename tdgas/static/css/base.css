@@ -27,6 +27,10 @@
     margin-right: 5px;
 }
 
+.col_ng {
+    padding: 0;
+}
+
 .fancy_btn {
     font-family: "blackhand_font";
     font-size: 30px;
