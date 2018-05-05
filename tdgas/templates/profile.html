@@ -36,17 +36,17 @@
               {% if contacts %}
                 <div class="col-5 col_ng align-self-end">
                 <div class="contact_row row">
-                  <div class="faicon_container"><i class="faicon far fa-envelope"></i></div>{{ user.email }}
+                  <div class="faicon_container"><i class="faicon fas fa-envelope"></i></div>{{ user.email }}
                 </div>
                 {% for contact in contacts %}
                   {% if contact.contact_type == 'mobile' %}
                     <div class="contact_row row">
-                      <div class="faicon_container"><i class="faicon fas fa-mobile-alt"></i></div>{{ contact.phone_number }}
+                      <div class="faicon_container"><i class="faicon fas fa-phone-square"></i></div>{{ contact.phone_number }}
                     </div>
                   {% endif %}
                   {% if contact.contact_type == 'home' %}
                     <div class="contact_row row">
-                      <div class="faicon_container"><i class="faicon fas fa-phone-square"></i></div>{{ contact.phone_number }}
+                      <div class="faicon_container"><i class="faicon fas fa-home"></i></div>{{ contact.phone_number }}
                     </div>
                   {% endif %}
                   {% if contact.contact_type == 'work' %}
