@@ -11,5 +11,5 @@ $('.section').ready(function() {
 
 $(document).on('click', '.modify_btn', function() {
     /* Display update form. */
-    
+    $('#user_profile_update_form').show();
 });
