@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Appointment {% endblock %}
+
+{% block loads %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}"/>
+{% endblock %}
+
+{% block navigation_bar %}
+<div class="row justify-content-center" style="width: 100%; padding: 0">
+  <div class="row justify-content-between" style="width: 800px; padding: 0">
+    <div class="col-12" style="padding: 0">
+      <h2 class="logo">Tom's Dog Grooming <span><i class="fas fa-paw" style="font-size: 30px"></i></span> Appointment</h2>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block cap_content %}
+<div class="row breadcrumb_wrapper justify-content-center" style="width: 100%">
+  <ol class="breadcrumb row" style="width: 800px;padding-left: 20px;padding-right: 20px">
+    <li class="breadcrumb-item"><a href="/">Back</a></li>
+  </ol>
+</div>
+<div class="row justify-content-center" style="width: 100%; padding: 30px 0">
+    <div class="row justify-content-between" style="width: 800px; padding: 0 20px">
+      <div class="col-12" style="padding: 0">
+          <form id="sign_up_form" method="post" action="{% url 'signup' %}"> {% csrf_token %}
+            <div class="row align-items-start" style="height: 25%"><h3>{{ user.first_name }}</h3></div>
+            <div class="row" style="width: 100%;height: 75%">
+              {% if dogs %}
+              <div class="col-5 col_ng align-self-end">
+                <div class="contact_row row">
+                  <div class="faicon_container"><i class="faicon fas fa-envelope"></i></div>{{ user.first_name }}
+                </div>
+                {% for dog in dogs %}
+                <div class="contact_row row">
+                  <div class="faicon_container"><i class="faicon fas fa-phone-square"></i></div>{{ dog.name }}
+                </div>
+                <div class="contact_row row">
+                  <div class="faicon_container"><i class="faicon fas fa-phone-square"></i></div>{{ dog.breed }}
+                </div>
+                <div class="contact_row row">
+                  <div class="faicon_container"><i class="faicon fas fa-home"></i></div>{{ dog.breed }}
+                </div>
+                <div class="contact_row row">
+                  <div class="faicon_container"><i class="faicon fas fa-briefcase"></i></div>{{ dog.date_of_birth }}
+                </div>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+            <div class="row justify-content-between">
+              <div class="row justify-content-between">
+                <h5 class="form_required">E-mail:</h5>
+                <input class="form_input" name="email" type="email" title="E-mail" autocomplete="off" required>
+                <h5 class="form_required">Password:</h5>
+                <input class="form_input" name="password" type="password" title="Password" autocomplete="off" required>
+                <h5 class="form_required">Confirm Password:</h5>
+                <input class="form_input" name="password2" type="password" title="Password" autocomplete="off" required>
+                <h5 class="form_required">Full Name:</h5>
+                <div class="row justify-content-between" style="width: 100%">
+                  <input style="width: 49%" class="form_input" name="first_name" type="text" title="First name"
+                  placeholder="First name" autocomplete="off" required>
+                  <input style="width: 49%" class="form_input" name="last_name" type="text" title="Last name"
+                  placeholder="Last name" autocomplete="off" required>
+                </div>
+                <h5>Address:</h5>
+                <input class="form_input" name="street_address" type="text" title="Street address"
+                placeholder="Street address" autocomplete="off">
+                <input class="form_input" name="street_address2" type="text" title="Street address 2"
+                placeholder="Street address 2" autocomplete="off">
+                <input style="width: 49%" class="form_input" name="suburb" type="text" title="Suburb" placeholder="Suburb"
+                autocomplete="off">
+                <input style="width: 49%" class="form_input" name="state" type="text" title="State" placeholder="State"
+                autocomplete="off">
+                <input style="width: 49%" class="form_input" name="postal" type="text" title="Postal" placeholder="Postal"
+                autocomplete="off">
+                <select style="width: 49%" class="form_input section_input" name="country" title="Country">
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}
