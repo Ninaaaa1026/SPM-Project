@@ -7,16 +7,14 @@ from .models import *
 class UserAdmin(UserAdmin):
     fieldsets = (
         (None             , {'fields': ('email',
-                                        'password',
-                                        'first_name',
+                                        'password')}),
+        ('Personal info'  , {'fields': ('first_name',
                                         'last_name',
                                         'address_street',
                                         'address_suburb',
                                         'address_state',
                                         'address_postcode',
                                         'address_country')}),
-        ('Personal info'  , {'fields': ('first_name',
-                                        'last_name')}),
         ('Permissions'    , {'fields': ('is_active',
                                         'is_staff',
                                         'is_superuser',
