@@ -43,14 +43,14 @@ def signup_view(request):
         else:
             return render(request, 'registration/register.html', {'errors': user_form.errors})
 
-### Review progress ###
-
 @login_required
 def profile_view(request):
     user     = User.objects.get(email__exact = request.user.email)
     contacts = Contact.objects.filter(user = user)
     dogs     = Dog.objects.filter(owner = user)
     return render(request, 'profile.html', {'user': user, 'contacts': contacts, 'dogs': dogs})
+
+### Review progress ### The code below hasn't been reviewed ###
 
 @login_required
 def profile_update_view(request):

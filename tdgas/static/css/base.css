@@ -22,9 +22,16 @@
 }
 .breadcrumb-item::before {
     content: "\00AB";
-    color: #ff655b;
+    color: #ff8970;
     display: inline-block;
     margin-right: 5px;
+}
+
+.btn_trans {
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
 }
 
 .col_ng {
@@ -72,6 +79,12 @@
     position: relative;
 }
 
+.input_trans {
+    padding: 0;
+    outline: none;
+    border: none;
+}
+
 .logo_letter {
     font: 1.3em arial;
     color: #4c4c4c;
@@ -84,6 +97,13 @@
     font-family: "logo_font";
     padding: 20px;
     font-size: 60px;
+}
+
+.section_input {
+    height: 28px;
+}
+.section_input:invalid {
+    color: #C8C8C8;
 }
 
 .shadow {

@@ -26,6 +26,10 @@
     color: #3da6c8;
 }
 
+.modify_icon {
+    color: #c87731;
+}
+
 .section {
     padding: 20px 0;
 }
@@ -33,10 +37,19 @@
     border-top: thin dotted #8bc8c8;
 }
 
-.section_input {
-    height: 28px;
+.profile_form {
+    width: 100%;
+    margin-bottom: 5px;
+    font-size: small;
+    border: thin solid rgb(200, 200, 200);
+    border-radius: 3px;
+    padding: 0 5px;
 }
-.section_input:invalid {
+.profile_form_selection {
+    font-size: small;
+    margin-bottom: 5px;
+}
+.profile_form_selection:invalid {
     color: #C8C8C8;
 }
 
