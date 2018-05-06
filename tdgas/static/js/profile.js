@@ -25,8 +25,9 @@ $(document).on('click', '.user_update_cancel_btn', function() {
     var userProfileUpdateForm   = $('#user_profile_update_form');
     var modifyBtn               = $(userProfileUpdateForm.parents('.section')).find('.modify_btn');
     userProfileUpdateForm.hide();
-    modifyBtn.removeClass('disabled');
     $('.update_btn_container').hide();
+    modifyBtn.removeClass('disabled');
+    modifyBtn.show();
 });
 
 /* AJAX call to update user profile. */
@@ -40,7 +41,7 @@ function updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_s
             'address_street'   :   addr_street ,
             'address_suburb'   :   addr_suburb ,
             'address_state'    :   addr_state  ,
-            'address_postal'   :   addr_postal
+            'address_postcode' :   addr_postal
         },
         statusCode: {
             201: function() {
