@@ -35,12 +35,12 @@ function updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_s
         type: 'POST',
         url : '/profile_update/',
         data: {
-            'first_name'    :   firstname   ,
-            'last_name'     :   lastname    ,
-            'addr_street'   :   addr_street ,
-            'addr_suburb'   :   addr_suburb ,
-            'addr_state'    :   addr_state  ,
-            'addr_postal'   :   addr_postal
+            'first_name'       :   firstname   ,
+            'last_name'        :   lastname    ,
+            'address_street'   :   addr_street ,
+            'address_suburb'   :   addr_suburb ,
+            'address_state'    :   addr_state  ,
+            'address_postal'   :   addr_postal
         },
         statusCode: {
             201: function() {
