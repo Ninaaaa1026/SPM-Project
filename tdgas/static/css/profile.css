@@ -15,6 +15,19 @@
     width: 100%;
 }
 
+.dog_avatar_container {
+    display: block;
+    width: 125px;
+    margin-right: 20px;
+}
+.dog_avatar_img {
+    display: block;
+    height: 50px;
+    width: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .faicon_container {
     width: 13px;
     height: 13px;

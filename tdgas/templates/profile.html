@@ -116,6 +116,30 @@
           </div>
         </div>
       </div>
+      <div id="dogs_container" style="margin-top: 30px;border-top: thin dotted #8bc8c8">
+        {% for dog in dogs %}
+          <div class="col-12 col_ng section">
+            <div class="row" style="padding: 0">
+              <div class="dog_avatar_container">
+                <img class="dog_avatar_img" src="{% static 'icons/dog.svg' %}"/>
+              </div>
+              <div id="dog_name" class="col col_ng">
+                  <input id="dog_id" title="Dog Id" value="{{ dog.id }}" hidden>
+                  <div class="row align-items-start">
+                    <div class="col col_ng"><h5>Name:</h5></div>
+                    <div class="col col_ng"><h5>Breed:</h5></div>
+                    <div class="col col_ng"><h5>Date of Birth:</h5></div>
+                  </div>
+                  <div class="row align-items-end">
+                    <div class="col col_ng"><input id="dog_name_input" class="input_trans" title="Dog Name" value="{{ dog.dog_name }}"></div>
+                    <div class="col col_ng"><input id="dog_breed_input" class="input_trans" title="Dog Breed" value="{{ dog.breed }}"></div>
+                    <div class="col col_ng"><input id="dog_dob_input" class="input_trans" title="Dog DOB" value="{{ dog.date_of_birth }}"></div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
 {% endblock %}

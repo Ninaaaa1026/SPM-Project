@@ -297,6 +297,9 @@ class Dog(models.Model):
     breed           = models.CharField      (max_length = SHORT, choices = DOG_TYPE)
     date_of_birth   = models.DateField      ()
 
+    def __str__(self):
+        return self.owner.first_name + ' - ' + self.dog_name
+
 class Appointment(models.Model):
     GROOM_TYPE = (
         ('1', 'Wash only'),
