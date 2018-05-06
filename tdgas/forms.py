@@ -6,7 +6,12 @@ from .models    import *
 class UserForm(forms.ModelForm):
     class Meta:
         model  = User
-        fields = ['email', 'password', 'first_name', 'last_name']
+        fields = ['first_name'     ,
+                  'last_name'      ,
+                  'address_street' ,
+                  'address_suburb' ,
+                  'address_state'  ,
+                  'address_postcode']
 
 
 class ContactForm(forms.ModelForm):

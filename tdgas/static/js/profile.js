@@ -33,7 +33,7 @@ $(document).on('click', '.user_update_cancel_btn', function() {
 function updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_state, addr_postal) {
     $.ajax({
         type: 'POST',
-        url : 'profile_update/',
+        url : '/profile_update/',
         data: {
             'first_name'    :   firstname   ,
             'last_name'     :   lastname    ,
@@ -45,9 +45,11 @@ function updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_s
         statusCode: {
             201: function() {
                 /* On succeed: */
+                alert('Updating succeeded!');
             },
             406: function() {
                 /* On fail: */
+                alert('Updating failed!');
             }
         },
         success: function() {}
