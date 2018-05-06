@@ -49,6 +49,15 @@
           <option value="2">Wash and nail clipping</option>
           <option value="3">Deluxe grooming</option>
         </select>
+        <h5 class="form_required">Groom type:</h5>
+        <select class="form_input section_input" name="available_times" title="available_times" required>
+          <option value="" disabled selected>Available appointment time</option>
+          {% if available_datetimes %}
+              {% for available_datetime in available_datetimes %}
+                <option value="{{ available_datetime }}" >{{ available_datetime }}</option>
+              {% endfor %}
+          {% endif %}
+        </select>
       </form>
     </div>
   </div>
