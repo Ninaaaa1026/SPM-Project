@@ -140,39 +140,48 @@ def dog_update_view(request):
 
 def appointment_update_view(request):
     if request.method == 'POST':
+        user = User.objects.get(email__exact=request.user.email)
+        firstname = request.user.first_name
         action = request.POST.get('action')
         if action == 'add':
             appointment_form = AppointmentForm(request.POST)
             if appointment_form.is_valid():
-                new_appointment = Appointment.objects.create(   subscriber = appointment_form.cleaned_data['subscriber'],
+                Appointment.objects.create(   subscriber = appointment_form.cleaned_data['subscriber'],
                                                                 groom_dog = appointment_form.cleaned_data['groom_dog'],
                                                                 groom_type = appointment_form.cleaned_data[' groom_type'],
                                                                 order_price = appointment_form.cleaned_data['order_price'],
                                                                 payment_status = appointment_form.cleaned_data['payment_status '],
                                                                 comment = appointment_form.cleaned_data['comment '],
                                                                 appointment_datetime = appointment_form.cleaned_data['appointment_datetime'],
-                                                                create_datetime = appointment_form.cleaned_data['create_datetime'],
-                                                                appointment_statue = 'TE')
-                return render(request, 'appointment_list.html', {'appointment': new_appointment})
+                                                                appointment_statue =  appointment_form.cleaned_data['appointment_statue'])
+                appointments = Appointment.objects.filter(subscriber=user)
+                return render(request, 'appointment_list.html',
+                              {'user': user, 'appointments': appointments, 'firstname': firstname})
             else:
-                return render(request, 'registration/register.html', {'errors': appointment_form.errors})
+                return render(request, 'appointment_confirm.html', {'errors': appointment_form.errors})
         elif action == 'update':
             appointment_form = AppointmentForm(request.POST)
             appointment_id = appointment_form.cleaned_data['id']
             if appointment_form.is_valid():
-                p = Appointment.objects.get(id=appointment_id)
-                p.appointment_datetime = appointment_form.cleaned_data['appointment_datetime']
-                p.save()
+                appointment = Appointment.objects.get(id=appointment_id)
+                appointment.appointment_datetime = appointment_form.cleaned_data['appointment_datetime']
+                appointment.save()
+                appointments=Appointment.objects.filter(subscriber=user)
+                return render(request, 'appointment_list.html',
+                              {'user': user, 'appointments': appointments, 'firstname': firstname})
             else:
-                return render(request, 'appointment_list.html', {'errors': appointment_form.errors})
+                return render(request, 'appointment_edit.html', {'errors': appointment_form.errors})
         else:
             appointment_form = AppointmentForm(request.POST)
             appointment_id = appointment_form.cleaned_data['id']
             if appointment_form.is_valid():
-                p = Appointment.objects.get(id=appointment_id)
-                p.delete()
+                appointment = Appointment.objects.get(id=appointment_id)
+                appointment.delete()
+                appointments = Appointment.objects.filter(subscriber=user)
+                return render(request, 'appointment_list.html',
+                              {'user': user, 'appointments': appointments, 'firstname': firstname})
             else:
-                return render(request, 'appointment_list.html', {'errors': appointment_form.errors})
+                return render(request, 'appointment_edit.html', {'errors': appointment_form.errors})
 
 def appointment_new_view(request):
     if request.user.is_authenticated:
@@ -251,6 +260,45 @@ def appointment_new_view(request):
             date_slot = date_slot + timedelta(days=1)
 
         return render(request, 'appointment_add.html', {'user': user, 'dogs': dogs, 'available_datetimes':available_datetimes,'firstname': firstname})
+    else:
+        error = 'You have to sign in first.'
+        return render(request, 'registration/login.html', {'error': error})
+
+def appointment_confirm_view(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            appointment_form = AppointmentForm(request.POST)
+            firstname = request.user.first_name
+            if appointment_form.is_valid():
+                appointment = Appointment()
+                appointment.subscriber=appointment_form.cleaned_data['subscriber']
+                appointment.groom_dog=appointment_form.cleaned_data['groom_dog']
+                appointment.groom_type=appointment_form.cleaned_data['groom_type']
+                appointment.comment=appointment_form.cleaned_data['comment']
+                appointment.appointment_datetime=appointment_form.cleaned_data['appointment_datetime']
+                if appointment.groom_type=='1':
+                    appointment.order_price=30
+                elif appointment.groom_type == '2':
+                    appointment.order_price=40
+                elif appointment.groom_type == '3':
+                    appointment.order_price=80
+                appointment.payment_status = 2
+                appointment.appointment_statue='TE'
+
+                return render(request, 'appointment_confirm.html', {'appointment': appointment, 'firstname': firstname})
+            else:
+                return render(request, 'appointment_add.html', {'errors': appointment_form.errors})
+    else:
+        error = 'You have to sign in first.'
+        return render(request, 'registration/login.html', {'error': error})
+
+def appointment_edit_view(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(email__exact = request.user.email)
+        appointments = Appointment.objects.filter(subscriber=user)
+        firstname = request.user.first_name
+        if request.method == 'GET':
+            return render(request, 'appointment_edit.html', {'user': user, 'appointments': appointments, 'firstname': firstname})
     else:
         error = 'You have to sign in first.'
         return render(request, 'registration/login.html', {'error': error})
