@@ -2,7 +2,7 @@ from datetime                       import datetime
 
 from django.contrib.auth            import login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.http                    import HttpResponseRedirect
+from django.http                    import HttpResponseRedirect, HttpResponse
 from django.shortcuts               import render
 
 from .forms                         import *
@@ -50,91 +50,56 @@ def profile_view(request):
     dogs     = Dog.objects.filter(owner = user)
     return render(request, 'profile.html', {'user': user, 'contacts': contacts, 'dogs': dogs})
 
-### Review progress ### The code below hasn't been reviewed ###
-
 @login_required
 def profile_update_view(request):
-    if request.method == 'POST':
-        user = request.POST.get("username")
-        profile = UserForm(request.POST)
-        if profile.is_valid():
-            p = User.objects.get(username = user)
-            p.first_name = profile.cleaned_data['first_name']
-            p.last_name = profile.cleaned_data['last_name']
-            p.address_street = profile.cleaned_data['address_street']
-            p.address_suburb = profile.cleaned_data['address_suburb']
-            p.address_state = profile.cleaned_data['address_state']
-            p.address_postcode = profile.cleaned_data['address_postcode']
-            p.save()
-        else:
-            profile.errors
+    profile_form = UserForm(request.POST)
+    if profile_form.is_valid():
+        user                    = User.objects.get(email = request.user.email)
+        user.first_name         = profile_form.cleaned_data['first_name'      ]
+        user.last_name          = profile_form.cleaned_data['last_name'       ]
+        user.address_street     = profile_form.cleaned_data['address_street'  ]
+        user.address_suburb     = profile_form.cleaned_data['address_suburb'  ]
+        user.address_state      = profile_form.cleaned_data['address_state'   ]
+        user.address_postcode   = profile_form.cleaned_data['address_postcode']
+        user.save()
+        return HttpResponse(status = 201)
+    else:
+        return HttpResponse(status = 406)
 
 @login_required
 def contact_update_view(request):
-    if request.method == 'POST':
-        action = request.POST.get('action')
-        if action == 'add':
-            contact = ContactForm(request.POST)
-            if contact.is_valid():
-                p = Contact()
-                p.user = contact.cleaned_data['user']
-                p.contact_type = contact.cleaned_data['contact_type']
-                p.phone_number = contact.cleaned_data['phone_number']
-                p.save()
-            else:
-                contact.errors
-        elif action == 'update':
-            contact = ContactForm(request.POST)
-            contact_id = contact.cleaned_data['id']
-            if contact.is_valid():
-                p = Contact.objects.get(id = contact_id)
-                p.contact_type = contact.cleaned_data['contact_type']
-                p.phone_number = contact.cleaned_data['phone_number']
-                p.save()
-            else:
-                contact.errors
+    contact_form = ContactForm(request.POST)
+    if contact_form.is_valid():
+        contact = Contact.objects.get(user = request.user, contact_type = request.POST.get['contact_type'])
+        if not contact.exists():
+            Contact.objects.create(user         = request.user,
+                                   contact_type = contact_form.cleaned_data['contact_type'],
+                                   phone_number = contact_form.cleaned_data['phone_number'])
         else:
-            contact = ContactForm(request.POST)
-            contact_id = contact.cleaned_data['id']
-            if contact.is_valid():
-                p = Contact.objects.get(id=contact_id)
-                p.delete()
-            else:
-                contact.errors
-                
+            contact              = Contact.objects.get(user = request.user)
+            contact.contact_type = contact_form.cleaned_data['contact_type']
+            contact.phone_number = contact_form.cleaned_data['phone_number']
+            contact.save()
+        return HttpResponse(status = 201)
+    else:
+        return HttpResponse(status = 406)
+
 @login_required
 def dog_update_view(request):
-    if request.method == 'POST':
-        action = request.POST.get('action')
-        if action == 'add':
-            dog = DogForm(request.POST)
-            if dog.is_valid():
-                p = Dog()
-                p.owner = dog.cleaned_data['owner']
-                p.dog_name = dog.cleaned_data['dog_name']
-                p.breed = dog.cleaned_data['breed']
-                p.date_of_birth = dog.cleaned_data['date_of_birth']
-                p.save()
-            else:
-                dog.errors
-        elif action == 'update':
-            dog = DogForm(request.POST)
-            dog_id = dog.cleaned_data.get('id')
-            if dog.is_valid():
-                p = Dog.objects.get(id = dog_id)
-                p.owner = dog.cleaned_data['owner']
-                p.dog_name = dog.cleaned_data['dog_name']
-                p.breed = dog.cleaned_data['breed']
-                p.date_of_birth = dog.cleaned_data['date_of_birth']
-                p.save()
-            else:
-                dog.errors
+    dog_form = ContactForm(request.POST)
+    if dog_form.is_valid():
+        dog = Contact.objects.get(owner = request.user, dog_name = request.POST.get['contact_type'])
+        if not dog.exists():
+            Dog.objects.create(owner         = request.user,
+                               dog_name      = dog_form.cleaned_data['dog_name'     ],
+                               breed         = dog_form.cleaned_data['breed'        ],
+                               date_of_birth = dog_form.cleaned_data['date_of_birth'])
         else:
-            dog = DogForm(request.POST)
-            dog_id = dog.cleaned_data.get('id')
-            if dog.is_valid():
-                p = Dog.objects.get(id = dog_id)
-                p.delete()
-            else:
-                dog.errors
+            dog.dog_name      = dog_form.cleaned_data['dog_name'     ]
+            dog.breed         = dog_form.cleaned_data['breed'        ]
+            dog.date_of_birth = dog_form.cleaned_data['date_of_birth']
+            dog.save()
+        return HttpResponse(status = 201)
+    else:
+        return HttpResponse(status = 406)
 
