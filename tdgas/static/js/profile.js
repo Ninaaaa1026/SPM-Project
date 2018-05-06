@@ -46,11 +46,34 @@ function updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_s
         statusCode: {
             201: function() {
                 /* On succeed: */
-                alert('Updating succeeded!');
+                console.log('Profile updating succeeded!');
             },
             406: function() {
                 /* On fail: */
-                alert('Updating failed!');
+                console.log('Profile updating failed!'   );
+            }
+        },
+        success: function() {}
+    });
+}
+
+/* AJAX call to update user contact. */
+function updateUserContact(contactType, phoneNumber) {
+    $.ajax({
+        type: 'POST',
+        url : '/contact_update/',
+        data: {
+            'contact_type' : contactType,
+            'phone_number' : phoneNumber
+        },
+        statusCode: {
+            201: function() {
+                /* On succeed: */
+                console.log(contactType + ' updating succeeded!');
+            },
+            406: function() {
+                /* On fail: */
+                console.log(contactType + ' updating failed!'   );
             }
         },
         success: function() {}
@@ -59,6 +82,7 @@ function updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_s
 
 /* Update user info on submit. */
 $(document).on('click', '.user_update_btn', function() {
+    /* Update profile info. */
     var firstname   = $('#firstname_input'  ).val();
     var lastname    = $('#lastname_input'   ).val();
     var addr_street = $('#addr_street_input').val();
@@ -66,4 +90,12 @@ $(document).on('click', '.user_update_btn', function() {
     var addr_state  = $('#addr_state_input' ).val();
     var addr_postal = $('#addr_postal_input').val();
     updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_state, addr_postal);
+
+    /* Update contact info. */
+    var mobile      = $('#contact_mobile_input').val();
+    var home        = $('#contact_home_input'  ).val();
+    var work        = $('#contact_work_input'  ).val();
+    updateUserContact('mobile', mobile);
+    updateUserContact('home'  , home  );
+    updateUserContact('work'  , work  );
 });

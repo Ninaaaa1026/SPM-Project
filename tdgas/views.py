@@ -70,13 +70,14 @@ def profile_update_view(request):
 def contact_update_view(request):
     contact_form = ContactForm(request.POST)
     if contact_form.is_valid():
-        contact = Contact.objects.get(user = request.user, contact_type = request.POST.get['contact_type'])
-        if not contact.exists():
+        contacts = Contact.objects.filter(user = request.user, contact_type = contact_form.cleaned_data['contact_type'])
+        if not contacts.exists():
             Contact.objects.create(user         = request.user,
                                    contact_type = contact_form.cleaned_data['contact_type'],
                                    phone_number = contact_form.cleaned_data['phone_number'])
         else:
-            contact              = Contact.objects.get(user = request.user)
+            contact              = Contact.objects.get(user = request.user,
+                                                       contact_type = contact_form.cleaned_data['contact_type'])
             contact.contact_type = contact_form.cleaned_data['contact_type']
             contact.phone_number = contact_form.cleaned_data['phone_number']
             contact.save()
@@ -88,13 +89,14 @@ def contact_update_view(request):
 def dog_update_view(request):
     dog_form = ContactForm(request.POST)
     if dog_form.is_valid():
-        dog = Contact.objects.get(owner = request.user, dog_name = request.POST.get['contact_type'])
-        if not dog.exists():
+        dogs = Contact.objects.filter(owner = request.user, id = dog_form.cleaned_data['id'])
+        if not dogs.exists():
             Dog.objects.create(owner         = request.user,
                                dog_name      = dog_form.cleaned_data['dog_name'     ],
                                breed         = dog_form.cleaned_data['breed'        ],
                                date_of_birth = dog_form.cleaned_data['date_of_birth'])
         else:
+            dog               = Dog.objects.get(owner = request.user, id = dog_form.cleaned_data['id'])
             dog.dog_name      = dog_form.cleaned_data['dog_name'     ]
             dog.breed         = dog_form.cleaned_data['breed'        ]
             dog.date_of_birth = dog_form.cleaned_data['date_of_birth']

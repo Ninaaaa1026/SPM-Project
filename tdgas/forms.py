@@ -16,8 +16,8 @@ class UserForm(forms.ModelForm):
 
 class ContactForm(forms.ModelForm):
     class Meta:
-        model  = Contact
-        fields = '__all__'
+        model   = Contact
+        exclude = ['user']
 
 
 class DogForm(forms.ModelForm):
