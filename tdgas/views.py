@@ -188,7 +188,7 @@ def appointment_new_view(request):
         user = User.objects.get(email__exact = request.user.email)
         dogs = Dog.objects.filter(owner=user)
         firstname = request.user.first_name
-        available_datetimes = avaliabletime()
+        available_datetimes = availabletime()
         return render(request, 'appointment_add.html', {'user': user,
                                                         'dogs': dogs,
                                                         'available_datetimes':available_datetimes,
@@ -201,15 +201,17 @@ def appointment_edit_view(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             user = User.objects.get(email__exact = request.user.email)
+            dogs = Dog.objects.filter(owner=user)
             appointment_form = AppointmentForm(request.POST)
             appointment_id = appointment_form.cleaned_data['id']
             appointment = Appointment.objects.get(id=appointment_id)
             firstname = request.user.first_name
-            available_datetimes = avaliabletime()
+            available_datetimes = availabletime()
             return render(request, 'appointment_edit.html', {'user': user,
-                                                            'appointment': appointment,
-                                                            'available_datetimes':available_datetimes,
-                                                            'firstname': firstname})
+                                                             'dogs': dogs,
+                                                             'appointment': appointment,
+                                                             'available_datetimes':available_datetimes,
+                                                             'firstname': firstname})
     else:
         error = 'You have to sign in first.'
         return render(request, 'registration/login.html', {'error': error})
