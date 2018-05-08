@@ -11,5 +11,6 @@ urlpatterns = [
     path('profile/'         , profile_view          , name = 'profile'          ),
     path('profile_update/'  , profile_update_view   , name = 'profile_update'   ),
     path('contact_update/'  , contact_update_view   , name = 'contact'          ),
-    path('dog_update/'      , dog_update_view       , name = 'dog'              )
+    path('dog_update/'      , dog_update_view       , name = 'dog'              ),
+    path('groomer_home/'    , groomer_view          , name = 'groomer'          )
 ]

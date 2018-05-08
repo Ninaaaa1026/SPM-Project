@@ -108,3 +108,12 @@ def dog_update_view(request):
     else:
         return HttpResponse(status = 406)
 
+def groomer_view(request):
+    ##get made appointments
+    #appointment_list = list(Appointment.objects.all())
+    show = Appointment.objects.filter(appointment_datetime__date__gt=datetime.today()).select_related('subscriber')
+    #
+    query = show.values('first_name','groom_dog','groom_type','comment','appointment_datetime','address_street','address_suburb')
+
+
+    return render(request, 'groomer_home.html', {'events':query})
