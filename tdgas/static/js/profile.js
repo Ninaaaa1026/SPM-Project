@@ -47,6 +47,11 @@ function updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_s
             201: function() {
                 /* On succeed: */
                 console.log('Profile updating succeeded!');
+                $('#user_firstname_header').text(firstname  );
+                $('#addr_street'          ).text(addr_street);
+                $('#addr_suburb'          ).text(addr_suburb);
+                $('#addr_state'           ).text(addr_state );
+                $('#addr_postcode'        ).text(addr_postal);
             },
             406: function() {
                 /* On fail: */
@@ -70,6 +75,12 @@ function updateUserContact(contactType, phoneNumber) {
             201: function() {
                 /* On succeed: */
                 console.log(contactType + ' updating succeeded!');
+                if (contactType == 'mobile')
+                    $('#contact_mobile').text(phoneNumber);
+                else if (contactType == 'home')
+                    $('#contact_home'  ).text(phoneNumber);
+                else
+                    $('#contact_work'  ).text(phoneNumber);
             },
             406: function() {
                 /* On fail: */
@@ -98,4 +109,7 @@ $(document).on('click', '.user_update_btn', function() {
     updateUserContact('mobile', mobile);
     updateUserContact('home'  , home  );
     updateUserContact('work'  , work  );
+
+    /* Hide update form after updating. */
+    $('.user_update_cancel_btn').click();
 });

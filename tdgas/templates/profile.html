@@ -33,7 +33,7 @@
           </div>
           <div class="col col_ng">
             <div class="row align-items-start" style="height: 25%">
-              <h3>{{ user.first_name }}</h3>
+              <h3 id="user_firstname_header">{{ user.first_name }}</h3>
               <div class="modify_btn btn_trans btn" style="display: none"><i class="modify_icon fas fa-edit"></i></div>
               <div class="update_btn_container row align-items-center" style="height: 100%;display: none">
                 <button class="user_update_btn btn">Save</button>
@@ -49,17 +49,17 @@
                 {% for contact in contacts %}
                   {% if contact.contact_type == 'mobile' %}
                     <div class="contact_row row">
-                      <div class="faicon_container"><i class="faicon fas fa-phone-square"></i></div>{{ contact.phone_number }}
+                      <div class="faicon_container"><i class="faicon fas fa-phone-square"></i></div><span id="contact_mobile">{{ contact.phone_number }}</span>
                     </div>
                   {% endif %}
                   {% if contact.contact_type == 'home' %}
                     <div class="contact_row row">
-                      <div class="faicon_container"><i class="faicon fas fa-home"></i></div>{{ contact.phone_number }}
+                      <div class="faicon_container"><i class="faicon fas fa-home"></i></div><span id="contact_home">{{ contact.phone_number }}</span>
                     </div>
                   {% endif %}
                   {% if contact.contact_type == 'work' %}
                     <div class="contact_row row">
-                      <div class="faicon_container"><i class="faicon fas fa-briefcase"></i></div>{{ contact.phone_number }}
+                      <div class="faicon_container"><i class="faicon fas fa-briefcase"></i></div><span id="contact_work">{{ contact.phone_number }}</span>
                     </div>
                   {% endif %}
                 {% endfor %}
@@ -67,13 +67,16 @@
               {% endif %}
               <div class="col-8 col_ng align-self-end">
                 {% if user.address_street %}
-                  <div class="address_row row">{{ user.address_street }}</div>
+                  <div id="addr_street" class="address_row row">{{ user.address_street }}</div>
                 {% endif %}
                 {% if user.address_suburb %}
-                  <div class="address_row row">{{ user.address_suburb }}</div>
+                  <div id="addr_suburb" class="address_row row">{{ user.address_suburb }}</div>
                 {% endif %}
                 {% if user.address_state %}
-                  <div class="address_row row">{{ user.address_state }}&nbsp;{{ user.address_postcode }}</div>
+                  <div class="address_row row">
+                    <span id="addr_state">{{ user.address_state }}</span>
+                    &nbsp;
+                    <span id="addr_postcode">{{ user.address_postcode }}</span></div>
                 {% endif %}
                 {% if user.address_country %}
                   <div class="address_row row">{{ user.address_country }}</div>
