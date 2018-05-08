@@ -22,7 +22,10 @@ def signin_view(request):
         user     = authenticate(username = email, password = password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect('/')
+            if user.is_superuser == True:
+                return HttpResponseRedirect('/groomer_home')
+            else:
+                return HttpResponseRedirect('/')
         else:
             error = 'Email or password not valid.'
     return render(request, 'registration/login.html', {'error': error})
