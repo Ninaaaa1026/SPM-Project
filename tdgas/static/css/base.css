@@ -81,8 +81,8 @@
 
 .input_trans {
     padding: 0;
-    outline: none;
-    border: none;
+    outline: transparent;
+    border: transparent;
 }
 
 .logo_letter {

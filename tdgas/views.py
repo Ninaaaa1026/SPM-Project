@@ -48,7 +48,8 @@ def profile_view(request):
     user     = User.objects.get(email__exact = request.user.email)
     contacts = Contact.objects.filter(user = user)
     dogs     = Dog.objects.filter(owner = user)
-    return render(request, 'profile.html', {'user': user, 'contacts': contacts, 'dogs': dogs})
+    breeds   = DOG_TYPE
+    return render(request, 'profile.html', {'user': user, 'contacts': contacts, 'dogs': dogs, 'breeds': breeds})
 
 @login_required
 def profile_update_view(request):

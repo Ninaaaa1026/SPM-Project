@@ -34,10 +34,10 @@
           <div class="col col_ng">
             <div class="row align-items-start" style="height: 25%">
               <h3 id="user_firstname_header">{{ user.first_name }}</h3>
-              <div class="modify_btn btn_trans btn" style="display: none"><i class="modify_icon fas fa-edit"></i></div>
+              <div id="user_profile_modify_btn" class="modify_btn btn_trans btn" style="display: none"><i class="modify_icon fas fa-edit"></i></div>
               <div class="update_btn_container row align-items-center" style="height: 100%;display: none">
-                <button class="user_update_btn btn">Save</button>
-                <button class="user_update_cancel_btn btn">Cancel</button>
+                <button id="user_update_btn" class="update_btn btn">Save</button>
+                <button id="user_update_cancel_btn" class="update_cancel_btn btn">Cancel</button>
               </div>
             </div>
             <div class="row" style="width: 100%;height: 75%">
@@ -119,26 +119,46 @@
           </div>
         </div>
       </div>
-      <div id="dogs_container" style="margin-top: 30px;border-top: thin dotted #8bc8c8">
+      <div id="dogs_container" style="margin-top: 30px;border-top: thin dotted #8bc8c8;width: 100%">
         {% for dog in dogs %}
           <div class="col-12 col_ng section">
             <div class="row" style="padding: 0">
               <div class="dog_avatar_container">
                 <img class="dog_avatar_img" src="{% static 'icons/dog.svg' %}"/>
               </div>
-              <div id="dog_name" class="col col_ng">
-                  <input id="dog_id" title="Dog Id" value="{{ dog.id }}" hidden>
+              <div id="dog_info_row" class="row" style="width: calc(100% - 145px)">
+                <input id="dog_id" title="Dog Id" value="{{ dog.id }}" hidden>
+                <div class="col-10">
                   <div class="row align-items-start">
-                    <div class="col col_ng"><h6>Name:</h6></div>
-                    <div class="col col_ng"><h6>Breed:</h6></div>
-                    <div class="col col_ng"><h6>Date of Birth:</h6></div>
+                    <div class="col-3 col_ng"><h6>Name:</h6></div>
+                    <div class="col-5 col_ng"><h6>Breed:</h6></div>
+                    <div class="col-4 col_ng"><h6>Date of Birth:</h6></div>
                   </div>
                   <div class="row align-items-end">
-                    <div class="col col_ng"><input id="dog_name_input" class="input_trans" title="Dog Name" value="{{ dog.dog_name }}"></div>
-                    <div class="col col_ng"><input id="dog_breed_input" class="input_trans" title="Dog Breed" value="{{ dog.breed }}"></div>
-                    <div class="col col_ng"><input id="dog_dob_input" class="input_trans" title="Dog DOB" value="{{ dog.date_of_birth }}"></div>
+                    <div class="col-3 col_ng"><input id="dog_name_input" class="dog_name_input input_trans" title="Dog Name" value="{{ dog.dog_name }}" readonly style="width: 90%"></div>
+                    <div class="col-5 col_ng">
+                      <input id="dog_breed_input" class="dog_breed_display input_trans" title="Dog Breed" value="{{ dog.breed }}" readonly style="width: 90%">
+                      <select id="dog_breed_selector" class="dog_breed_input section_input" name="dog_breed" title="Dog Breed" style="width: 90%;margin: 0;display: none">
+                        <option value="unmodified" selected>{{ dog.breed }}</option>
+                        {% for breed in breeds %}
+                          <option value="{{ breed.0 }}">{{ breed.1 }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-4 col_ng">
+                      <input id="dog_dob_input" class="dog_dob_display input_trans" title="Dog DOB" value="{{ dog.date_of_birth }}" readonly style="width: 90%">
+                      <input id="dog_dob_input" class="dog_dob_input" type="date" title="Dog DOB" style="width: 90%;display: none">
+                    </div>
                   </div>
                 </div>
+                <div class="col-2 col_ng">
+                  <div class="dog_modify_btn modify_btn btn_trans btn" style="display: none"><i class="modify_icon fas fa-edit"></i></div>
+                  <div class="update_btn_container row align-items-center" style="height: 100%;display: none">
+                    <button class="dog_update_btn update_btn btn">Save</button>
+                    <button class="dog_update_cancel_btn update_cancel_btn btn">Cancel</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         {% endfor %}
