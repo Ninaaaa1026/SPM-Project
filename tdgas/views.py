@@ -111,9 +111,9 @@ def dog_update_view(request):
 def groomer_view(request):
     ##get made appointments
     #appointment_list = list(Appointment.objects.all())
-    show = Appointment.objects.filter(appointment_datetime__date__gt=datetime.today()).select_related('subscriber')
+    show = Appointment.objects.filter(appointment_datetime__date__gt=datetime.today()).select_related('subscriber__first_name','subscriber__address_street','subscriber__address_suburb')
+    #clientdets = User.objects.all().values('first_name','address_street','address_suburb')
     #
-    query = show.values('first_name','groom_dog','groom_type','comment','appointment_datetime','address_street','address_suburb')
-
+    query = show.values('subscriber__first_name','groom_dog','groom_type','comment','appointment_datetime','subscriber__address_street','subscriber__address_suburb')
 
     return render(request, 'groomer_home.html', {'events':query})
