@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock %}
+
+{% block loads %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
+{% endblock %}
+
+{% block content %}
+<table border="1">
+  <th>Header 0</th>
+  <th>Header 1</th>
+  <th>Header 2</th>
+  {% for event in events %}
+  <tr>
+  {% for x in event %} <td>{{ x }}</td>
+  {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
