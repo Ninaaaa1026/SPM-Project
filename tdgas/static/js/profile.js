@@ -25,7 +25,7 @@ function updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_s
             },
             406: function() {
                 /* On fail: */
-                console.log('Profile updating failed!'   );
+                console.log('Profile updating failed!');
             }
         },
         success: function() {}
@@ -55,6 +55,32 @@ function updateUserContact(contactType, phoneNumber) {
             406: function() {
                 /* On fail: */
                 console.log(contactType + ' updating failed!'   );
+            }
+        },
+        success: function() {}
+    });
+}
+
+/* AJAX call to update dog info. */
+function updateDogInfo(dogName, dogBreed, dogDOB, parentSection) {
+    $.ajax({
+        type: 'POST',
+        url : '/dog_update/',
+        data: {
+            'dog_name'  : dogName   ,
+            'dog_breed' : dogBreed  ,
+            'dog_DOB'   : dogDOB
+        },
+        statusCode: {
+            201: function() {
+                /* On succeed: */
+                parentSection.find('.dog_name_input'   ).val(dogName );
+                parentSection.find('.dog_breed_display').val(dogBreed);
+                parentSection.find('.dog_dob_display  ').val(dogDOB  );
+            },
+            406: function() {
+                /* On fail: */
+                console.log('Dog info updating failed!');
             }
         },
         success: function() {}
@@ -128,8 +154,8 @@ $(document).on('click', '#user_update_btn', function() {
  * ***********************************************************************************************/
 /* Display dog update form on click. */
 $(document).on('click', '.dog_modify_btn', function() {
-    var modifyBtn               = $(this);
-    var parentSection           = modifyBtn.parents('.section');
+    var modifyBtn     = $(this);
+    var parentSection = modifyBtn.parents('.section');
     modifyBtn.addClass('disabled');
     modifyBtn.hide();
     parentSection.find('.update_btn_container').show       (             );
@@ -143,9 +169,9 @@ $(document).on('click', '.dog_modify_btn', function() {
 
 /* Restore original dog UI on cancel. */
 $(document).on('click', '.dog_update_cancel_btn', function() {
-    var cancelBtn               = $(this);
-    var parentSection           = cancelBtn.parents('.section');
-    var modifyBtn               = parentSection.find('.modify_btn');
+    var cancelBtn     = $(this);
+    var parentSection = cancelBtn.parents('.section');
+    var modifyBtn     = parentSection.find('.modify_btn');
     modifyBtn.removeClass('disabled');
     modifyBtn.show();
     parentSection.find('.update_btn_container').hide       (             );
@@ -159,10 +185,15 @@ $(document).on('click', '.dog_update_cancel_btn', function() {
 
 /* Update dog info on submit. */
 $(document).on('click', '.dog_update_btn', function() {
-    var updateBtn = $(this);
+    var updateBtn     = $(this);
     var parentSection = updateBtn.parents('.section');
+    var dogName       = parentSection.find('.dog_name_input' ).val();
+    var dogBreed      = parentSection.find('.dog_breed_input').val();
+    var dogDOB        = parentSection.find('.dog_dob_input'  ).val();
+
     /* Update dog info. */
-    
+    updateDogInfo(dogName, dogBreed, dogDOB, parentSection);
+
     /* Hide update form after updating. */
     parentSection.find('.user_update_cancel_btn').click();
 });

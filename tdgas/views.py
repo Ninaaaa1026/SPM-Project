@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, date, time
+from datetime                       import datetime, timedelta, date, time
 
 from django.contrib.auth            import login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -22,7 +22,7 @@ def signin_view(request):
         user     = authenticate(username = email, password = password)
         if user is not None:
             login(request, user)
-            if user.is_superuser == True:
+            if user.is_superuser:
                 return HttpResponseRedirect('/groomer_home')
             else:
                 return HttpResponseRedirect('/')
@@ -109,6 +109,7 @@ def dog_update_view(request):
     else:
         return HttpResponse(status = 406)
 
+@login_required
 def groomer_view(request):
     ##get made appointments
     #appointment_list = list(Appointment.objects.all())
@@ -118,6 +119,7 @@ def groomer_view(request):
     query = show.values('subscriber__first_name','groom_dog','groom_type','comment','appointment_datetime','subscriber__address_street','subscriber__address_suburb')
     return render(request, 'groomer_home.html', {'events':query})
 
+@login_required
 def appointment_update_view(request):
     if request.method == 'POST':
         user = User.objects.get(email__exact=request.user.email)
@@ -163,6 +165,7 @@ def appointment_update_view(request):
             else:
                 return render(request, 'appointment_edit.html', {'errors': appointment_form.errors})
 
+@login_required
 def appointment_new_view(request):
     if request.user.is_authenticated:
         user = User.objects.get(email__exact = request.user.email)
@@ -177,6 +180,7 @@ def appointment_new_view(request):
         error = 'You have to sign in first.'
         return render(request, 'registration/login.html', {'error': error})
 
+@login_required
 def appointment_edit_view(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -196,6 +200,7 @@ def appointment_edit_view(request):
         error = 'You have to sign in first.'
         return render(request, 'registration/login.html', {'error': error})
 
+@login_required
 def appointment_view(request):
     if request.user.is_authenticated:
         user = User.objects.get(email__exact = request.user.email)

@@ -251,6 +251,8 @@ class CustomUserManager(BaseUserManager):
         user = self.create_user(
             email       = email,
             password    = password,
+            first_name  = 'Admin',
+            last_name   = 'Admin'
         )
         user.is_superuser   = True
         user.is_admin       = True
