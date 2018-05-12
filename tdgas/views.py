@@ -108,7 +108,7 @@ def dog_update_view(request):
                                breed         = dog_form.cleaned_data['breed'        ],
                                date_of_birth = dog_form.cleaned_data['date_of_birth'])
         else:
-            dog               = Dog.objects.get(owner = request.user, id = dog_form.cleaned_data['id'])
+            dog               = Dog.objects.get(owner = request.user, id = request.POST.get('id'))
             dog.dog_name      = dog_form.cleaned_data['dog_name'     ]
             dog.breed         = dog_form.cleaned_data['breed'        ]
             dog.date_of_birth = dog_form.cleaned_data['date_of_birth']
