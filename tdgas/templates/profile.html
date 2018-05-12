@@ -114,7 +114,7 @@
                 <img class="dog_avatar_img" src="{% static 'icons/dog.svg' %}"/>
               </div>
               <div id="dog_info_row" class="row" style="width: calc(100% - 145px)">
-                <input id="dog_id" title="Dog Id" value="{{ dog.id }}" hidden>
+                <input class="dog_id" title="Dog Id" value="{{ dog.id }}" hidden>
                 <div class="col-10">
                   <div class="row align-items-start">
                     <div class="col-3 col_ng"><h6>Name:</h6></div>
@@ -149,7 +149,45 @@
             </div>
           </div>
         {% endfor %}
-
+        <div id="dog_add_row">
+          <button class="btn btn-primary">Add your dog</button>
+          <div class="col-12 col_ng section">
+            <div class="row" style="padding: 0">
+              <div class="dog_avatar_container">
+                <img class="dog_avatar_img" src="{% static 'icons/dog.svg' %}"/>
+              </div>
+              <div id="dog_info_row" class="row" style="width: calc(100% - 145px)">
+                <input class="dog_id" title="Dog Id" value="-1" hidden>
+                <div class="col-10">
+                  <div class="row align-items-start">
+                    <div class="col-3 col_ng"><h6>Name:</h6></div>
+                    <div class="col-5 col_ng"><h6>Breed:</h6></div>
+                    <div class="col-4 col_ng"><h6>Date of Birth:</h6></div>
+                  </div>
+                  <div class="row align-items-end">
+                    <div class="col-3 col_ng"><input id="dog_name_input" class="dog_name_input" title="Dog Name" style="width: 90%"></div>
+                    <div class="col-5 col_ng">
+                      <select id="dog_breed_selector" class="dog_breed_input section_input" name="dog_breed" title="Dog Breed" style="width: 90%;margin: 0">
+                        {% for breed in breeds %}
+                          <option value="{{ breed.0 }}">{{ breed.1 }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-4 col_ng">
+                      <input id="dog_dob_input" class="dog_dob_input" type="date" title="Dog DOB" style="width: 90%">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2 col_ng">
+                  <div class="update_btn_container row align-items-center" style="height: 100%">
+                    <button class="dog_update_btn update_btn btn">Save</button>
+                    <button class="dog_add_cancel_btn update_cancel_btn btn">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -48,7 +48,7 @@ def signup_view(request):
 
 @login_required
 def profile_view(request):
-    user           = User.objects.get(email__exact = request.user.email)
+    user           = User   .objects.get   (email__exact = request.user.email   )
     contact_mobile = Contact.objects.filter(user = user, contact_type = 'mobile')
     contact_home   = Contact.objects.filter(user = user, contact_type = 'home'  )
     contact_work   = Contact.objects.filter(user = user, contact_type = 'work'  )
@@ -72,6 +72,7 @@ def profile_update_view(request):
         user.address_suburb     = profile_form.cleaned_data['address_suburb'  ]
         user.address_state      = profile_form.cleaned_data['address_state'   ]
         user.address_postcode   = profile_form.cleaned_data['address_postcode']
+        user.address_country    = 'Australia'
         user.save()
         return HttpResponse(status = 201)
     else:
@@ -98,9 +99,9 @@ def contact_update_view(request):
 
 @login_required
 def dog_update_view(request):
-    dog_form = ContactForm(request.POST)
+    dog_form = DogForm(request.POST)
     if dog_form.is_valid():
-        dogs = Contact.objects.filter(owner = request.user, id = dog_form.cleaned_data['id'])
+        dogs = Dog.objects.filter(owner = request.user, id = request.POST.get('id'))
         if not dogs.exists():
             Dog.objects.create(owner         = request.user,
                                dog_name      = dog_form.cleaned_data['dog_name'     ],
@@ -120,10 +121,13 @@ def dog_update_view(request):
 def groomer_view(request):
     ##get made appointments
     #appointment_list = list(Appointment.objects.all())
-    show = Appointment.objects.filter(appointment_datetime__date__gt=datetime.today()).select_related('subscriber__first_name','subscriber__address_street','subscriber__address_suburb')
+    show = Appointment.objects.filter(appointment_datetime__date__gt=datetime.today()).select_related('subscriber__first_name',
+                                                                                                      'subscriber__address_street',
+                                                                                                      'subscriber__address_suburb')
     #clientdets = User.objects.all().values('first_name','address_street','address_suburb')
     #
-    query = show.values('subscriber__first_name','groom_dog','groom_type','comment','appointment_datetime','subscriber__address_street','subscriber__address_suburb')
+    query = show.values('subscriber__first_name','groom_dog','groom_type','comment',
+                        'appointment_datetime','subscriber__address_street','subscriber__address_suburb')
     return render(request, 'groomer_home.html', {'events':query})
 
 @login_required

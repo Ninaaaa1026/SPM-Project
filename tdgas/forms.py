@@ -23,7 +23,7 @@ class ContactForm(forms.ModelForm):
 class DogForm(forms.ModelForm):
     class Meta:
         model  = Dog
-        fields = '__all__'
+        fields = ['id', 'dog_name', 'breed', 'date_of_birth']
 
 
 class AppointmentForm(forms.ModelForm):

@@ -62,14 +62,15 @@ function updateUserContact(contactType, phoneNumber) {
 }
 
 /* AJAX call to update dog info. */
-function updateDogInfo(dogName, dogBreed, dogDOB, parentSection) {
+function updateDogInfo(dogId, dogName, dogBreed, dogDOB, parentSection) {
     $.ajax({
         type: 'POST',
         url : '/dog_update/',
         data: {
-            'dog_name'  : dogName   ,
-            'dog_breed' : dogBreed  ,
-            'dog_DOB'   : dogDOB
+            'id'            : dogId     ,
+            'dog_name'      : dogName   ,
+            'breed'         : dogBreed  ,
+            'date_of_birth' : dogDOB
         },
         statusCode: {
             201: function() {
@@ -187,12 +188,13 @@ $(document).on('click', '.dog_update_cancel_btn', function() {
 $(document).on('click', '.dog_update_btn', function() {
     var updateBtn     = $(this);
     var parentSection = updateBtn.parents('.section');
+    var dogId         = parentSection.find('.dog_id').val();
     var dogName       = parentSection.find('.dog_name_input' ).val();
     var dogBreed      = parentSection.find('.dog_breed_input').val();
     var dogDOB        = parentSection.find('.dog_dob_input'  ).val();
 
     /* Update dog info. */
-    updateDogInfo(dogName, dogBreed, dogDOB, parentSection);
+    updateDogInfo(dogId, dogName, dogBreed, dogDOB, parentSection);
 
     /* Hide update form after updating. */
     parentSection.find('.user_update_cancel_btn').click();
