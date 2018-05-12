@@ -48,11 +48,18 @@ def signup_view(request):
 
 @login_required
 def profile_view(request):
-    user     = User.objects.get(email__exact = request.user.email)
-    contacts = Contact.objects.filter(user = user)
+    user           = User.objects.get(email__exact = request.user.email)
+    contact_mobile = Contact.objects.filter(user = user, contact_type = 'mobile')
+    contact_home   = Contact.objects.filter(user = user, contact_type = 'home'  )
+    contact_work   = Contact.objects.filter(user = user, contact_type = 'work'  )
     dogs     = Dog.objects.filter(owner = user)
     breeds   = DOG_TYPE
-    return render(request, 'profile.html', {'user': user, 'contacts': contacts, 'dogs': dogs, 'breeds': breeds})
+    return render(request, 'profile.html', {'user'  : user                                                                 ,
+                                            'mobile': contact_mobile.get().phone_number if contact_mobile.exists() else '' ,
+                                            'home'  : contact_home  .get().phone_number if contact_home  .exists() else '' ,
+                                            'work'  : contact_work  .get().phone_number if contact_work  .exists() else '' ,
+                                            'dogs'  : dogs                                                                 ,
+                                            'breeds': breeds                                                               })
 
 @login_required
 def profile_update_view(request):
