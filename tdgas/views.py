@@ -48,18 +48,22 @@ def signup_view(request):
 
 @login_required
 def profile_view(request):
-    user           = User   .objects.get   (email__exact = request.user.email   )
-    contact_mobile = Contact.objects.filter(user = user, contact_type = 'mobile')
-    contact_home   = Contact.objects.filter(user = user, contact_type = 'home'  )
-    contact_work   = Contact.objects.filter(user = user, contact_type = 'work'  )
-    dogs     = Dog.objects.filter(owner = user)
-    breeds   = DOG_TYPE
-    return render(request, 'profile.html', {'user'  : user                                                                 ,
-                                            'mobile': contact_mobile.get().phone_number if contact_mobile.exists() else '' ,
-                                            'home'  : contact_home  .get().phone_number if contact_home  .exists() else '' ,
-                                            'work'  : contact_work  .get().phone_number if contact_work  .exists() else '' ,
-                                            'dogs'  : dogs                                                                 ,
-                                            'breeds': breeds                                                               })
+    user           = User       .objects.get   (email__exact = request.user.email           )
+    contact_mobile = Contact    .objects.filter(user         = user, contact_type = 'mobile')
+    contact_home   = Contact    .objects.filter(user         = user, contact_type = 'home'  )
+    contact_work   = Contact    .objects.filter(user         = user, contact_type = 'work'  )
+    dogs           = Dog        .objects.filter(owner        = user                         )
+    appointments   = Appointment.objects.filter(subscriber   = user                         )
+    breeds         = DOG_TYPE
+    groom_types    = GROOM_TYPE
+    return render(request, 'profile.html', {'user'          : user                                                                 ,
+                                            'mobile'        : contact_mobile.get().phone_number if contact_mobile.exists() else '' ,
+                                            'home'          : contact_home  .get().phone_number if contact_home  .exists() else '' ,
+                                            'work'          : contact_work  .get().phone_number if contact_work  .exists() else '' ,
+                                            'dogs'          : dogs                                                                 ,
+                                            'appointments'  : appointments                                                         ,
+                                            'breeds'        : breeds                                                               ,
+                                            'groom_types'   : groom_types                                                          })
 
 @login_required
 def profile_update_view(request):
@@ -88,7 +92,7 @@ def contact_update_view(request):
                                    contact_type = contact_form.cleaned_data['contact_type'],
                                    phone_number = contact_form.cleaned_data['phone_number'])
         else:
-            contact              = Contact.objects.get(user = request.user,
+            contact              = Contact.objects.get(user         = request.user,
                                                        contact_type = contact_form.cleaned_data['contact_type'])
             contact.contact_type = contact_form.cleaned_data['contact_type']
             contact.phone_number = contact_form.cleaned_data['phone_number']
@@ -121,7 +125,7 @@ def dog_update_view(request):
 def groomer_view(request):
     ##get made appointments
     #appointment_list = list(Appointment.objects.all())
-    show = Appointment.objects.filter(appointment_datetime__date__gt=datetime.today()).select_related('subscriber__first_name',
+    show = Appointment.objects.filter(appointment_datetime__date__gt=datetime.today()).select_related('subscriber__first_name'    ,
                                                                                                       'subscriber__address_street',
                                                                                                       'subscriber__address_suburb')
     #clientdets = User.objects.all().values('first_name','address_street','address_suburb')
@@ -139,14 +143,14 @@ def appointment_update_view(request):
         if action == 'add':
             appointment_form = AppointmentForm(request.POST)
             if appointment_form.is_valid():
-                Appointment.objects.create( subscriber = appointment_form.cleaned_data['subscriber'],
-                                            groom_dog = appointment_form.cleaned_data['groom_dog'],
-                                            groom_type = appointment_form.cleaned_data[' groom_type'],
-                                            order_price = appointment_form.cleaned_data['order_price'],
-                                            payment_status = appointment_form.cleaned_data['payment_status '],
-                                            comment = appointment_form.cleaned_data['comment '],
-                                            appointment_datetime = appointment_form.cleaned_data['appointment_datetime'],
-                                            appointment_statue =  appointment_form.cleaned_data['appointment_statue'])
+                Appointment.objects.create(subscriber = appointment_form.cleaned_data['subscriber'],
+                                           groom_dog = appointment_form.cleaned_data['groom_dog'],
+                                           groom_type = appointment_form.cleaned_data[' groom_type'],
+                                           order_price = appointment_form.cleaned_data['order_price'],
+                                           payment_status = appointment_form.cleaned_data['payment_status '],
+                                           comment = appointment_form.cleaned_data['comment '],
+                                           appointment_datetime = appointment_form.cleaned_data['appointment_datetime'],
+                                           appointment_statue =  appointment_form.cleaned_data['appointment_statue'])
                 appointments = Appointment.objects.filter(subscriber=user)
                 return render(request, 'appointment_list.html',
                               {'user': user, 'appointments': appointments, 'firstname': firstname})
@@ -207,17 +211,6 @@ def appointment_edit_view(request):
                                                              'appointment': appointment,
                                                              'available_datetimes':available_datetimes,
                                                              'firstname': firstname})
-    else:
-        error = 'You have to sign in first.'
-        return render(request, 'registration/login.html', {'error': error})
-
-@login_required
-def appointment_view(request):
-    if request.user.is_authenticated:
-        user = User.objects.get(email__exact = request.user.email)
-        appointments = Appointment.objects.filter(subscriber=user)
-        firstname = request.user.first_name
-        return render(request, 'appointment_list.html', {'user': user, 'appointments': appointments, 'firstname': firstname})
     else:
         error = 'You have to sign in first.'
         return render(request, 'registration/login.html', {'error': error})

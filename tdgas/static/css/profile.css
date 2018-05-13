@@ -10,6 +10,18 @@
     font-size: small;
 }
 
+.appointment_avatar_container {
+    display: block;
+    width: 125px;
+    margin-right: 20px;
+}
+.appointment_avatar_img {
+    display: block;
+    height: 50px;
+    width: 50px;
+    margin: auto;
+}
+
 .contact_row {
     font-size: small;
     width: 100%;

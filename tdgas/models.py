@@ -227,6 +227,12 @@ DOG_TYPE = (
     ('Others'                              , 'Others'                              )
 )
 
+GROOM_TYPE = (
+    ('Wash only'                           , 'Wash only'                           ),
+    ('Wash and nail clipping'              , 'Wash and nail clipping'              ),
+    ('Deluxe grooming'                     , 'Deluxe grooming'                     )
+)
+
 class CustomUserManager(BaseUserManager):
 
     use_in_migrations = True
@@ -303,21 +309,15 @@ class Dog(models.Model):
         return self.owner.first_name + ' - ' + self.dog_name
 
 class Appointment(models.Model):
-    GROOM_TYPE = (
-        ('1', 'Wash only'),
-        ('2', 'Wash and nail clipping'),
-        ('3', 'Deluxe grooming')
-    )
-
     PAY_STATUS = (
-        ('1', 'Paid'),
-        ('2', 'To be paid')
+        ('Paid'      , 'Paid'      ),
+        ('To be paid', 'To be paid')
     )
 
     APPOINTMENT_STATUS = (
-        ('TE', 'To be executed'),
-        ('DE', 'During execution'),
-        ('FIN', 'Finished')
+        ('In Queue' , 'In Queue'),
+        ('Serving'  , 'Serving' ),
+        ('Finished' , 'Finished')
     )
 
     subscriber              = models.ForeignKey     (User, on_delete = models.CASCADE)
