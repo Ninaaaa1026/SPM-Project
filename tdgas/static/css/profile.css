@@ -86,8 +86,6 @@
 
 .section {
     padding: 20px 0;
-}
-.section + .section {
     border-top: thin dotted #8bc8c8;
 }
 

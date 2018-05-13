@@ -1,7 +1,8 @@
 /* AJAX functions.
  * ***********************************************************************************************/
 /* AJAX call to update user profile. */
-function updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_state, addr_postal) {
+function updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_state, addr_postal)
+{
     $.ajax({
         type: 'POST',
         url : '/profile_update/',
@@ -33,7 +34,8 @@ function updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_s
 }
 
 /* AJAX call to update user contact. */
-function updateUserContact(contactType, phoneNumber) {
+function updateUserContact(contactType, phoneNumber)
+{
     $.ajax({
         type: 'POST',
         url : '/contact_update/',
@@ -62,7 +64,8 @@ function updateUserContact(contactType, phoneNumber) {
 }
 
 /* AJAX call to update dog info. */
-function updateDogInfo(dogId, dogName, dogBreed, dogDOB, parentSection) {
+function updateDogInfo(dogId, dogName, dogBreed, dogDOB, parentSection)
+{
     $.ajax({
         type: 'POST',
         url : '/dog_update/',
@@ -99,6 +102,31 @@ $('.section').ready(function() {
     section.on('mouseleave', function() {
         $(this).find('.modify_btn').hide();
     });
+});
+
+/* Switch dog and appointments display on click.
+ * ***********************************************************************************************/
+$(document).on('click', '.display_switch_btn', function() {
+    var switchBtn = $(this);
+    var dogDisplay = $('#dogs_container');
+    var appointmentDisplay = $('#appointments_container');
+
+    if (switchBtn.hasClass('show_appointments')){
+        switchBtn.removeClass('show_appointments');
+        switchBtn.addClass   ('show_dogs'        );
+        switchBtn.text       ('My dogs >>'       );
+
+        dogDisplay.hide();
+        appointmentDisplay.show();
+    }
+    else {
+        switchBtn.removeClass('show_dogs'         );
+        switchBtn.addClass   ('show_appointments' );
+        switchBtn.text       ('My appointments >>');
+
+        dogDisplay.show();
+        appointmentDisplay.hide();
+    }
 });
 
 /* Update user profile.

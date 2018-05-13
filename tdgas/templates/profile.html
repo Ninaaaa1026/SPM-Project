@@ -26,7 +26,7 @@
   </div>
   <div class="row justify-content-center" style="width: 100%; padding: 30px 0">
     <div class="row justify-content-between" style="width: 800px; padding: 0 20px">
-      <div class="col-12 col_ng section">
+      <div class="col-12 col_ng section" style="border: none">
         <div class="row">
           <div id="avatar_container">
             <img class="avatar_img" src="https://api.adorable.io/avatars/125/{{ user.email }}"/>
@@ -81,8 +81,7 @@
                 {% endif %}
               </div>
               <div class="col-3 col_ng align-self-end" style="text-align: right">
-                <button class="btn btn_trans" style="font-size: small;color: #19a2ff">My Appointments >></button>
-                <button class="btn btn_trans" style="font-size: small;color: #19a2ff;display: none">My Dogs >></button>
+                <button class="btn btn_trans display_switch_btn show_appointments" style="font-size: small;color: #19a2ff">My Appointments >></button>
               </div>
             </div>
           </div>
@@ -110,7 +109,7 @@
           </div>
         </div>
       </div>
-      <div id="dogs_container" style="margin-top: 30px;border-top: thin dotted #8bc8c8;width: 100%">
+      <div id="dogs_container" style="margin-top: 30px;width: 100%">
         {% for dog in dogs %}
           <div class="col-12 col_ng section">
             <div class="row" style="padding: 0">
@@ -193,7 +192,7 @@
           </div>
         </div>
       </div>
-      <div id="appointments_container" style="margin-top: 30px;border-top: thin dotted #8bc8c8;width: 100%;display: none">
+      <div id="appointments_container" style="margin-top: 30px;width: 100%;display: none">
         {% for appointment in appointments %}
           <div class="col-12 col_ng section">
             <div class="row" style="padding: 0">
@@ -241,38 +240,44 @@
           </div>
         {% endfor %}
         <div id="dog_add_row">
-          <button class="btn btn-primary">Make appointment</button>
-          <div class="col-12 col_ng section">
+          <button class="btn btn_trans item_add_btn">Make appointment</button>
+          <div class="col-12 col_ng section section_add" style="display: none">
             <div class="row" style="padding: 0">
               <div class="appointment_avatar_container">
                 <img class="appointment_avatar_img" src="{% static 'icons/appointment.svg' %}"/>
               </div>
-              <div id="dog_info_row" class="row" style="width: calc(100% - 145px)">
-                <input class="dog_id" title="Dog Id" value="-1" hidden>
+              <div id="appointment_info_row" class="row" style="width: calc(100% - 145px)">
+                <input class="appointment_id" title="Appointment Id" value="-1" hidden>
                 <div class="col-10">
                   <div class="row align-items-start">
-                    <div class="col-3 col_ng"><h6>Name:</h6></div>
-                    <div class="col-5 col_ng"><h6>Breed:</h6></div>
-                    <div class="col-4 col_ng"><h6>Date of Birth:</h6></div>
+                    <div class="col-3 col_ng"><h6>Dog:</h6></div>
+                    <div class="col-5 col_ng"><h6>Type:</h6></div>
+                    <div class="col-4 col_ng"><h6>Date:</h6></div>
                   </div>
                   <div class="row align-items-end">
-                    <div class="col-3 col_ng"><input id="dog_name_input" class="dog_name_input" title="Dog Name" style="width: 90%"></div>
+                    <div class="col-3 col_ng">
+                      <select id="dog_selector" class="dog_selector section_input" name="groom_dog" title="Dog" style="width: 90%;margin: 0">
+                        {% for dog in dogs %}
+                          <option value="{{ dog.id }}">{{ dog.dog_name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
                     <div class="col-5 col_ng">
-                      <select id="dog_breed_selector" class="dog_breed_input section_input" name="dog_breed" title="Dog Breed" style="width: 90%;margin: 0">
-                        {% for breed in breeds %}
-                          <option value="{{ breed.0 }}">{{ breed.1 }}</option>
+                      <select id="groom_type_selector" class="groom_type_selector section_input" name="groom_type" title="Groom Type" style="width: 90%;margin: 0">
+                        {% for groom_type in groom_types %}
+                          <option value="{{ groom_type.1 }}">{{ groom_type.2 }}</option>
                         {% endfor %}
                       </select>
                     </div>
                     <div class="col-4 col_ng">
-                      <input id="dog_dob_input" class="dog_dob_input" type="date" title="Dog DOB" style="width: 90%">
+                      <input id="appointment_date_selector" class="appointment_date_selector section_input" type="date" title="Appointment Date" value="{{ appointment.appointment_datetime }}" style="width: 90%">
                     </div>
                   </div>
                 </div>
                 <div class="col-2 col_ng">
                   <div class="update_btn_container row align-items-center" style="height: 100%">
-                    <button class="dog_update_btn update_btn btn">Save</button>
-                    <button class="dog_add_cancel_btn update_cancel_btn btn">Cancel</button>
+                    <button class="appointment_update_btn update_btn btn">Save</button>
+                    <button class="add_cancel_btn update_cancel_btn btn">Cancel</button>
                   </div>
                 </div>
               </div>
