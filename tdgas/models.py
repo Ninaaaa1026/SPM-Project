@@ -309,23 +309,22 @@ class Dog(models.Model):
         return self.owner.first_name + ' - ' + self.dog_name
 
 class Appointment(models.Model):
-    PAY_STATUS = (
-        ('Paid'      , 'Paid'      ),
-        ('To be paid', 'To be paid')
-    )
-
-    APPOINTMENT_STATUS = (
-        ('In Queue' , 'In Queue'),
-        ('Serving'  , 'Serving' ),
-        ('Finished' , 'Finished')
-    )
+    # PAY_STATUS = (
+    #     ('Paid'      , 'Paid'      ),
+    #     ('To be paid', 'To be paid')
+    # )
+    #
+    # APPOINTMENT_STATUS = (
+    #     ('In Queue' , 'In Queue'),
+    #     ('Serving'  , 'Serving' ),
+    #     ('Finished' , 'Finished')
+    # )
 
     subscriber              = models.ForeignKey     (User, on_delete = models.CASCADE)
     groom_dog               = models.ForeignKey     (Dog , on_delete = models.CASCADE)
     groom_type              = models.CharField      (max_length = SHORT, choices = GROOM_TYPE)
-    order_price             = models.DecimalField   (max_digits = 5    , decimal_places = 2)
-    payment_status          = models.CharField      (max_length = SHORT, choices = PAY_STATUS)
+    # order_price             = models.DecimalField   (max_digits = 5    , decimal_places = 2)
+    # payment_status          = models.CharField      (max_length = SHORT, choices = PAY_STATUS)
     comment                 = models.CharField      (max_length = LONG , null = True, blank = True)
     appointment_datetime    = models.DateTimeField  ()
-    create_datetime         = models.DateTimeField  (auto_now_add = True)
-    appointment_statue = models.CharField(max_length=SHORT, choices=APPOINTMENT_STATUS)
+    # appointment_statue = models.CharField(max_length=SHORT, choices=APPOINTMENT_STATUS)
