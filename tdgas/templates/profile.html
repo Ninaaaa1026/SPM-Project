@@ -80,8 +80,9 @@
                   <div class="address_row row">{{ user.address_country }}</div>
                 {% endif %}
               </div>
-              <div class="col-3 col_ng align-self-end">
-                <a href="/appointments/" style="font-size: small">My appointments >></a>
+              <div class="col-3 col_ng align-self-end" style="text-align: right">
+                <button class="btn btn_trans" style="font-size: small;color: #19a2ff">My Appointments >></button>
+                <button class="btn btn_trans" style="font-size: small;color: #19a2ff;display: none">My Dogs >></button>
               </div>
             </div>
           </div>
@@ -137,7 +138,7 @@
                     </div>
                     <div class="col-4 col_ng">
                       <input id="dog_dob_input" class="dog_dob_display input_trans" title="Dog DOB" value="{{ dog.date_of_birth }}" readonly style="width: 90%">
-                      <input id="dog_dob_input" class="dog_dob_input" type="date" title="Dog DOB" value="{{ dog.date_of_birth}}" style="width: 90%;display: none">
+                      <input id="dog_dob_input" class="dog_dob_input section_input" type="date" title="Dog DOB" value="{{ dog.date_of_birth}}" style="width: 90%;display: none">
                     </div>
                   </div>
                 </div>
@@ -168,7 +169,7 @@
                     <div class="col-4 col_ng"><h6>Date of Birth:</h6></div>
                   </div>
                   <div class="row align-items-end">
-                    <div class="col-3 col_ng"><input id="dog_name_input" class="dog_name_input" title="Dog Name" style="width: 90%"></div>
+                    <div class="col-3 col_ng"><input id="dog_name_input" class="dog_name_input section_input" title="Dog Name" style="width: 90%"></div>
                     <div class="col-5 col_ng">
                       <select id="dog_breed_selector" class="dog_breed_input section_input" name="dog_breed" title="Dog Breed" style="width: 90%;margin: 0">
                         {% for breed in breeds %}
@@ -177,7 +178,7 @@
                       </select>
                     </div>
                     <div class="col-4 col_ng">
-                      <input id="dog_dob_input" class="dog_dob_input" type="date" title="Dog DOB" style="width: 90%">
+                      <input id="dog_dob_input" class="dog_dob_input section_input" type="date" title="Dog DOB" style="width: 90%">
                     </div>
                   </div>
                 </div>
@@ -192,7 +193,7 @@
           </div>
         </div>
       </div>
-      <div id="appointments_container" style="margin-top: 30px;border-top: thin dotted #8bc8c8;width: 100%">
+      <div id="appointments_container" style="margin-top: 30px;border-top: thin dotted #8bc8c8;width: 100%;display: none">
         {% for appointment in appointments %}
           <div class="col-12 col_ng section">
             <div class="row" style="padding: 0">

@@ -101,6 +101,9 @@
 
 .section_input {
     height: 28px;
+    box-shadow: none;
+    border: thin solid rgb(200, 200, 200);
+    border-radius: 3px;
 }
 .section_input:invalid {
     color: #C8C8C8;

@@ -159,13 +159,14 @@ $(document).on('click', '.dog_modify_btn', function() {
     var parentSection = modifyBtn.parents('.section');
     modifyBtn.addClass('disabled');
     modifyBtn.hide();
-    parentSection.find('.update_btn_container').show       (             );
-    parentSection.find('.dog_name_input'      ).removeAttr ('readonly'   );
-    parentSection.find('.dog_name_input'      ).removeClass('input_trans');
-    parentSection.find('.dog_breed_display'   ).hide       (             );
-    parentSection.find('.dog_breed_input'     ).show       (             );
-    parentSection.find('.dog_dob_display'     ).hide       (             );
-    parentSection.find('.dog_dob_input'       ).show       (             );
+    parentSection.find('.update_btn_container').show       (               );
+    parentSection.find('.dog_name_input'      ).removeAttr ('readonly'     );
+    parentSection.find('.dog_name_input'      ).removeClass('input_trans'  );
+    parentSection.find('.dog_name_input'      ).addClass   ('section_input');
+    parentSection.find('.dog_breed_display'   ).hide       (               );
+    parentSection.find('.dog_breed_input'     ).show       (               );
+    parentSection.find('.dog_dob_display'     ).hide       (               );
+    parentSection.find('.dog_dob_input'       ).show       (               );
 });
 
 /* Restore original dog UI on cancel. */
@@ -175,13 +176,14 @@ $(document).on('click', '.dog_update_cancel_btn', function() {
     var modifyBtn     = parentSection.find('.modify_btn');
     modifyBtn.removeClass('disabled');
     modifyBtn.show();
-    parentSection.find('.update_btn_container').hide       (             );
-    parentSection.find('.dog_name_input'      ).attr       ('readonly'   );
-    parentSection.find('.dog_name_input'      ).addClass   ('input_trans');
-    parentSection.find('.dog_breed_display'   ).show       (             );
-    parentSection.find('.dog_breed_input'     ).hide       (             );
-    parentSection.find('.dog_dob_display'     ).show       (             );
-    parentSection.find('.dog_dob_input'       ).hide       (             );
+    parentSection.find('.update_btn_container').hide       (               );
+    parentSection.find('.dog_name_input'      ).attr       ('readonly'     );
+    parentSection.find('.dog_name_input'      ).addClass   ('input_trans'  );
+    parentSection.find('.dog_name_input'      ).removeClass('section_input');
+    parentSection.find('.dog_breed_display'   ).show       (               );
+    parentSection.find('.dog_breed_input'     ).hide       (               );
+    parentSection.find('.dog_dob_display'     ).show       (               );
+    parentSection.find('.dog_dob_input'       ).hide       (               );
 });
 
 /* Update dog info on submit. */
