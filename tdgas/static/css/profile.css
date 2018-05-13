@@ -39,6 +39,20 @@
     margin: auto;
 }
 
+.item_add_btn {
+    width: 100%;
+    border-radius: 0;
+    border: thick dashed #cdcdcd;
+    color: #cdcdcd;
+    font-size: 25px;
+    height: 90px;
+    margin: 10px 0;
+}
+.item_add_btn:hover {
+    border: thick dashed #b1b1b1;
+    color: #b1b1b1;
+}
+
 .faicon_container {
     width: 13px;
     height: 13px;
@@ -75,6 +89,10 @@
 }
 .section + .section {
     border-top: thin dotted #8bc8c8;
+}
+
+.section_add {
+    border: thick dashed #cdcdcd;
 }
 
 .update_btn {

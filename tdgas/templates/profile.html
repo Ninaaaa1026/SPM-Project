@@ -154,8 +154,8 @@
           </div>
         {% endfor %}
         <div id="dog_add_row">
-          <button class="btn btn-primary">Add your dog</button>
-          <div class="col-12 col_ng section">
+          <button class="btn btn_trans item_add_btn">Add your dog</button>
+          <div class="col-12 col_ng section section_add" style="display: none">
             <div class="row" style="padding: 0">
               <div class="dog_avatar_container">
                 <img class="dog_avatar_img" src="{% static 'icons/dog.svg' %}"/>
@@ -185,7 +185,7 @@
                 <div class="col-2 col_ng">
                   <div class="update_btn_container row align-items-center" style="height: 100%">
                     <button class="dog_update_btn update_btn btn">Save</button>
-                    <button class="dog_add_cancel_btn update_cancel_btn btn">Cancel</button>
+                    <button class="add_cancel_btn update_cancel_btn btn">Cancel</button>
                   </div>
                 </div>
               </div>

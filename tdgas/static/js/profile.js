@@ -201,3 +201,24 @@ $(document).on('click', '.dog_update_btn', function() {
     /* Hide update form after updating. */
     parentSection.find('.user_update_cancel_btn').click();
 });
+
+/* Add new dog/appointment.
+ * ***********************************************************************************************/
+/* Display add form on click. */
+$(document).on('click', '.item_add_btn', function() {
+    var addBtn     = $(this);
+    var addSection = addBtn.parent().find('.section_add');
+
+    addBtn    .hide();
+    addSection.show();
+});
+
+/* Restore UI on add cancel btn clicked. */
+$(document).on('click', '.add_cancel_btn', function() {
+    var cancelBtn     = $(this);
+    var parentSection = cancelBtn    .parents('.section_add');
+    var addBtn        = parentSection.parent ().find('.item_add_btn');
+
+    parentSection.hide();
+    addBtn       .show();
+});
