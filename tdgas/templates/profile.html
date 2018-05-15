@@ -265,12 +265,16 @@
                     <div class="col-5 col_ng">
                       <select id="groom_type_selector" class="groom_type_selector section_input" name="groom_type" title="Groom Type" style="width: 90%;margin: 0">
                         {% for groom_type in groom_types %}
-                          <option value="{{ groom_type.1 }}">{{ groom_type.2 }}</option>
+                          <option value="{{ groom_type.0 }}">{{ groom_type.1 }}</option>
                         {% endfor %}
                       </select>
                     </div>
                     <div class="col-4 col_ng">
-                      <input id="appointment_date_selector" class="appointment_date_selector section_input" type="date" title="Appointment Date" value="{{ appointment.appointment_datetime }}" style="width: 90%">
+                      <select id="appointment_time_selector" class="appointment_time_selector section_input" name="appointment_time" title="Appointment Time" style="width: 90%;margin: 0">
+                        {% for time in available_time %}
+                          <option value="{{ time }}">{{ time }}</option>
+                        {% endfor %}
+                      </select>
                     </div>
                   </div>
                 </div>

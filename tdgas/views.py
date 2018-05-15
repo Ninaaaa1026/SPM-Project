@@ -55,6 +55,7 @@ def profile_view(request):
     appointments   = Appointment.objects.filter(subscriber   = user                         )
     breeds         = DOG_TYPE
     groom_types    = GROOM_TYPE
+    available_time = availabletime()
     return render(request, 'profile.html', {'user'          : user                                                                 ,
                                             'mobile'        : contact_mobile.get().phone_number if contact_mobile.exists() else '' ,
                                             'home'          : contact_home  .get().phone_number if contact_home  .exists() else '' ,
@@ -62,7 +63,8 @@ def profile_view(request):
                                             'dogs'          : dogs                                                                 ,
                                             'appointments'  : appointments                                                         ,
                                             'breeds'        : breeds                                                               ,
-                                            'groom_types'   : groom_types                                                          })
+                                            'groom_types'   : groom_types                                                          ,
+                                            'available_time': available_time                                                       })
 
 @login_required
 def profile_update_view(request):
