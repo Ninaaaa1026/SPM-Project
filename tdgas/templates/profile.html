@@ -276,7 +276,7 @@
                     <div class="col-4 col_ng">
                       <select id="appointment_time_selector" class="appointment_time_selector section_input" name="appointment_time" title="Appointment Time" style="width: 90%;margin: 0">
                         {% for time in available_time %}
-                          <option value="{{ time }}">{{ time }}</option>
+                          <option value="{{ time.year }}-{{ time.month }}-{{ time.day }} {{ time.hour }}:{{ time.minute }}:{{ time.second }}">{{ time }}</option>
                         {% endfor %}
                       </select>
                     </div>

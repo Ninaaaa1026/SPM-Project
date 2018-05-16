@@ -323,8 +323,9 @@ class Appointment(models.Model):
     subscriber              = models.ForeignKey     (User, on_delete = models.CASCADE)
     groom_dog               = models.ForeignKey     (Dog , on_delete = models.CASCADE)
     groom_type              = models.CharField      (max_length = SHORT, choices = GROOM_TYPE)
-    # order_price             = models.DecimalField   (max_digits = 5    , decimal_places = 2)
-    # payment_status          = models.CharField      (max_length = SHORT, choices = PAY_STATUS)
     comment                 = models.CharField      (max_length = LONG , null = True, blank = True)
     appointment_datetime    = models.DateTimeField  ()
+
+    # order_price             = models.DecimalField   (max_digits = 5    , decimal_places = 2)
+    # payment_status          = models.CharField      (max_length = SHORT, choices = PAY_STATUS)
     # appointment_statue = models.CharField(max_length=SHORT, choices=APPOINTMENT_STATUS)

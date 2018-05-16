@@ -26,7 +26,8 @@ class DogForm(forms.ModelForm):
         fields = ['id', 'dog_name', 'breed', 'date_of_birth']
 
 
-class AppointmentForm(forms.ModelForm):
-    class Meta:
-        model  = Appointment
-        fields = '__all__'
+class AppointmentForm(forms.Form):
+    dog_id               = forms.IntegerField   ()
+    groom_type           = forms.CharField      (max_length = SHORT)
+    appointment_datetime = forms.DateTimeField  (input_formats = ['%Y-%m-%d %H:%M:%S'])
+    # comment = models.CharField(max_length = LONG, null = True, blank = True)

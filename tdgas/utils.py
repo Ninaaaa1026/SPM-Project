@@ -12,7 +12,7 @@ SUNDAY      =  6
 WORK_DAY    = [0, 1, 2, 3, 4]
 WEEK_END    = [5, 6]
 
-def availabletime():
+def available_time():
     date_from   = date.today()
     weekday     = date.today().weekday()
     now         = datetime.now() + timedelta(hours = 10) ### Australian Eastern Standard Time

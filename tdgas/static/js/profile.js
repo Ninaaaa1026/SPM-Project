@@ -287,12 +287,12 @@ $(document).on('click', '.appointment_update_cancel_btn', function() {
 });
 
 /* Update dog info on submit. */
-$(document).on('click', '.appointment_update_btn', function() {4
+$(document).on('click', '.appointment_update_btn', function() {
     var updateBtn     = $(this);
-    var parentSection = updateBtn    .parents('.section'            )      ;
-    var dogId         = parentSection.find   ('.dog_id'             ).val();
-    var groomType     = parentSection.find   ('.groom_type_selector').val();
-    var datetime      = parentSection.find   ('.groom_time_selector').val();
+    var parentSection = updateBtn    .parents('.section'                  )      ;
+    var dogId         = parentSection.find   ('.dog_selector'             ).val();
+    var groomType     = parentSection.find   ('.groom_type_selector'      ).val();
+    var datetime      = parentSection.find   ('.appointment_time_selector').val();
 
     /* Update appointment info. */
     updateAppointmentInfo(dogId, groomType, datetime, parentSection);

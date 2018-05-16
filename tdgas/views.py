@@ -55,7 +55,7 @@ def profile_view(request):
     appointments   = Appointment.objects.filter(subscriber   = user                         )
     breeds         = DOG_TYPE
     groom_types    = GROOM_TYPE
-    available_time = availabletime()
+    groom_time     = available_time()
     return render(request, 'profile.html', {'user'          : user                                                                 ,
                                             'mobile'        : contact_mobile.get().phone_number if contact_mobile.exists() else '' ,
                                             'home'          : contact_home  .get().phone_number if contact_home  .exists() else '' ,
@@ -64,7 +64,7 @@ def profile_view(request):
                                             'appointments'  : appointments                                                         ,
                                             'breeds'        : breeds                                                               ,
                                             'groom_types'   : groom_types                                                          ,
-                                            'available_time': available_time                                                       })
+                                            'available_time': groom_time                                                           })
 
 @login_required
 def profile_update_view(request):
@@ -126,12 +126,12 @@ def dog_update_view(request):
 def appointment_update_view(request):
     user             = request.user
     appointment_id   = request.POST.get('id')
-    appointments     = Appointment.objects.filter(subscriber = user, id = appointment_id)
+    appointments     = Appointment.objects.filter(id = appointment_id, subscriber = user)
     appointment_form = AppointmentForm(request.POST)
     if appointments.exists():
         if appointment_form.is_valid():
             appointment                      = Appointment.objects.get(id = appointment_id)
-            appointment.groom_dog            = appointment_form.cleaned_data['groom_dog'           ]
+            appointment.groom_dog            = Dog        .objects.get(id = appointment_form.cleaned_data['dog_id'])
             appointment.groom_type           = appointment_form.cleaned_data['groom_type'          ]
             appointment.appointment_datetime = appointment_form.cleaned_data['appointment_datetime']
             appointment.save()
@@ -140,11 +140,11 @@ def appointment_update_view(request):
             return HttpResponse(status = 406)
     else:
         if appointment_form.is_valid():
-            Appointment.objects.create(subscriber           = request.user                                         ,
-                                       groom_dog            = appointment_form.cleaned_data['groom_dog'           ],
-                                       groom_type           = appointment_form.cleaned_data['groom_type'          ],
-                                       comment              = ''                                                   ,
-                                       appointment_datetime = appointment_form.cleaned_data['appointment_datetime'])
+            Appointment.objects.create(subscriber           = request.user                                                 ,
+                                       groom_dog            = Dog.objects.get(id = appointment_form.cleaned_data['dog_id']),
+                                       groom_type           = appointment_form.cleaned_data['groom_type'                  ],
+                                       comment              = ''                                                           ,
+                                       appointment_datetime = appointment_form.cleaned_data['appointment_datetime'        ])
             return HttpResponse(status = 201)
         else:
             return HttpResponse(status = 406)
