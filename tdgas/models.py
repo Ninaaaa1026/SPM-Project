@@ -231,7 +231,7 @@ class CustomUserManager(BaseUserManager):
 
     use_in_migrations = True
 
-    def create_user(self, email, password = None, first_name = None, last_name = None):
+    def create_user(self, email, password = None, first_name = 'test', last_name = 'spm'):
         if not email:
             raise ValueError('Users must have a valid e-mail address.')
         user = self.model(

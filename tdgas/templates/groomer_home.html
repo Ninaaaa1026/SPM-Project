@@ -5,18 +5,59 @@
 
 {% block loads %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
+  <script type="text/javascript" src="{% static 'js/groomer.js' %}"></script>
 {% endblock %}
 
-{% block content %}
-<table border="1">
-  <th>Header 0</th>
-  <th>Header 1</th>
-  <th>Header 2</th>
-  {% for event in events %}
-  <tr>
-  {% for x in event %} <td>{{ x }}</td>
+{% block cap_content %}
+<div class="row breadcrumb_wrapper justify-content-center" style="width: 100%">
+  <ol class="breadcrumb row" style="width: 800px;padding-left: 20px;padding-right: 20px">
+    <li class="breadcrumb-item"><a href="/">Back</a></li>
+  </ol>
+  
+</div>
+<div class="row justify-content-center" style="width: 90%; padding: 30px 0">
+    {% for event in events %}
+    <div class="col-12 col_ng section">
+      <div class="row" style="padding: 0">
+        <div id="appointment" class="col col_ng">
+            <input id="appointment" title="Appointments" value="{{ appointment.id }}" hidden>
+            <div class="row align-items-start">
+              <div class="col col_ng"><h6>Name:</h6></div>
+              <div class="col col_ng"><h6>Suburb:</h6></div>
+              <div class="col col_ng"><h6>Street:</h6></div>
+              <div class="col col_ng"><h6>Dog name:</h6></div>
+              <div class="col col_ng"><h6>Appointment time:</h6></div>
+            </div>
+            <div class="row align-items-end">
+              <div class="col col_ng"><input id="client_name" class="input_trans" title="Client Name" value="{{ event.subscriber__first_name }}"></div>
+              <div class="col col_ng"><input id="suburb" class="input_trans" title="Suburb" value="{{ event.subscriber__address_suburb }}"></div>
+              <div class="col col_ng"><input id="street" class="input_trans" title="Street" value="{{ event.subscriber__address_street }}"></div>
+              <div class="col col_ng"><input id="dog_name" class="input_trans" title="Dog name" value="{{ event.groom_dog__dog_name }}"></div>
+              <div class="col col_ng"><input id="Datetime" class="input_trans" title="Datetime" value="{{ event.appointment_datetime }}"></div>
+              <div class="details_btn row align-items-center" style="height: 100%">
+                  <button class="appointment_details_btn btn">Show details</button>
+               </div>
+               <div class="hide_btn btn_trans btn" style="display: none"><i class="modify_icon fas fa-edit"></i></div>
+            </div>
+            <div id="appointment_details" style="margin-top: 20px;display: none">
+                <div class="row justify-content-between" style="width: 80%">
+                  <div class="row align-items-start">
+                  <div class="col col_ng"><h6>Comments:</h6></div>
+                  <div class="col col_ng"><h6>Groom type:</h6></div>
+                  <div class="col col_ng"><h6>Price:</h6></div>
+                  <div class="col col_ng"><h6>Pay Status:</h6></div>
+                </div>
+                <div class="row align-items-end">
+                  <div class="col col_ng"><input id="comment" class="input_trans" title="Comment" value="{{ event.comment }}"></div>
+                  <div class="col col_ng"><input id="groom_type" class="input_trans" title="Groom type" value="{{ event.groom_type }}"></div>
+                  <div class="col col_ng"><input id="price" class="input_trans" title="Price" value="{{ event.order_price }}"></div>
+                  <div class="col col_ng"><input id="pay_status" class="input_trans" title="Pay Status" value="{{ event.payment_status }}"></div>
+                </div>
+                </div>
+            </div>
+         </div>
+       </div>
+     </div>
   {% endfor %}
-  </tr>
-  {% endfor %}
-</table>
+</div>
 {% endblock %}
