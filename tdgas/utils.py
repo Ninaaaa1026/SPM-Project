@@ -15,7 +15,7 @@ WEEK_END    = [5, 6]
 def availabletime():
     date_from   = date.today()
     weekday     = date.today().weekday()
-    now         = datetime.now() + timedelta(hours = 10)
+    now         = datetime.now() + timedelta(hours = 10) ### Australian Eastern Standard Time
     if weekday in WORK_DAY:
         if   time( 0,  0) <= now.time() < time( 8, 30):
             datetime_from_hour      = 8

@@ -205,10 +205,10 @@
                   <div class="row align-items-start">
                     <div class="col-3 col_ng"><h6>Dog:</h6></div>
                     <div class="col-5 col_ng"><h6>Type:</h6></div>
-                    <div class="col-4 col_ng"><h6>Date:</h6></div>
+                    <div class="col-4 col_ng"><h6>Datetime:</h6></div>
                   </div>
                   <div class="row align-items-end">
-                    <div class="col-3 col_ng"><input id="dog_name_display" class="dog_name_input input_trans" title="Dog Name" value="{{ appointment.groom_dog.dog_name }}" readonly style="width: 90%"></div>
+                    <div class="col-3 col_ng"><input class="dog_name_display input_trans" title="Dog Name" value="{{ appointment.groom_dog.dog_name }}" readonly style="width: 90%"></div>
                     <select id="dog_selector" class="dog_selector section_input" name="groom_dog" title="Dog" style="width: 90%;margin: 0;display: none">
                       {% for dog in dogs %}
                         <option value="{{ dog.id }}">{{ dog.dog_name }}</option>
@@ -218,21 +218,25 @@
                       <input id="groom_type_display" class="groom_type_display input_trans" title="Dog Breed" value="{{ appointment.groom_type }}" readonly style="width: 90%">
                       <select id="groom_type_selector" class="groom_type_selector section_input" name="groom_type" title="Groom Type" style="width: 90%;margin: 0;display: none">
                         {% for groom_type in groom_types %}
-                          <option value="{{ groom_type.1 }}">{{ groom_type.2 }}</option>
+                          <option value="{{ groom_type.0 }}">{{ groom_type.1 }}</option>
                         {% endfor %}
                       </select>
                     </div>
                     <div class="col-4 col_ng">
-                      <input id="appointment_date_display" class="appointment_date_display input_trans" title="Appointment Date" value="{{ dog.date_of_birth }}" readonly style="width: 90%">
-                      <input id="appointment_date_selector" class="appointment_date_selector" type="date" title="Appointment Date" value="{{ appointment.appointment_datetime }}" style="width: 90%;display: none">
+                      <input id="appointment_date_display" class="appointment_time_display input_trans" title="Appointment Date" value="{{ appointment.appointment_datetime }}" readonly style="width: 90%">
+                      <select id="appointment_time_selector" class="appointment_time_selector section_input" name="appointment_time" title="Appointment Time" style="width: 90%;margin: 0;display: none">
+                        {% for time in available_time %}
+                          <option value="{{ time }}">{{ time }}</option>
+                        {% endfor %}
+                      </select>
                     </div>
                   </div>
                 </div>
                 <div class="col-2 col_ng">
-                  <div class="dog_modify_btn modify_btn btn_trans btn" style="display: none"><i class="modify_icon fas fa-edit"></i></div>
+                  <div class="appointment_modify_btn modify_btn btn_trans btn" style="display: none"><i class="modify_icon fas fa-edit"></i></div>
                   <div class="update_btn_container row align-items-center" style="height: 100%;display: none">
-                    <button class="dog_update_btn update_btn btn">Save</button>
-                    <button class="dog_update_cancel_btn update_cancel_btn btn">Cancel</button>
+                    <button class="appointment_update_btn update_btn btn">Save</button>
+                    <button class="appointment_update_cancel_btn update_cancel_btn btn">Cancel</button>
                   </div>
                 </div>
               </div>
