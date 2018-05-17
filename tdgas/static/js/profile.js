@@ -263,6 +263,7 @@ $(document).on('click', '.appointment_modify_btn', function() {
     var parentSection = modifyBtn.parents('.section');
     modifyBtn.addClass('disabled');
     modifyBtn.hide();
+    parentSection.find('.update_btn_container'      ).show();
     parentSection.find('.dog_name_display'          ).hide();
     parentSection.find('.dog_selector'              ).show();
     parentSection.find('.groom_type_display'        ).hide();
@@ -278,6 +279,7 @@ $(document).on('click', '.appointment_update_cancel_btn', function() {
     var modifyBtn     = parentSection.find   ('.modify_btn');
     modifyBtn.removeClass('disabled');
     modifyBtn.show();
+    parentSection.find('.update_btn_container'      ).hide();
     parentSection.find('.dog_name_display'          ).show();
     parentSection.find('.dog_selector'              ).hide();
     parentSection.find('.groom_type_display'        ).show();
@@ -286,7 +288,7 @@ $(document).on('click', '.appointment_update_cancel_btn', function() {
     parentSection.find('.appointment_time_selector' ).hide();
 });
 
-/* Update dog info on submit. */
+/* Update appointment info on submit. */
 $(document).on('click', '.appointment_update_btn', function() {
     var updateBtn     = $(this);
     var parentSection = updateBtn    .parents('.section'                  )      ;

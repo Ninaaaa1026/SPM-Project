@@ -208,12 +208,14 @@
                     <div class="col-4 col_ng"><h6>Datetime:</h6></div>
                   </div>
                   <div class="row align-items-end">
-                    <div class="col-3 col_ng"><input class="dog_name_display input_trans" title="Dog Name" value="{{ appointment.groom_dog.dog_name }}" readonly style="width: 90%"></div>
-                    <select id="dog_selector" class="dog_selector section_input" name="groom_dog" title="Dog" style="width: 90%;margin: 0;display: none">
+                    <div class="col-3 col_ng">
+                      <input class="dog_name_display input_trans" title="Dog Name" value="{{ appointment.groom_dog.dog_name }}" readonly style="width: 90%">
+                      <select id="dog_selector" class="dog_selector section_input" name="groom_dog" title="Dog" style="width: 90%;margin: 0;display: none">
                       {% for dog in dogs %}
                         <option value="{{ dog.id }}">{{ dog.dog_name }}</option>
                       {% endfor %}
                     </select>
+                    </div>
                     <div class="col-5 col_ng">
                       <input id="groom_type_display" class="groom_type_display input_trans" title="Dog Breed" value="{{ appointment.groom_type }}" readonly style="width: 90%">
                       <select id="groom_type_selector" class="groom_type_selector section_input" name="groom_type" title="Groom Type" style="width: 90%;margin: 0;display: none">
