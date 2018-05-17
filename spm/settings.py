@@ -1,5 +1,6 @@
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -121,3 +122,20 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(STATICFILES_DIRS[0], 'media')
 
 MEDIA_URL = '/media/'
+
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = True
+
+# Google SMTP server, 99 free emails per 24 hours
+EMAIL_HOST = 'smtp.gmail.com'
+
+# Change this to the sender address, e.g.: no-reply@somedomain.com
+EMAIL_HOST_USER = 'no-reply@gmail.com'
+
+# Password for the auto-mailing account
+EMAIL_HOST_PASSWORD = 'admin@tom'
+
+EMAIL_PORT = 587

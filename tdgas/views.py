@@ -7,6 +7,10 @@ from .forms                         import *
 from .models                        import *
 from .utils                         import *
 
+from django.conf import settings
+from django.core.mail import *
+import time
+
 def home_view(request):
     firstname = ''
     if request.user.is_authenticated:
@@ -173,3 +177,105 @@ def groomer_view(request):
     query = show.values('subscriber__first_name','groom_dog','groom_type','comment',
                         'appointment_datetime','subscriber__address_street','subscriber__address_suburb')
     return render(request, 'groomer_home.html', {'events':query})
+
+# This sign_up_email_view should be included into signup_view
+
+sender = settings.EMAIL_HOST_USER
+def sign_up_email_view(request):
+    if request.method == 'GET':
+        return render(request, 'registration/register.html', {})
+    elif request.method == 'POST':
+        user_form = UserForm(request.POST)
+        if user_form.is_valid():
+            receiver = user_form.cleaned_data['email'     ]
+            title = 'Welcome to Tom\’s Dog Grooming Appointment System'
+            mail_msg = u'<p>Dear customer, </p>\
+            <p>Thank you for signing up Tom’s Dog Grooming Appointment System.\
+            Now you can book an appointment for your dogs.</p>\
+            <p>Kind Regards,</p>\
+            <p>Tom</p>'
+
+            subject, from_email, to = title, sender, receiver
+            msg = EmailMultiAlternatives(subject, mail_msg, from_email, to)
+            msg.attach_alternative(mail_msg, "text/html")
+            msg.send()
+
+
+def appointment_update_email_view(request):
+    user             = request.user
+    appointment_id   = request.POST.get('id')
+    appointments     = Appointment.objects.filter(subscriber = user, id = appointment_id)
+    appointment_form = AppointmentForm(request.POST)
+    receiver = user
+    appointment_time = appointment_form.cleaned_data['appointment_datetime']
+    groom_dog = appointment_form.cleaned_data['groom_dog']
+    if appointments.exists():
+        if appointment_form.is_valid():
+            title = 'Reschedule Appointment Successfully'
+            mail_msg = u'<p>Dear customer, </p>\
+            <p>you have rescheduled your appointment <% = groom_dog>  on <% = appointment_time %> successfully..</p>\
+            <p>Kind Regards,</p>\
+            <p>Tom</p>'
+
+            subject, from_email, to = title, sender, receiver
+            msg = EmailMultiAlternatives(subject, mail_msg, from_email, to)
+            msg.attach_alternative(mail_msg, "text/html")
+            msg.send()
+    else:
+        if appointment_form.is_valid():
+            title = 'Book Appointment Successfully'
+            mail_msg =  u'<p>Dear customer, </p>\
+            <p>You have booked an appointment for <% = appointment.groom_dog>  on <% = appointment_time %> successfully.</p>\
+            <p>Kind Regards,</p>\
+            <p>Tom</p>'
+
+            subject, from_email, to = title, sender, receiver
+            msg = EmailMultiAlternatives(subject, mail_msg, from_email, to)
+            msg.attach_alternative(mail_msg, "text/html")
+            msg.send()
+            return HttpResponse(u'The email was sent successfully.')
+        else:
+            return HttpResponse(status = 406)
+
+def appointment_delete_email_view(request):
+    user            = request.user
+    appointment_id  = request.POST.get('id')
+    appointment    = Appointment.objects.get(id = appointment_id)
+    title = 'Cancel Appointment Successfully'
+    mail_msg = u'<p>Dear customer, </p>\
+    <p>Your have cancelled your appointment for <% = appointment.groom_dog>  on <% = appointment.appointment_time %> successfully.</p>\
+    <p>Kind Regards,</p>\
+    <p>Tom</p>'
+    receiver = user
+
+    subject, from_email, to = title, sender, receiver
+    msg = EmailMultiAlternatives(subject, mail_msg, from_email, to)
+    msg.attach_alternative(mail_msg, "text/html")
+    msg.send()
+
+def remind_email_view():
+    local_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    appointments = Appointment.objects.filter(reminder = 0)
+    for appointment in appointments:
+        appointment_time =  appointment.appointment_datetime
+        hour = (appointment_time - local_time).hour
+        if hour <= 24:
+            receiver = appointment.subscriber
+            title = 'This is a reminder email.'
+            mail_msg = u'<p>Dear customer, </p>\
+            <p>Your appointment for <% = appointment.groom_dog> will be on <% = appointment_time %>.</p>\
+            <p>Kind Regards,</p>\
+            <p>Tom</p>'
+            subject, from_email, to = title, sender, receiver
+            msg = EmailMultiAlternatives(subject, mail_msg, from_email, to)
+            msg.attach_alternative(mail_msg, "text/html")
+            msg.send()
+            appointment.reminder = 1
+            appointment.save()
+        else:
+            continue
+
+while 1==1:
+    remind_email_view()
+    time.sleep(1800)
+
