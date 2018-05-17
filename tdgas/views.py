@@ -114,8 +114,14 @@ def groomer_view(request):
     show = Appointment.objects.filter(appointment_datetime__date__gte=date.today()).select_related('subscriber__first_name','subscriber__address_street','subscriber__address_suburb','groom_dog__dog_name')
     #clientdets = Contact.objects.all()
     #
-    query = show.values('subscriber__first_name','groom_dog__dog_name','groom_type','comment','appointment_datetime','subscriber__address_street','subscriber__address_suburb','order_price','payment_status')
+    query = show.values('subscriber','subscriber__first_name','groom_dog__dog_name','groom_type','comment','appointment_datetime','subscriber__address_street','subscriber__address_suburb','order_price','payment_status')
     return render(request, 'groomer_home.html', {'events':query})
+
+def groomer_details_view(request):
+    client = request.GET.get('user')
+    contact = Contact.objects.filter(user = client)
+
+    return HttpResponse(status = 201)
 
 def appointment_update_view(request):
     if request.method == 'POST':
