@@ -16,5 +16,6 @@ urlpatterns = [
     path('appointment_new/'		, appointment_new_view	, name = 'appointment_new'),
 	path('appointment_update/'	, appointment_update_view, name = 'appointment_update'),
     path('appointment_edit/'	, appointment_edit_view, name = 'appointment_edit'),
-    path('groomer_home/'    , groomer_view          , name = 'groomer'          )
+    path('groomer_home/'        , groomer_view          , name = 'groomer'          ),
+    path('groom_details/'       , groomer_details_view  , name = 'groom_details')
 ]

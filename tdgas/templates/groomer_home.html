@@ -16,18 +16,23 @@
   
 </div>
 <div class="row justify-content-center" style="width: 90%; padding: 30px 0">
+  <div class="col-12 col_ng section">
+    <div class="row" style="padding:10">    
+      <div class="row align-items-end">
+        <div class="col-sm-2"><h6>Name: </h6></div>
+        <div class="col-sm-2"><h6>Suburb: </h6></div>
+        <div class="col-sm-2"><h6>Street: </h6></div>
+        <div class="col-sm-2"><h6>Dog name: </h6></div>
+        <div class="col-sm-2"><h6>Appointment time: </h6></div>
+        <div class="col-sm-2"><h6>Info: </h6></div>
+      </div>
+    </div>
+  </div>
     {% for event in events %}
     <div class="col-12 col_ng section">
-      <div class="row" style="padding: 0">
+      <div class="row" style="padding: 10">
         <div id="appointment" class="col col_ng">
-            <input id="appointment" title="Appointments" value="{{ appointment.id }}" hidden>
-            <div class="row align-items-start">
-              <div class="col col_ng"><h6>Name:</h6></div>
-              <div class="col col_ng"><h6>Suburb:</h6></div>
-              <div class="col col_ng"><h6>Street:</h6></div>
-              <div class="col col_ng"><h6>Dog name:</h6></div>
-              <div class="col col_ng"><h6>Appointment time:</h6></div>
-            </div>
+            <input id="appointment" title="Appointments" value="{{ event.id }}" hidden>
             <div class="row align-items-end">
               <div class="col col_ng"><input id="client_name" class="input_trans" title="Client Name" value="{{ event.subscriber__first_name }}"></div>
               <div class="col col_ng"><input id="suburb" class="input_trans" title="Suburb" value="{{ event.subscriber__address_suburb }}"></div>
@@ -35,24 +40,18 @@
               <div class="col col_ng"><input id="dog_name" class="input_trans" title="Dog name" value="{{ event.groom_dog__dog_name }}"></div>
               <div class="col col_ng"><input id="Datetime" class="input_trans" title="Datetime" value="{{ event.appointment_datetime }}"></div>
               <div class="details_btn row align-items-center" style="height: 100%">
-                  <button class="appointment_details_btn btn">Show details</button>
+                  <button class="appointment_details_btn btn" formmethod = "get" value="{{ event.id }}">Show details</button>
+                  <button class="hide_btn btn" style="display:none"value="{{ event.id }}">hide</button>
                </div>
-               <div class="hide_btn btn_trans btn" style="display: none"><i class="modify_icon fas fa-edit"></i></div>
             </div>
             <div id="appointment_user" style ="display:none" value="{{ event.subscriber }}"></div>
-            <div id="appointment_details" style="margin-top: 20px;display: none">
+            <div id="appointment_details_{{event.id}}" style="margin-top: 20px;display: none">
                 <div class="row justify-content-between" style="width: 80%">
-                  <div class="row align-items-start">
-                  <div class="col col_ng"><h6>Comments:</h6></div>
-                  <div class="col col_ng"><h6>Groom type:</h6></div>
-                  <div class="col col_ng"><h6>Price:</h6></div>
-                  <div class="col col_ng"><h6>Pay Status:</h6></div>
-                </div>
-                <div class="row align-items-end">
-                  <div class="col col_ng"><input id="comment" class="input_trans" title="Comment" value="{{ event.comment }}"></div>
-                  <div class="col col_ng"><input id="groom_type" class="input_trans" title="Groom type" value="{{ event.groom_type }}"></div>
-                  <div class="col col_ng"><input id="price" class="input_trans" title="Price" value="{{ event.order_price }}"></div>
-                  <div class="col col_ng"><input id="pay_status" class="input_trans" title="Pay Status" value="{{ event.payment_status }}"></div>
+                <div class="row align-items-start">
+                  <div class="col col_ng"><input id="comment" class="input_trans" title="Comment" value="Comments: {{ event.comment }}"></div>
+                  <div class="col col_ng"><input id="groom_type" class="input_trans" title="Groom type" value="Groom type: {{ event.groom_type }}"></div>
+                  <div class="col col_ng"><input id="price" class="input_trans" title="Price" value="Price: {{ event.order_price }}"></div>
+                  <div class="col col_ng"><input id="pay_status" class="input_trans" title="Pay Status" value="Pay Status: {{ event.payment_status }}"></div>
                 </div>
                 </div>
             </div>

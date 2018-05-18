@@ -109,19 +109,32 @@ def dog_update_view(request):
         return HttpResponse(status = 406)
 
 def groomer_view(request):
-    ##get made appointments
-    #appointment_list = list(Appointment.objects.all())
-    show = Appointment.objects.filter(appointment_datetime__date__gte=date.today()).select_related('subscriber__first_name','subscriber__address_street','subscriber__address_suburb','groom_dog__dog_name')
-    #clientdets = Contact.objects.all()
-    #
-    query = show.values('subscriber','subscriber__first_name','groom_dog__dog_name','groom_type','comment','appointment_datetime','subscriber__address_street','subscriber__address_suburb','order_price','payment_status')
-    return render(request, 'groomer_home.html', {'events':query})
+    show = Appointment.objects.filter(appointment_datetime__date__gte=date.today()).select_related('subscriber__first_name',
+                                                                                                    'subscriber__address_street',
+                                                                                                    'subscriber__address_suburb',
+                                                                                                    'groom_dog__dog_name')
+
+    query = show.values('id',
+                        'subscriber',
+                        'subscriber__first_name',
+                        'groom_dog__dog_name',
+                        'groom_type',
+                        'comment',
+                        'appointment_datetime',
+                        'subscriber__address_street',
+                        'subscriber__address_suburb')
+    newquery = sorted(query, key=lambda k: k['appointment_datetime']) 
+    return render(request, 'groomer_home.html', {'events':newquery})
 
 def groomer_details_view(request):
-    client = request.GET.get('user')
-    contact = Contact.objects.filter(user = client)
+    appointment = request.GET.get('appointmentID')
+    appointmentObj = Appointment.objects.get(id=appointment)
+    contact = Contact.objects.filter(user = appointmentObj.subscriber).select_related('user__email',
+                                                                                    'user__last_name')
+    contactinfo = contact.values()                                                                            
+    details ={'apptDetails':appointmentObj,'contact':contactinfo}
 
-    return HttpResponse(status = 201)
+    return render(request, 'groom_details.html',{'details':details})
 
 def appointment_update_view(request):
     if request.method == 'POST':
