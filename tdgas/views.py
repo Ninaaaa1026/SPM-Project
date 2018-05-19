@@ -14,7 +14,6 @@ def home_view(request):
     return render(request, 'home.html', {'firstname': firstname})
 
 def signin_view(request):
-    error = ''
     if request.method == 'POST':
         email    = request.POST.get('email')
         password = request.POST.get('password')
@@ -26,8 +25,8 @@ def signin_view(request):
             else:
                 return HttpResponseRedirect('/')
         else:
-            error = 'Email or password not valid.'
-    return render(request, 'registration/login.html', {'error': error})
+            print('Email or password not valid.')
+    return render(request, 'registration/login.html')
 
 def signup_view(request):
     if request.method == 'GET':
@@ -42,6 +41,7 @@ def signup_view(request):
             login(request, new_user)
             return HttpResponseRedirect('/')
         else:
+            print(user_form.errors)
             return render(request, 'registration/register.html', {'errors': user_form.errors})
 
 @login_required
@@ -67,7 +67,7 @@ def profile_view(request):
 
 @login_required
 def profile_update_view(request):
-    profile_form = UserForm(request.POST)
+    profile_form = ProfileUpdateForm(request.POST)
     if profile_form.is_valid():
         user                    = request.user
         user.first_name         = profile_form.cleaned_data['first_name'      ]
@@ -80,6 +80,7 @@ def profile_update_view(request):
         user.save()
         return profile_view(request = request)
     else:
+        print(profile_form.errors)
         return HttpResponse(status = 406)
 
 @login_required
@@ -97,8 +98,9 @@ def contact_update_view(request):
             contact.contact_type = contact_form.cleaned_data['contact_type']
             contact.phone_number = contact_form.cleaned_data['phone_number']
             contact.save()
-        return profile_view(request = request)
+        return HttpResponse(status = 200)
     else:
+        print(contact_form.errors)
         return HttpResponse(status = 406)
 
 @login_required

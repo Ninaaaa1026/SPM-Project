@@ -37,14 +37,16 @@ function updateUserContact(contactType, phoneNumber)
             'phone_number' : phoneNumber
         },
         statusCode: {
+            200: function() {
+                /* On success: */
+                console.log(contactType + ' updating succeeded!');
+            },
             406: function() {
                 /* On fail: */
-                alert(contactType + ' updating failed!'   );
+                alert(contactType + ' updating failed!');
             }
         },
-        success: function(data) {
-            $('#user_profile').html($(data).find('#user_profile').html());
-        }
+        success: function() {}
     });
 }
 
@@ -161,14 +163,6 @@ $(document).on('click', '#user_update_cancel_btn', function() {
 $(document).on('click', '#user_update_btn', function() {
     var updateBtn = $(this);
     var parentSection = updateBtn.parents('.section');
-    /* Update profile info. */
-    var firstname   = parentSection.find('#firstname_input'     ).val();
-    var lastname    = parentSection.find('#lastname_input'      ).val();
-    var addr_street = parentSection.find('#addr_street_input'   ).val();
-    var addr_suburb = parentSection.find('#addr_suburb_input'   ).val();
-    var addr_state  = parentSection.find('#addr_state_input'    ).val();
-    var addr_postal = parentSection.find('#addr_postal_input'   ).val();
-    updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_state, addr_postal);
 
     /* Update contact info. */
     var mobile      = parentSection.find('#contact_mobile_input').val();
@@ -177,6 +171,15 @@ $(document).on('click', '#user_update_btn', function() {
     updateUserContact('mobile', mobile);
     updateUserContact('home'  , home  );
     updateUserContact('work'  , work  );
+
+    /* Update profile info. */
+    var firstname   = parentSection.find('#firstname_input'     ).val();
+    var lastname    = parentSection.find('#lastname_input'      ).val();
+    var addr_street = parentSection.find('#addr_street_input'   ).val();
+    var addr_suburb = parentSection.find('#addr_suburb_input'   ).val();
+    var addr_state  = parentSection.find('#addr_state_input'    ).val();
+    var addr_postal = parentSection.find('#addr_postal_input'   ).val();
+    updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_state, addr_postal);
 
     /* Hide update form after updating. */
     parentSection.find('#user_update_cancel_btn').click();
