@@ -26,7 +26,7 @@
   </div>
   <div class="row justify-content-center" style="width: 100%; padding: 30px 0">
     <div class="row justify-content-between" style="width: 800px; padding: 0 20px">
-      <div class="col-12 col_ng section">
+      <div class="col-12 col_ng section" style="border: none">
         <div class="row">
           <div id="avatar_container">
             <img class="avatar_img" src="https://api.adorable.io/avatars/125/{{ user.email }}"/>
@@ -65,7 +65,7 @@
                 {% endfor %}
                 </div>
               {% endif %}
-              <div class="col-8 col_ng align-self-end">
+              <div class="col-4 col_ng align-self-end">
                 {% if user.address_street %}
                   <div id="addr_street" class="address_row row">{{ user.address_street }}</div>
                 {% endif %}
@@ -81,6 +81,9 @@
                 {% if user.address_country %}
                   <div class="address_row row">{{ user.address_country }}</div>
                 {% endif %}
+              </div>
+              <div class="col-4 col_ng align-self-end" style="text-align: right">
+                <button id="switch_btn" class="btn btn_trans show_dogs" style="font-size: small;color: #5aa8ff;padding: 0">Show your appointments ></button>
               </div>
             </div>
           </div>
@@ -119,15 +122,15 @@
           </div>
         </div>
       </div>
-      <div id="dogs_container" style="margin-top: 30px;border-top: thin dotted #8bc8c8;width: 100%">
+      <div id="dogs_container" style="margin-top: 30px;width: 100%">
         {% for dog in dogs %}
           <div class="col-12 col_ng section">
             <div class="row" style="padding: 0">
-              <div class="dog_avatar_container">
-                <img class="dog_avatar_img" src="{% static 'icons/dog.svg' %}"/>
+              <div class="list_avatar_container">
+                <img class="list_avatar_img" src="{% static 'icons/dog.svg' %}"/>
               </div>
               <div id="dog_info_row" class="row" style="width: calc(100% - 145px)">
-                <input id="dog_id" title="Dog Id" value="{{ dog.id }}" hidden>
+                <input class="dog_id" title="Dog Id" value="{{ dog.id }}" hidden>
                 <div class="col-10">
                   <div class="row align-items-start">
                     <div class="col-3 col_ng"><h6>Name:</h6></div>
@@ -138,8 +141,7 @@
                     <div class="col-3 col_ng"><input id="dog_name_input" class="dog_name_input input_trans" title="Dog Name" value="{{ dog.dog_name }}" readonly style="width: 90%"></div>
                     <div class="col-5 col_ng">
                       <input id="dog_breed_input" class="dog_breed_display input_trans" title="Dog Breed" value="{{ dog.breed }}" readonly style="width: 90%">
-                      <select id="dog_breed_selector" class="dog_breed_input section_input" name="dog_breed" title="Dog Breed" style="width: 90%;margin: 0;display: none">
-                        <option value="unmodified" selected>{{ dog.breed }}</option>
+                      <select id="dog_breed_selector" class="dog_breed_input update_input section_input" name="dog_breed" title="Dog Breed" style="width: 90%;margin: 0;display: none">
                         {% for breed in breeds %}
                           <option value="{{ breed.0 }}">{{ breed.1 }}</option>
                         {% endfor %}
@@ -147,7 +149,7 @@
                     </div>
                     <div class="col-4 col_ng">
                       <input id="dog_dob_input" class="dog_dob_display input_trans" title="Dog DOB" value="{{ dog.date_of_birth }}" readonly style="width: 90%">
-                      <input id="dog_dob_input" class="dog_dob_input" type="date" title="Dog DOB" style="width: 90%;display: none">
+                      <input id="dog_dob_input" class="dog_dob_input update_input" type="date" title="Dog DOB" style="width: 90%;display: none">
                     </div>
                   </div>
                 </div>
@@ -162,6 +164,147 @@
             </div>
           </div>
         {% endfor %}
+        <div class="add_section">
+          <button id="dog_add_btn" class="btn btn_trans btn_add">Add your dog</button>
+          <div class="col-12 col_ng section" style="border: none;display: none">
+            <div class="row" style="padding: 0">
+              <div class="list_avatar_container">
+                <img class="list_avatar_img" src="{% static 'icons/dog.svg' %}"/>
+              </div>
+              <div id="dog_info_row" class="row" style="width: calc(100% - 145px)">
+                <input class="dog_id" title="Dog Id" value="-1" hidden>
+                <div class="col-10">
+                  <div class="row align-items-start">
+                    <div class="col-3 col_ng"><h6>Name:</h6></div>
+                    <div class="col-5 col_ng"><h6>Breed:</h6></div>
+                    <div class="col-4 col_ng"><h6>Date of Birth:</h6></div>
+                  </div>
+                  <div class="row align-items-end">
+                    <div class="col-3 col_ng"><input id="dog_name_input" class="dog_name_input update_input" title="Dog Name" value="{{ dog.dog_name }}" style="width: 90%"></div>
+                    <div class="col-5 col_ng">
+                      <select id="dog_breed_selector" class="dog_breed_input update_input section_input" name="dog_breed" title="Dog Breed" style="width: 90%;margin: 0">
+                        {% for breed in breeds %}
+                          <option value="{{ breed.0 }}">{{ breed.1 }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-4 col_ng">
+                      <input id="dog_dob_input" class="dog_dob_input update_input" type="date" title="Dog DOB" style="width: 90%">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2 col_ng">
+                  <div class="update_btn_container row align-items-center" style="height: 100%">
+                    <button class="dog_update_btn update_btn btn">Save</button>
+                    <button class="add_update_cancel_btn update_cancel_btn btn">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="appointments_container" style="margin-top: 30px;width: 100%;display: none">
+        {% for appointment in appointments %}
+          <div class="col-12 col_ng section">
+            <div class="row" style="padding: 0">
+              <div class="list_avatar_container">
+                <img class="list_avatar_img" src="{% static 'icons/appointment.svg' %}"/>
+              </div>
+              <div id="appointment_info_row" class="row" style="width: calc(100% - 145px)">
+                <input class="appointment_id" title="Appointment Id" value="{{ appointment.id }}" hidden>
+                <div class="col-10">
+                  <div class="row align-items-start">
+                    <div class="col-3 col_ng"><h6>Dog:</h6></div>
+                    <div class="col-5 col_ng"><h6>Groom Type:</h6></div>
+                    <div class="col-4 col_ng"><h6>Datetime:</h6></div>
+                  </div>
+                  <div class="row align-items-end">
+                    <div class="col-3 col_ng">
+                      <input class="dog_name_display input_trans" title="Dog Name" value="{{ appointment.groom_dog.dog_name }}" readonly style="width: 90%">
+                      <select class="groom_dog_selector update_input section_input" name="groom_dog" title="Groom Dog" style="width: 90%;margin: 0;display: none">
+                        {% for dog in dogs %}
+                          <option value="{{ dog.id }}">{{ dog.dog_name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-5 col_ng">
+                      <input class="groom_type_display input_trans" title="Groom Type" value="{{ appointment.groom_type }}" readonly style="width: 90%">
+                      <select class="groom_type_selector update_input section_input" name="groom_type" title="Groom Type" style="width: 90%;margin: 0;display: none">
+                        {% for type in groom_types %}
+                          <option value="{{ type.0 }}">{{ type.1 }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-4 col_ng">
+                      <input class="appointment_datetime_display input_trans" title="Datetime" value="{{ appointment.appointment_datetime }}" readonly style="width: 90%">
+                      <input class="appointment_datetime_selector update_input" type="date" title="Datetime" style="width: 90%;display: none">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <textarea class="appointment_comments input_trans" title="Comments" placeholder="Additional Comments..." readonly style="width: 100%">{{ appointment.comment }}</textarea>
+                  </div>
+                </div>
+                <div class="col-2 col_ng">
+                  <div class="appointment_modify_btn modify_btn btn_trans btn" style="display: none"><i class="modify_icon fas fa-edit"></i></div>
+                  <div class="update_btn_container row align-items-center" style="height: 100%;display: none">
+                    <button class="appointment_update_btn update_btn btn">Save</button>
+                    <button class="appointment_update_cancel_btn update_cancel_btn btn">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        <div class="add_section">
+          <button id="appointment_add_btn" class="btn btn_trans btn_add">Make an appointment</button>
+          <div class="col-12 col_ng section" style="border: none;display: none">
+            <div class="row" style="padding: 0">
+              <div class="list_avatar_container">
+                <img class="list_avatar_img" src="{% static 'icons/appointment.svg' %}"/>
+              </div>
+              <div id="appointment_info_row" class="row" style="width: calc(100% - 145px)">
+                <input class="appointment_id" title="Appointment Id" value="-1" hidden>
+                <div class="col-10">
+                  <div class="row align-items-start">
+                    <div class="col-3 col_ng"><h6>Dog:</h6></div>
+                    <div class="col-5 col_ng"><h6>Groom Type:</h6></div>
+                    <div class="col-4 col_ng"><h6>Datetime:</h6></div>
+                  </div>
+                  <div class="row align-items-end">
+                    <div class="col-3 col_ng">
+                      <select class="groom_dog_selector update_input section_input" name="groom_dog" title="Groom Dog" style="width: 90%;margin: 0">
+                        {% for dog in dogs %}
+                          <option value="{{ dog.id }}">{{ dog.dog_name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-5 col_ng">
+                      <select class="groom_type_selector update_input section_input" name="groom_type" title="Groom Type" style="width: 90%;margin: 0">
+                        {% for type in groom_types %}
+                          <option value="{{ type.0 }}">{{ type.1 }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-4 col_ng">
+                      <input class="appointment_datetime_selector update_input" type="date" title="Datetime">
+                    </div>
+                  </div>
+                  <div class="row" style="padding: 0">
+                    <textarea class="appointment_comments update_input" title="Comments" placeholder="Additional Comments..." style="width: 100%">{{ appointment.comment }}</textarea>
+                  </div>
+                </div>
+                <div class="col-2 col_ng">
+                  <div class="update_btn_container row align-items-center" style="height: 100%">
+                    <button class="appointment_update_btn update_btn btn">Save</button>
+                    <button class="add_update_cancel_btn update_cancel_btn btn">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

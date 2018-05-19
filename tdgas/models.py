@@ -227,6 +227,12 @@ DOG_TYPE = (
     ('Others'                              , 'Others'                              )
 )
 
+GROOM_TYPE = (
+    ('Wash only'                , 'Wash only'               ),
+    ('Wash and nail clipping'   , 'Wash and nail clipping'  ),
+    ('Deluxe grooming'          , 'Deluxe grooming'         )
+)
+
 class CustomUserManager(BaseUserManager):
 
     use_in_migrations = True
@@ -247,10 +253,18 @@ class CustomUserManager(BaseUserManager):
         user.save(self._db)
         return user
 
-    def create_superuser(self, email, password):
+    def create_superuser(self, email, password, first_name = None, last_name = None):
+
+        if not first_name:
+            first_name = 'Admin'
+        if not last_name:
+            last_name  = 'Admin'
+
         user = self.create_user(
-            email       = email,
-            password    = password,
+            email       = email     ,
+            password    = password  ,
+            first_name  = first_name,
+            last_name   = last_name ,
         )
         user.is_superuser   = True
         user.is_admin       = True
@@ -301,22 +315,8 @@ class Dog(models.Model):
         return self.owner.first_name + ' - ' + self.dog_name
 
 class Appointment(models.Model):
-    GROOM_TYPE = (
-        ('1', 'Wash only'),
-        ('2', 'Wash and nail clipping'),
-        ('3', 'Deluxe grooming')
-    )
-
-    PAY_STATUS = (
-        ('1', 'Paid'),
-        ('2', 'To be paid')
-    )
-
     subscriber              = models.ForeignKey     (User, on_delete = models.CASCADE)
     groom_dog               = models.ForeignKey     (Dog , on_delete = models.CASCADE)
     groom_type              = models.CharField      (max_length = SHORT, choices = GROOM_TYPE)
-    order_price             = models.DecimalField   (max_digits = 5    , decimal_places = 2)
-    payment_status          = models.CharField      (max_length = SHORT, choices = PAY_STATUS)
     comment                 = models.CharField      (max_length = LONG , null = True, blank = True)
     appointment_datetime    = models.DateTimeField  ()
-    create_datetime         = models.DateTimeField  (auto_now_add = True)

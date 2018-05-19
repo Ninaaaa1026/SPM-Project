@@ -45,11 +45,18 @@ def signup_view(request):
 
 @login_required
 def profile_view(request):
-    user     = User.objects.get(email__exact = request.user.email)
-    contacts = Contact.objects.filter(user = user)
-    dogs     = Dog.objects.filter(owner = user)
-    breeds   = DOG_TYPE
-    return render(request, 'profile.html', {'user': user, 'contacts': contacts, 'dogs': dogs, 'breeds': breeds})
+    user         = request.user
+    contacts     = Contact.objects.filter(user = user)
+    dogs         = Dog.objects.filter(owner = user)
+    appointments = Appointment.objects.filter(subscriber = user)
+    breeds       = DOG_TYPE
+    groom_types  = GROOM_TYPE
+    return render(request, 'profile.html', {'user'          : user          ,
+                                            'contacts'      : contacts      ,
+                                            'dogs'          : dogs          ,
+                                            'breeds'        : breeds        ,
+                                            'appointments'  : appointments  ,
+                                            'groom_types'   : groom_types   })
 
 @login_required
 def profile_update_view(request):
@@ -88,21 +95,29 @@ def contact_update_view(request):
 
 @login_required
 def dog_update_view(request):
-    dog_form = ContactForm(request.POST)
-    if dog_form.is_valid():
-        dogs = Contact.objects.filter(owner = request.user, id = dog_form.cleaned_data['id'])
-        if not dogs.exists():
-            Dog.objects.create(owner         = request.user,
-                               dog_name      = dog_form.cleaned_data['dog_name'     ],
-                               breed         = dog_form.cleaned_data['breed'        ],
-                               date_of_birth = dog_form.cleaned_data['date_of_birth'])
-        else:
-            dog               = Dog.objects.get(owner = request.user, id = dog_form.cleaned_data['id'])
-            dog.dog_name      = dog_form.cleaned_data['dog_name'     ]
-            dog.breed         = dog_form.cleaned_data['breed'        ]
-            dog.date_of_birth = dog_form.cleaned_data['date_of_birth']
-            dog.save()
-        return HttpResponse(status = 201)
+    dogs = Contact.objects.filter(id = request.POST.get('id'))
+    if not dogs.exists():
+        Dog.objects.create(owner         = request.user,
+                           dog_name      = request.POST.get('dog_name' ),
+                           breed         = request.POST.get('dog_breed'),
+                           date_of_birth = request.POST.get('dog_dob'  ))
     else:
-        return HttpResponse(status = 406)
+        dog               = Dog.objects.get(id = request.POST.get('id'))
+        dog.dog_name      = request.POST.get('dog_name' )
+        dog.breed         = request.POST.get('dog_breed')
+        dog.date_of_birth = request.POST.get('dog_dob'  )
+        dog.save()
+    return profile_view(request = request)
 
+# @login_required
+# def appointment_update_view(request):
+#     appointment = Appointment.objects.filter(id = request.POST.get('id'))
+#     if not appointment.exists():
+#         Appointment.objects.create()
+#     else:
+#         dog = Dog.objects.get(owner = request.user, id = dog_form.cleaned_data['id'])
+#         dog.dog_name = dog_form.cleaned_data['dog_name']
+#         dog.breed = dog_form.cleaned_data['breed']
+#         dog.date_of_birth = dog_form.cleaned_data['date_of_birth']
+#         dog.save()
+#     return HttpResponse(status = 201)

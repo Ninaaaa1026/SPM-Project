@@ -10,21 +10,44 @@
     font-size: small;
 }
 
+.appointment_comments {
+    margin-top: 10px;
+    font-style: italic;
+    color: #a3a3a3;
+    resize: none;
+}
+
+.btn_add {
+    width: 100%;
+    height: 95px;
+    font-size: 25px;
+    color: #bbbbbb;
+}
+
 .contact_row {
     font-size: small;
     width: 100%;
 }
 
-.dog_avatar_container {
+.list_avatar_container {
     display: block;
     width: 125px;
+    min-height: 100%;
     margin-right: 20px;
 }
-.dog_avatar_img {
+.list_avatar_img {
     display: block;
     height: 50px;
     width: 50px;
     margin: auto;
+}
+
+.add_section {
+    width: 100%;
+    border: dashed thick #bbbbbb;
+}
+.add_section:hover {
+    border: dashed thick #a3a3a3;
 }
 
 .faicon_container {
@@ -60,9 +83,13 @@
 
 .section {
     padding: 20px 0;
-}
-.section + .section {
     border-top: thin dotted #8bc8c8;
+}
+
+.update_input {
+    box-shadow: none;
+    border: thin solid #cdcdcd;
+    border-radius: 3px;
 }
 
 .update_btn {

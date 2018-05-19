@@ -18,15 +18,3 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model   = Contact
         exclude = ['user']
-
-
-class DogForm(forms.ModelForm):
-    class Meta:
-        model  = Dog
-        fields = '__all__'
-
-
-class AppointmentForm(forms.ModelForm):
-    class Meta:
-        model  = Appointment
-        fields = '__all__'

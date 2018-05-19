@@ -101,6 +101,7 @@
 
 .section_input {
     height: 28px;
+    border-radius: 3px;
 }
 .section_input:invalid {
     color: #C8C8C8;
