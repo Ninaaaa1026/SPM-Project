@@ -41,7 +41,7 @@ def available_time():
         datetime_from_hour      = 8
         datetime_from_minute    = 30
 
-    date_from = datetime(date_from.year, date_from.month, date_from.day, datetime_from_hour, datetime_from_minute, 0)
+    date_from = datetime(date_from.year, date_from.month, date_from.day, datetime_from_hour, datetime_from_minute)
     date_to   = date_from + timedelta(days = 6)
     date_slot = date_from
 
@@ -54,7 +54,7 @@ def available_time():
                     if date_slot.time() == time(11, 30):
                         date_slot = date_slot + timedelta(minutes = 60)
                     available_datetimes.append(date_slot.strftime("%Y-%m-%d %H:%M"))
-                    date_slot = date_slot + timedelta(minutes = 90)
-        date_slot = date_slot + timedelta(days = 1)
+                date_slot = date_slot + timedelta(minutes = 90)
         date_slot = datetime(date_slot.year, date_slot.month, date_slot.day, 8, 30, 0)
+        date_slot = date_slot + timedelta(days = 1)
     return available_datetimes
