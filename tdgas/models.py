@@ -253,12 +253,18 @@ class CustomUserManager(BaseUserManager):
         user.save(self._db)
         return user
 
-    def create_superuser(self, email, password):
+    def create_superuser(self, email, password, first_name = None, last_name = None):
+
+        if not first_name:
+            first_name = 'Admin'
+        if not last_name:
+            last_name  = 'Admin'
+
         user = self.create_user(
-            email       = email,
-            password    = password,
-            first_name  = 'Admin',
-            last_name   = 'Admin'
+            email       = email     ,
+            password    = password  ,
+            first_name  = first_name,
+            last_name   = last_name ,
         )
         user.is_superuser   = True
         user.is_admin       = True
@@ -309,23 +315,8 @@ class Dog(models.Model):
         return self.owner.first_name + ' - ' + self.dog_name
 
 class Appointment(models.Model):
-    # PAY_STATUS = (
-    #     ('Paid'      , 'Paid'      ),
-    #     ('To be paid', 'To be paid')
-    # )
-    #
-    # APPOINTMENT_STATUS = (
-    #     ('In Queue' , 'In Queue'),
-    #     ('Serving'  , 'Serving' ),
-    #     ('Finished' , 'Finished')
-    # )
-
     subscriber              = models.ForeignKey     (User, on_delete = models.CASCADE)
     groom_dog               = models.ForeignKey     (Dog , on_delete = models.CASCADE)
     groom_type              = models.CharField      (max_length = SHORT, choices = GROOM_TYPE)
     comment                 = models.CharField      (max_length = LONG , null = True, blank = True)
     appointment_datetime    = models.DateTimeField  ()
-
-    # order_price             = models.DecimalField   (max_digits = 5    , decimal_places = 2)
-    # payment_status          = models.CharField      (max_length = SHORT, choices = PAY_STATUS)
-    # appointment_statue = models.CharField(max_length=SHORT, choices=APPOINTMENT_STATUS)
