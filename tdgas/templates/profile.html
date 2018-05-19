@@ -129,8 +129,11 @@
                     <div class="col-5 col_ng">
                       <input id="dog_breed_input" class="dog_breed_display input_trans" title="Dog Breed" value="{{ dog.breed }}" readonly style="width: 90%">
                       <select id="dog_breed_selector" class="dog_breed_input update_input section_input" name="dog_breed" title="Dog Breed" style="width: 90%;margin: 0;display: none">
+                        <option value="{{ dog.breed }}">{{ dog.breed }}</option>
                         {% for breed in breeds %}
-                          <option value="{{ breed.0 }}">{{ breed.1 }}</option>
+                          {% if breed != dog.breed %}
+                            <option value="{{ breed.0 }}">{{ breed.1 }}</option>
+                          {% endif %}
                         {% endfor %}
                       </select>
                     </div>
@@ -210,24 +213,33 @@
                     <div class="col-3 col_ng">
                       <input class="dog_name_display input_trans" title="Dog Name" value="{{ appointment.groom_dog.dog_name }}" readonly style="width: 90%">
                       <select class="groom_dog_selector update_input section_input" name="groom_dog" title="Groom Dog" style="width: 90%;margin: 0;display: none">
+                        <option value="{{ appointment.groom_dog.id }}">{{ appointment.groom_dog.dog_name }}</option>
                         {% for dog in dogs %}
-                          <option value="{{ dog.id }}">{{ dog.dog_name }}</option>
+                          {% if dog.id != appointment.groom_dog.id %}
+                            <option value="{{ dog.id }}">{{ dog.dog_name }}</option>
+                          {% endif %}
                         {% endfor %}
                       </select>
                     </div>
                     <div class="col-5 col_ng">
                       <input class="groom_type_display input_trans" title="Groom Type" value="{{ appointment.groom_type }}" readonly style="width: 90%">
                       <select class="groom_type_selector update_input section_input" name="groom_type" title="Groom Type" style="width: 90%;margin: 0;display: none">
+                        <option value="{{ appointment.groom_type }}" selected>{{ appointment.groom_type }}</option>
                         {% for type in groom_types %}
-                          <option value="{{ type.0 }}">{{ type.1 }}</option>
+                          {% if type.0 != appointment.groom_type %}
+                            <option value="{{ type.0 }}">{{ type.1 }}</option>
+                          {% endif %}
                         {% endfor %}
                       </select>
                     </div>
                     <div class="col-4 col_ng">
                       <input class="appointment_datetime_display input_trans" title="Groom Datetime" value="{{ appointment.appointment_datetime }}" readonly style="width: 90%">
                       <select class="appointment_datetime_selector update_input section_input" name="groom_datetime" title="Groom Datetime" style="width: 100%;margin: 0;display: none">
+                        <option value="{{ appointment.appointment_datetime }}" selected>{{ appointment.appointment_datetime }}</option>
                         {% for time in available_time %}
-                          <option value="{{ time }}">{{ time }}</option>
+                          {% if time != appointment.appointment_datetime %}
+                            <option value="{{ time }}">{{ time }}</option>
+                          {% endif %}
                         {% endfor %}
                       </select>
                     </div>
