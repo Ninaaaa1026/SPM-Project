@@ -96,13 +96,13 @@
             <input id="contact_home_input" style="width: 33%" class="profile_form" name="home" type="text" title="Home" placeholder="Home" autocomplete="off" value="{{ home }}">
             <input id="contact_work_input" style="width: 32.5%" class="profile_form" name="work" type="text" title="Work" placeholder="Work" autocomplete="off" value="{{ work }}">
             <input id="addr_street_input" class="profile_form" name="street_address" type="text" title="Street"
-                   placeholder="Street address" autocomplete="off" value="{{ user.address_street }}">
+                   placeholder="Street address" autocomplete="off" value="{% if user.address_street %}{{ user.address_street }}{% else %}{% endif %}">
             <input id="addr_suburb_input" style="width: 49.5%" class="profile_form" name="suburb" type="text" title="Suburb" placeholder="Suburb"
-                   autocomplete="off" value="{{ user.address_suburb }}">
+                   autocomplete="off" value="{% if user.address_suburb %}{{ user.address_suburb }}{% else %}{% endif %}">
             <input id="addr_state_input" style="width: 49.5%" class="profile_form" name="state" type="text" title="State" placeholder="State"
-                   autocomplete="off" value="{{ user.address_state }}">
+                   autocomplete="off" value="{% if user.address_state %}{{ user.address_state }}{% else %}{% endif %}">
             <input id="addr_postal_input" style="width: 49.5%" class="profile_form" name="postal" type="text" title="Postal" placeholder="Postal"
-                   autocomplete="off" value="{{ user.address_postcode }}">
+                   autocomplete="off" value="{% if user.address_postcode %}{{ user.address_postcode }}{% else %}{% endif %}">
             <select style="width: 49.5%" class="profile_form profile_form_selection" name="country" title="Country">
               <option value="AU">Australia</option>
             </select>

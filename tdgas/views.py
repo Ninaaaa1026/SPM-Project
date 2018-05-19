@@ -46,7 +46,7 @@ def signup_view(request):
 
 @login_required
 def profile_view(request):
-    user           = User       .objects.get   (email__exact = request.user.email           )
+    user           = request.user
     contact_mobile = Contact    .objects.filter(user         = user, contact_type = 'mobile')
     contact_home   = Contact    .objects.filter(user         = user, contact_type = 'home'  )
     contact_work   = Contact    .objects.filter(user         = user, contact_type = 'work'  )
@@ -69,7 +69,7 @@ def profile_view(request):
 def profile_update_view(request):
     profile_form = UserForm(request.POST)
     if profile_form.is_valid():
-        user                    = User.objects.get(email = request.user.email)
+        user                    = request.user
         user.first_name         = profile_form.cleaned_data['first_name'      ]
         user.last_name          = profile_form.cleaned_data['last_name'       ]
         user.address_street     = profile_form.cleaned_data['address_street'  ]
