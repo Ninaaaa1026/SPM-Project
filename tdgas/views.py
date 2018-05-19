@@ -35,11 +35,10 @@ def signup_view(request):
     elif request.method == 'POST':
         user_form = UserForm(request.POST)
         if user_form.is_valid():
-            new_user = User.objects.create(email       = user_form.cleaned_data['email'     ],
-                                           password    = user_form.cleaned_data['password'  ],
-                                           first_name  = user_form.cleaned_data['first_name'],
-                                           last_name   = user_form.cleaned_data['last_name' ],
-                                           date_joined = datetime.now())
+            new_user = User.objects.create_user(email       = user_form.cleaned_data['email'     ],
+                                                password    = user_form.cleaned_data['password'  ],
+                                                first_name  = user_form.cleaned_data['first_name'],
+                                                last_name   = user_form.cleaned_data['last_name' ])
             login(request, new_user)
             return HttpResponseRedirect('/')
         else:

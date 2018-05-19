@@ -6,12 +6,7 @@ from .models    import *
 class UserForm(forms.ModelForm):
     class Meta:
         model  = User
-        fields = ['first_name'     ,
-                  'last_name'      ,
-                  'address_street' ,
-                  'address_suburb' ,
-                  'address_state'  ,
-                  'address_postcode']
+        exclude = ['date_joined']
 
 
 class ContactForm(forms.ModelForm):
