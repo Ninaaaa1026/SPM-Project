@@ -53,7 +53,7 @@ def available_time():
                 if not Appointment.objects.filter(appointment_datetime__contains = date_slot).exists():
                     if date_slot.time() == time(11, 30):
                         date_slot = date_slot + timedelta(minutes = 60)
-                    available_datetimes.append(date_slot)
+                    available_datetimes.append(date_slot.strftime("%Y-%m-%d %H:%M"))
                     date_slot = date_slot + timedelta(minutes = 90)
         date_slot = date_slot + timedelta(days = 1)
         date_slot = datetime(date_slot.year, date_slot.month, date_slot.day, 8, 30, 0)

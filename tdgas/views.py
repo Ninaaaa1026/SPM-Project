@@ -79,7 +79,7 @@ def profile_update_view(request):
         user.address_postcode   = profile_form.cleaned_data['address_postcode']
         user.address_country    = 'Australia'
         user.save()
-        return HttpResponse(status = 201)
+        return profile_view(request = request)
     else:
         return HttpResponse(status = 406)
 
@@ -98,7 +98,7 @@ def contact_update_view(request):
             contact.contact_type = contact_form.cleaned_data['contact_type']
             contact.phone_number = contact_form.cleaned_data['phone_number']
             contact.save()
-        return HttpResponse(status = 201)
+        return profile_view(request = request)
     else:
         return HttpResponse(status = 406)
 

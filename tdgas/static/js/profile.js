@@ -15,21 +15,14 @@ function updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_s
             'address_postcode' :   addr_postal
         },
         statusCode: {
-            201: function() {
-                /* On succeed: */
-                console.log('Profile updating succeeded!'   );
-                $('#user_firstname_header').text(firstname  );
-                $('#addr_street'          ).text(addr_street);
-                $('#addr_suburb'          ).text(addr_suburb);
-                $('#addr_state'           ).text(addr_state );
-                $('#addr_postcode'        ).text(addr_postal);
-            },
             406: function() {
                 /* On fail: */
-                console.log('Profile updating failed!');
+                alert.log('Profile updating failed!');
             }
         },
-        success: function() {}
+        success: function(data) {
+            $('#user_profile').html($(data).find('#user_profile').html());
+        }
     });
 }
 
@@ -44,22 +37,14 @@ function updateUserContact(contactType, phoneNumber)
             'phone_number' : phoneNumber
         },
         statusCode: {
-            201: function() {
-                /* On succeed: */
-                console.log(contactType + ' updating succeeded!');
-                if (contactType == 'mobile')
-                    $('#contact_mobile').text(phoneNumber);
-                else if (contactType == 'home')
-                    $('#contact_home'  ).text(phoneNumber);
-                else
-                    $('#contact_work'  ).text(phoneNumber);
-            },
             406: function() {
                 /* On fail: */
-                console.log(contactType + ' updating failed!'   );
+                alert.log(contactType + ' updating failed!'   );
             }
         },
-        success: function() {}
+        success: function(data) {
+            $('#user_profile').html($(data).find('#user_profile').html());
+        }
     });
 }
 
@@ -104,7 +89,7 @@ function deleteAppointment(appointmentId) {
         type: 'POST',
         url : '/appointment_delete/',
         data: {
-            'id'        : appointmentId
+            'id' : appointmentId
         },
         success: function(data) {
             $('#appointments_container').html($(data).find('#appointments_container').html());
