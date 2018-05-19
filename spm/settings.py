@@ -101,6 +101,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 
 DATE_FORMAT = 'Y-m-d'
+DATETIME_FORMAT = 'Y-m-d h:m'
 
 
 # Static files (CSS, JavaScript, Images)
