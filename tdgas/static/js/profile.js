@@ -75,7 +75,39 @@ function updateDogInfo(dogId, dogName, dogBreed, dogDoB) {
             'dog_dob'   : dogDoB
         },
         success: function(data) {
-            $('#dogs_container').html($(data).find('#dogs_container'));
+            $('#dogs_container').html($(data).find('#dogs_container').html());
+        }
+    });
+}
+
+/* AJAX call to update appointment information. */
+function updateAppointmentInfo(appointmentId, dogId, groomType, comment, datetime) {
+    $.ajax({
+        type: 'POST',
+        url : '/appointment_update/',
+        data: {
+            'id'        : appointmentId ,
+            'dog_id'    : dogId         ,
+            'groom_type': groomType     ,
+            'comment'   : comment       ,
+            'datetime'  : datetime
+        },
+        success: function(data) {
+            $('#appointments_container').html($(data).find('#appointments_container').html());
+        }
+    });
+}
+
+/* AJAX call to delete appointment. */
+function deleteAppointment(appointmentId) {
+    $.ajax({
+        type: 'POST',
+        url : '/appointment_delete/',
+        data: {
+            'id'        : appointmentId
+        },
+        success: function(data) {
+            $('#appointments_container').html($(data).find('#appointments_container').html());
         }
     });
 }
@@ -213,6 +245,69 @@ $(document).on('click', '.dog_update_btn', function() {
     var dogDoB          = parentSection.find('.dog_dob_input'  ).val();
     /* Update dog info. */
     updateDogInfo(dogId, dogName, dogBreed, dogDoB);
+    /* Hide update form after updating. */
+    parentSection.find('.dog_update_cancel_btn').click();
+});
+
+/* Update appointment info.
+ * ***********************************************************************************************/
+/* Display appointment update form on click. */
+$(document).on('click', '.appointment_modify_btn', function() {
+    var modifyBtn     = $(this);
+    var parentSection = modifyBtn.parents('.section');
+    modifyBtn.addClass('disabled');
+    modifyBtn.hide();
+    parentSection.find('.update_btn_container'         ).show       (              );
+    parentSection.find('.dog_name_display'             ).hide       (              );
+    parentSection.find('.groom_dog_selector'           ).show       (              );
+    parentSection.find('.groom_type_display'           ).hide       (              );
+    parentSection.find('.groom_type_selector'          ).show       (              );
+    parentSection.find('.appointment_datetime_display' ).hide       (              );
+    parentSection.find('.appointment_datetime_selector').show       (              );
+    parentSection.find('.appointment_comments'         ).removeClass('input_trans' );
+    parentSection.find('.appointment_comments'         ).addClass   ('update_input');
+});
+
+/* Restore original appointment UI on cancel. */
+$(document).on('click', '.appointment_update_cancel_btn', function() {
+    var cancelBtn               = $(this);
+    var parentSection           = cancelBtn    .parents('.section');
+    var modifyBtn               = parentSection.find('.modify_btn');
+    modifyBtn.removeClass('disabled');
+    modifyBtn.show();
+    parentSection.find('.update_btn_container'         ).hide       (              );
+    parentSection.find('.dog_name_display'             ).show       (              );
+    parentSection.find('.groom_dog_selector'           ).hide       (              );
+    parentSection.find('.groom_type_display'           ).show       (              );
+    parentSection.find('.groom_type_selector'          ).hide       (              );
+    parentSection.find('.appointment_datetime_display' ).show       (              );
+    parentSection.find('.appointment_datetime_selector').hide       (              );
+    parentSection.find('.appointment_comments'         ).addClass   ('input_trans' );
+    parentSection.find('.appointment_comments'         ).removeClass('update_input');
+});
+
+/* Update appointment info on submit. */
+$(document).on('click', '.appointment_update_btn', function() {
+    var updateBtn       = $(this);
+    var parentSection   = updateBtn    .parents('.section');
+    var appointmentId   = parentSection.find('.appointment_id'               ).val();
+    var dogId           = parentSection.find('.groom_dog_selector'           ).val();
+    var groomType       = parentSection.find('.groom_type_selector'          ).val();
+    var datetime        = parentSection.find('.appointment_datetime_selector').val();
+    var comment         = parentSection.find('.appointment_comments'         ).val();
+    /* Update appointment info. */
+    updateAppointmentInfo(appointmentId, dogId, groomType, comment, datetime);
+    /* Hide update form after updating. */
+    parentSection.find('.appointment_update_cancel_btn').click();
+});
+
+/* Delete appointment on delete. */
+$(document).on('click', '.appointment_delete_btn', function() {
+    var deleteBtn       = $(this);
+    var parentSection   = deleteBtn    .parents('.section');
+    var appointmentId   = parentSection.find('.appointment_id').val();
+    /* Delete appointment. */
+    deleteAppointment(appointmentId);
     /* Hide update form after updating. */
     parentSection.find('.appointment_update_cancel_btn').click();
 });

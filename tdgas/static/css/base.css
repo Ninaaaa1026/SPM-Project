@@ -38,6 +38,10 @@
     padding: 0;
 }
 
+.delete_btn {
+    background-color: red;
+}
+
 .fancy_btn {
     font-family: "blackhand_font";
     font-size: 30px;

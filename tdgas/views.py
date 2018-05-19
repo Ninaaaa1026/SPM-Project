@@ -120,42 +120,31 @@ def dog_update_view(request):
 
 @login_required
 def appointment_update_view(request):
-    user             = request.user
-    appointment_id   = request.POST.get('id')
-    appointments     = Appointment.objects.filter(id = appointment_id, subscriber = user)
-    appointment_form = AppointmentForm(request.POST)
-    if appointments.exists():
-        if appointment_form.is_valid():
-            appointment                      = Appointment.objects.get(id = appointment_id)
-            appointment.groom_dog            = Dog        .objects.get(id = appointment_form.cleaned_data['dog_id'])
-            appointment.groom_type           = appointment_form.cleaned_data['groom_type'          ]
-            appointment.appointment_datetime = appointment_form.cleaned_data['appointment_datetime']
-            appointment.save()
-            return HttpResponse(status = 201)
-        else:
-            return HttpResponse(status = 406)
+    appointment = Appointment.objects.filter(id = request.POST.get('id'))
+    if not appointment.exists():
+        Appointment.objects.create(subscriber           = request.user,
+                                   groom_dog            = Dog.objects.get(id = request.POST.get('dog_id')),
+                                   groom_type           = request.POST.get('groom_type'),
+                                   comment              = request.POST.get('comment'   ),
+                                   appointment_datetime = request.POST.get('datetime'  ))
     else:
-        if appointment_form.is_valid():
-            Appointment.objects.create(subscriber           = request.user                                                 ,
-                                       groom_dog            = Dog.objects.get(id = appointment_form.cleaned_data['dog_id']),
-                                       groom_type           = appointment_form.cleaned_data['groom_type'                  ],
-                                       comment              = ''                                                           ,
-                                       appointment_datetime = appointment_form.cleaned_data['appointment_datetime'        ])
-            return HttpResponse(status = 201)
-        else:
-            return HttpResponse(status = 406)
+        appointment                      = Appointment.objects.get(id = request.POST.get('id'))
+        appointment.subscriber           = request.user
+        appointment.groom_dog            = Dog.objects.get(id = request.POST.get('dog_id'))
+        appointment.groom_type           = request.POST.get('groom_type')
+        appointment.comment              = request.POST.get('comment')
+        appointment.appointment_datetime = request.POST.get('datetime')
+        appointment.save()
+    return profile_view(request = request)
 
 @login_required
 def appointment_delete_view(request):
-    user            = request.user
     appointment_id  = request.POST.get('id')
-    appointments    = Appointment.objects.filter(subscriber = user, id = appointment_id)
+    appointments    = Appointment.objects.filter(id = appointment_id)
     if appointments.exists():
         appointment = appointments.first()
         appointment.delete()
-        return HttpResponse(status = 201)
-    else:
-        return HttpResponse(status = 406)
+    return profile_view(request = request)
 
 @login_required
 def groomer_view(request):
@@ -169,15 +158,3 @@ def groomer_view(request):
     query = show.values('subscriber__first_name','groom_dog','groom_type','comment',
                         'appointment_datetime','subscriber__address_street','subscriber__address_suburb')
     return render(request, 'groomer_home.html', {'events':query})
-# @login_required
-# def appointment_update_view(request):
-#     appointment = Appointment.objects.filter(id = request.POST.get('id'))
-#     if not appointment.exists():
-#         Appointment.objects.create()
-#     else:
-#         dog = Dog.objects.get(owner = request.user, id = dog_form.cleaned_data['id'])
-#         dog.dog_name = dog_form.cleaned_data['dog_name']
-#         dog.breed = dog_form.cleaned_data['breed']
-#         dog.date_of_birth = dog_form.cleaned_data['date_of_birth']
-#         dog.save()
-#     return HttpResponse(status = 201)

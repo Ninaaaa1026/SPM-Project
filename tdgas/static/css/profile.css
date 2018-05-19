@@ -10,6 +10,15 @@
     font-size: small;
 }
 
+.appointment_delete_btn {
+    width: 65px;
+    font-size: small;
+    padding: 2px 10px;
+    margin-left: 10px;
+    color: white;
+    border: none;
+}
+
 .appointment_comments {
     margin-top: 10px;
     font-style: italic;
