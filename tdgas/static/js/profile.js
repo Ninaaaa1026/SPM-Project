@@ -99,15 +99,12 @@ function deleteAppointment(appointmentId) {
 
 /* Display modify button on hover.
  * ***********************************************************************************************/
-$('.section').ready(function() {
-    var section = $('.section');
-    section.on('mouseenter', function() {
-        if (!$(section).find('.modify_btn').hasClass('disabled'))
-            $(this).find('.modify_btn').show();
-    });
-    section.on('mouseleave', function() {
-        $(this).find('.modify_btn').hide();
-    });
+$(document).on('mouseenter', '.section', function() {
+    if (!$(this).find('.modify_btn').hasClass('disabled'))
+        $(this).find('.modify_btn').show();
+});
+$(document).on('mouseleave', '.section', function() {
+    $(this).find('.modify_btn').hide();
 });
 
 /* Switch dog and appointments display on click.
