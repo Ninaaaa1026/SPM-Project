@@ -17,7 +17,7 @@ function updateUserProfile(firstname, lastname, addr_street, addr_suburb, addr_s
         statusCode: {
             406: function() {
                 /* On fail: */
-                alert.log('Profile updating failed!');
+                alert('Profile updating failed!');
             }
         },
         success: function(data) {
@@ -39,7 +39,7 @@ function updateUserContact(contactType, phoneNumber)
         statusCode: {
             406: function() {
                 /* On fail: */
-                alert.log(contactType + ' updating failed!'   );
+                alert(contactType + ' updating failed!'   );
             }
         },
         success: function(data) {
@@ -174,9 +174,9 @@ $(document).on('click', '#user_update_btn', function() {
     var mobile      = parentSection.find('#contact_mobile_input').val();
     var home        = parentSection.find('#contact_home_input'  ).val();
     var work        = parentSection.find('#contact_work_input'  ).val();
-    if (mobile) updateUserContact('mobile', mobile);
-    if (home  ) updateUserContact('home'  , home  );
-    if (work  ) updateUserContact('work'  , work  );
+    updateUserContact('mobile', mobile);
+    updateUserContact('home'  , home  );
+    updateUserContact('work'  , work  );
 
     /* Hide update form after updating. */
     parentSection.find('#user_update_cancel_btn').click();

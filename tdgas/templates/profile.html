@@ -92,9 +92,9 @@
                    placeholder="First name" autocomplete="off" value="{{ user.first_name }}">
             <input id="lastname_input" style="width: 49.5%" class="profile_form" name="last_name" type="text" title="Last name"
                    placeholder="Last name" autocomplete="off" value="{{ user.last_name }}">
-            <input id="contact_mobile_input" style="width: 32.5%" class="profile_form" name="mobile" type="text" title="Mobile" placeholder="Mobile" autocomplete="off" value="{{ mobile }}">
-            <input id="contact_home_input" style="width: 33%" class="profile_form" name="home" type="text" title="Home" placeholder="Home" autocomplete="off" value="{{ home }}">
-            <input id="contact_work_input" style="width: 32.5%" class="profile_form" name="work" type="text" title="Work" placeholder="Work" autocomplete="off" value="{{ work }}">
+            <input id="contact_mobile_input" style="width: 32.5%" class="profile_form" name="mobile" type="text" title="Mobile" placeholder="Mobile" autocomplete="off" value="{% if mobile %}{{ mobile }}{% else %}{% endif %}">
+            <input id="contact_home_input" style="width: 33%" class="profile_form" name="home" type="text" title="Home" placeholder="Home" autocomplete="off" value="{% if home %}{{ home }}{% else %}{% endif %}">
+            <input id="contact_work_input" style="width: 32.5%" class="profile_form" name="work" type="text" title="Work" placeholder="Work" autocomplete="off" value="{% if work %}{{ work }}{% else %}{% endif %}">
             <input id="addr_street_input" class="profile_form" name="street_address" type="text" title="Street"
                    placeholder="Street address" autocomplete="off" value="{% if user.address_street %}{{ user.address_street }}{% else %}{% endif %}">
             <input id="addr_suburb_input" style="width: 49.5%" class="profile_form" name="suburb" type="text" title="Suburb" placeholder="Suburb"
