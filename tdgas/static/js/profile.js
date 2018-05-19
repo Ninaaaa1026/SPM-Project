@@ -99,6 +99,28 @@ function deleteAppointment(appointmentId) {
     });
 }
 
+/* AJAX call to switch list. */
+function switchList(showDogs) {
+    $.ajax({
+        type: 'POST',
+        url : '/profile/',
+        success: function(data) {
+            if (showDogs) {
+                var dogsContainer = $('#dogs_container');
+                dogsContainer.html($(data).find('#dogs_container').html());
+                $('#appointments_container').hide();
+                dogsContainer.show();
+            }
+            else {
+                var appointmentsContainer = $('#appointments_container');
+                appointmentsContainer.html($(data).find('#appointments_container').html());
+                $('#dogs_container').hide();
+                appointmentsContainer.show();
+            }
+        }
+    });
+}
+
 /* Display modify button on hover.
  * ***********************************************************************************************/
 $(document).on('mouseenter', '.section', function() {
@@ -316,16 +338,13 @@ $(document).on('click', '#switch_btn', function() {
         switchBtn.removeClass('show_dogs'        );
         switchBtn.addClass   ('show_appointments');
         switchBtn.text       ('Show your dogs >' );
-        $('#dogs_container')        .hide();
-        $('#appointments_container').show();
     }
     else {
         switchBtn.removeClass('show_appointments'        );
         switchBtn.addClass   ('show_dogs'                );
         switchBtn.text       ('Show your appointments >' );
-        $('#appointments_container').hide();
-        $('#dogs_container')        .show();
     }
+    switchList(switchBtn.hasClass('show_dogs'));
 });
 
 /* Display and hide add form on click.
