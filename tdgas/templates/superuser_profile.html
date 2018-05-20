@@ -1,0 +1,108 @@
+{% extends 'profile.html' %}
+{% load static %}
+
+{% block user_profile %}{% endblock %}
+
+{% block navigation_bar %}
+  <div class="row justify-content-center" style="width: 100%; padding: 0">
+    <div class="row justify-content-between" style="width: 800px; padding: 0">
+      <div class="col-12" style="padding: 0">
+        <h2 class="logo">Tom's Dog Grooming <span><i class="fas fa-paw" style="font-size: 30px"></i></span> Admin</h2>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block listitem %}
+<div id="appointments_container" style="width: 100%">
+{% for appointment in appointments_all %}
+  <div class="col-12 col_ng admin_section">
+    <div class="row" style="padding: 0">
+      <div class="list_avatar_container">
+        <img class="list_avatar_img" src="{% static 'icons/appointment.svg' %}"/>
+      </div>
+      <div id="appointment_info_row" class="row" style="width: calc(100% - 145px)">
+        <input class="appointment_id" title="Appointment Id" value="{{ appointment.0.id }}" hidden>
+        <div class="col-12 col_ng">
+          <div class="groom_row row align-items-start" style="margin-top: 10px">
+            <div class="col-4 col_ng"><h6>Datetime: </h6></div>
+            <div class="col-8 col_ng"><h6>{{ appointment.0.appointment_datetime }}</h6></div>
+          </div>
+          <div class="user_row row align-items-start" style="margin-top: 10px;padding-top: 10px;border-top: thin dotted #8bc8c8">
+            <div class="col-4 col_ng"><h6>Client:</h6></div>
+            <div class="col-8 col_ng"><h6>Email:</h6></div>
+          </div>
+          <div class="user_info_row row align-items-start">
+            <div class="col-4 col_ng">
+              <input class="client_name_display input_trans" title="Client Name" value="{{ appointment.0.subscriber.first_name }} {{ appointment.0.subscriber.last_name }}" readonly style="width: 90%">
+            </div>
+            <div class="col-8 col_ng">
+              <input class="client_email_display input_trans" title="Client Name" value="{{ appointment.0.subscriber.email }}" readonly style="width: 90%">
+            </div>
+          </div>
+          {% if appointment.1.phone_number or appointment.2.phone_number or appointment.3.phone_number %}
+            <div class="contact_row row align-items-start" style="margin-top: 10px;padding-top: 10px;border-top: thin dotted #8bc8c8">
+              {% if appointment.1.phone_number %}
+                <div class="col-4 col_ng"><h6>Mobile:</h6></div>
+              {% endif %}
+              {% if appointment.2.phone_number %}
+                <div class="col-4 col_ng"><h6>Home:</h6></div>
+              {% endif %}
+              {% if appointment.3.phone_number %}
+                <div class="col-4 col_ng"><h6>Work:</h6></div>
+              {% endif %}
+            </div>
+            <div class="contact_info_row row align-items-start">
+              {% if appointment.1.phone_number %}
+                <div class="col-4 col_ng">
+                  <input class="client_contact_display input_trans" title="Contact Mobile" value="{{ appointment.1.phone_number }}" readonly style="width: 90%">
+                </div>
+              {% endif %}
+              {% if appointment.2.phone_number %}
+                <div class="col-4 col_ng">
+                  <input class="client_contact_display input_trans" title="Contact Home" value="{{ appointment.2.phone_number }}" readonly style="width: 90%">
+                </div>
+              {% endif %}
+              {% if appointment.3.phone_number %}
+                <div class="col-4 col_ng">
+                  <input class="client_contact_display input_trans" title="Contact Work" value="{{ appointment.3.phone_number }}" readonly style="width: 90%">
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+          <div class="dog_row row align-items-start" style="margin-top: 10px;padding-top: 10px;border-top: thin dotted #8bc8c8">
+            <div class="col-4 col_ng"><h6>Dog:</h6></div>
+            <div class="col-4 col_ng"><h6>Breed:</h6></div>
+            <div class="col-4 col_ng"><h6>Date of Birth:</h6></div>
+          </div>
+          <div class="dog_info_row row align-items-start">
+            <div class="col-4 col_ng">
+              <input class="dog_name_display input_trans" title="Dog Name" value="{{ appointment.0.groom_dog.dog_name }}" readonly style="width: 90%">
+            </div>
+            <div class="col-4 col_ng">
+              <input class="dog_breed_display input_trans" title="Breed" value="{{ appointment.0.groom_dog.breed }}" readonly style="width: 90%">
+            </div>
+            <div class="col-4 col_ng">
+              <input class="dog_dob_display input_trans" title="Dog DoB" value="{{ appointment.0.groom_dog.date_of_birth }}" readonly style="width: 90%">
+            </div>
+          </div>
+          <div class="groom_row row align-items-start" style="margin-top: 10px;padding-top: 10px;border-top: thin dotted #8bc8c8">
+            <div class="col-4 col_ng"><h6>Groom Type: </h6></div>
+            <div class="col-8 col_ng"><h6>{{ appointment.0.groom_type }}</h6></div>
+          </div>
+          {% if appointment.0.comment %}
+            <div class="groom_comment_row row align-items-start" style="margin-top: 10px">
+              <div class="col-4 col_ng"><h6 style="margin: 3px 0 0">Additional Comment: </h6></div>
+              <div class="col-8 col_ng"><textarea class="appointment_comments input_trans" title="Comments" readonly style="margin: 0;width: 100%">{{ appointment.0.comment }}</textarea></div>
+            </div>
+            <div class="groom_comment_info_row row align-items-start">
+
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% endblock %}

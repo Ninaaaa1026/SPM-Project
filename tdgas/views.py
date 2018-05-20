@@ -21,10 +21,7 @@ def signin_view(request):
         user     = authenticate(username = email, password = password)
         if user is not None:
             login(request, user)
-            if user.is_superuser:
-                return HttpResponseRedirect('/groomer_home')
-            else:
-                return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/')
         else:
             print('Email or password not valid.')
     return render(request, 'registration/login.html')
@@ -51,24 +48,36 @@ def signup_view(request):
 
 @login_required
 def profile_view(request):
-    user           = request.user
-    contact_mobile = Contact    .objects.filter(user         = user, contact_type = 'mobile')
-    contact_home   = Contact    .objects.filter(user         = user, contact_type = 'home'  )
-    contact_work   = Contact    .objects.filter(user         = user, contact_type = 'work'  )
-    dogs           = Dog        .objects.filter(owner        = user                         )
-    appointments   = Appointment.objects.filter(subscriber   = user                         )
-    breeds         = DOG_TYPE
-    groom_types    = GROOM_TYPE
-    groom_time     = available_time()
-    return render(request, 'profile.html', {'user'          : user                                                                 ,
-                                            'mobile'        : contact_mobile.get().phone_number if contact_mobile.exists() else '' ,
-                                            'home'          : contact_home  .get().phone_number if contact_home  .exists() else '' ,
-                                            'work'          : contact_work  .get().phone_number if contact_work  .exists() else '' ,
-                                            'dogs'          : dogs                                                                 ,
-                                            'appointments'  : appointments                                                         ,
-                                            'breeds'        : breeds                                                               ,
-                                            'groom_types'   : groom_types                                                          ,
-                                            'available_time': groom_time                                                           })
+    if request.user.is_superuser:
+        appointments = list(Appointment.objects.all())
+        packs = []
+        for apt in appointments:
+            contact_objs = Contact.objects.filter(user = apt.subscriber  )
+            mobile       = contact_objs   .filter(contact_type = 'mobile').first()
+            home         = contact_objs   .filter(contact_type = 'home'  ).first()
+            work         = contact_objs   .filter(contact_type = 'work'  ).first()
+            packs.append((apt, mobile, home, work))
+        print('packs = ', packs)
+        return render(request, 'superuser_profile.html', {'appointments_all': packs})
+    else:
+        user = request.user
+        contact_mobile = Contact.objects.filter(user = user, contact_type = 'mobile')
+        contact_home = Contact.objects.filter(user = user, contact_type = 'home')
+        contact_work = Contact.objects.filter(user = user, contact_type = 'work')
+        dogs = Dog.objects.filter(owner = user)
+        appointments = Appointment.objects.filter(subscriber = user)
+        breeds = DOG_TYPE
+        groom_types = GROOM_TYPE
+        groom_time = available_time()
+        return render(request, 'profile.html', {'user'          : user                                                                 ,
+                                                'mobile'        : contact_mobile.get().phone_number if contact_mobile.exists() else '' ,
+                                                'home'          : contact_home  .get().phone_number if contact_home  .exists() else '' ,
+                                                'work'          : contact_work  .get().phone_number if contact_work  .exists() else '' ,
+                                                'dogs'          : dogs                                                                 ,
+                                                'appointments'  : appointments                                                         ,
+                                                'breeds'        : breeds                                                               ,
+                                                'groom_types'   : groom_types                                                          ,
+                                                'available_time': groom_time                                                           })
 
 @login_required
 def profile_update_view(request):
@@ -128,14 +137,11 @@ def dog_update_view(request):
 def appointment_update_view(request):
     appointment = Appointment.objects.filter(id = request.POST.get('id'))
     if not appointment.exists():
-        new_appointment = Appointment.objects.create(subscriber           = request.user,
-                                                     groom_dog            = Dog.objects.get(id = request.POST.get('dog_id')),
-                                                     groom_type           = request.POST.get('groom_type'),
-                                                     comment              = request.POST.get('comment'   ),
-                                                     appointment_datetime = request.POST.get('datetime'  ))
-        # t = threading.Thread(target = send_reminder_email(receiver = request.user, appointment = new_appointment))
-        # t.daemon = True
-        # t.start()
+        Appointment.objects.create(subscriber           = request.user,
+                                   groom_dog            = Dog.objects.get(id = request.POST.get('dog_id')),
+                                   groom_type           = request.POST.get('groom_type'),
+                                   comment              = request.POST.get('comment'   ),
+                                   appointment_datetime = request.POST.get('datetime'  ))
     else:
         appointment                      = Appointment.objects.get(id = request.POST.get('id'))
         appointment.subscriber           = request.user
@@ -168,5 +174,6 @@ def groomer_view(request):
     query = show.values('subscriber__first_name','groom_dog','groom_type','comment',
                         'appointment_datetime','subscriber__address_street','subscriber__address_suburb')
     return render(request, 'groomer_home.html', {'events':query})
+
 
 thread_check_reminder_email.delay()

@@ -29,12 +29,11 @@ def check_reminder_email():
     appointments = Appointment.objects.filter(reminded = False)
     for appointment in appointments:
         appointment_time = appointment.appointment_datetime
-        hour_delta       = (appointment_time - now).seconds / 3600
+        time_delta       = appointment_time - now
+        hour_delta       = (time_delta.days * 24) + (time_delta.seconds / 3600)
         if hour_delta <= 24:
-
             send_reminder_email(receiver    = appointment.subscriber,
                                 appointment = appointment           )
-
             appointment.reminded = True
             appointment.save()
             connection.close()
