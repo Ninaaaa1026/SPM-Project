@@ -6,6 +6,7 @@ from django.shortcuts               import render
 from .forms                         import *
 from .models                        import *
 from .utils                         import *
+from .tasks                         import thread_check_reminder_email
 
 def home_view(request):
     firstname = ''
@@ -168,8 +169,4 @@ def groomer_view(request):
                         'appointment_datetime','subscriber__address_street','subscriber__address_suburb')
     return render(request, 'groomer_home.html', {'events':query})
 
-@thread_task
-def thread_check_reminder_email():
-    while True:
-        check_reminder_email()
-        elapse_time.sleep(10)
+thread_check_reminder_email.delay()

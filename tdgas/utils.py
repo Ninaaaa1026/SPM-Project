@@ -1,10 +1,3 @@
-import time as elapse_time
-import threading
-
-from django.template.loader         import get_template
-from django.core.mail               import EmailMultiAlternatives
-from django.db                      import connection
-
 from datetime           import datetime, timedelta, date, time
 
 from .models            import Appointment
@@ -66,39 +59,3 @@ def available_time():
         date_slot = date_slot + timedelta(days = 1)
     return available_datetimes
 
-def send_reminder_email(receiver, appointment):
-    print('Sending out reminder email to ', receiver.first_name, ' at ', receiver.email, '...')
-    subject, from_email, to = 'Tom\'s Grooming Service Appointment Reminder', 'ice.vilinon@gmail.com', [receiver.email]
-    plain_content_template = get_template('html_emails/email_apt_confirm.txt')
-    html_content_template = get_template('html_emails/email_apt_confirm.html')
-    context = {'name': receiver.first_name, 'time': appointment.appointment_datetime}
-    plain_content = plain_content_template.render(context)
-    html_content = html_content_template.render(context)
-    msg = EmailMultiAlternatives(subject, plain_content, from_email, to)
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
-    print('Reminder email sent.')
-
-def check_reminder_email():
-    print('Performing appointments reminder check...')
-    now          = datetime.now() + timedelta(hours = 10)
-    appointments = Appointment.objects.filter(reminded = False)
-    for appointment in appointments:
-        appointment_time = appointment.appointment_datetime
-        hour_delta       = (appointment_time - now).seconds / 3600
-        if hour_delta <= 24:
-
-            send_reminder_email(receiver = appointment.subscriber, appointment = appointment)
-
-            appointment.reminded = True
-            appointment.save()
-            connection.close()
-        else:
-            continue
-
-def thread_task(function):
-  def decorator():
-    t = threading.Thread(target = function)
-    t.daemon = True
-    t.start()
-  return decorator
