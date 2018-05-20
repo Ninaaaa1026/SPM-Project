@@ -1,0 +1,13 @@
+{% extends 'html_emails/email_base.html' %}
+
+{% block preview %}
+	This is an auto-generated e-mail to confirm your appointment for Tom's dog grooming service on {{ time }}.
+{% endblock %}
+
+{% block title %}
+	<h3 class="title">Hi {{ name }},</h3>
+{% endblock %}
+
+{% block content %}
+	<p class="text">This is an auto-generated e-mail to confirm your appointment for Tom's dog grooming service on {{ time }}.</p>
+{% endblock %}

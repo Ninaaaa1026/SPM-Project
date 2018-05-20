@@ -26,6 +26,7 @@
   </div>
   <div class="row justify-content-center" style="width: 100%; padding: 30px 0">
     <div class="row justify-content-between" style="width: 800px; padding: 0 20px">
+      {% block user_profile %}
       <div class="col-12 col_ng section" style="border: none">
         <div class="row">
           <div id="avatar_container">
@@ -109,6 +110,8 @@
           </div>
         </div>
       </div>
+      {% endblock %}
+      {% block listitem %}
       <div id="dogs_container" style="margin-top: 30px;width: 100%">
         {% for dog in dogs %}
           <div class="col-12 col_ng section">
@@ -313,6 +316,7 @@
           </div>
         </div>
       </div>
+      {% endblock %}
     </div>
   </div>
 {% endblock %}

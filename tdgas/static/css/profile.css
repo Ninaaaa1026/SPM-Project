@@ -6,6 +6,13 @@
     box-shadow: 0 0 5px rgb(148, 219, 255);
 }
 
+.admin_section {
+    padding: 40px 0;
+}
+.admin_section + .admin_section {
+    border-top: thick dashed #8bc8c8;
+}
+
 .address_row {
     font-size: small;
 }

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" content="width=device-width">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>{% block page_title %}No Reply{% endblock %}</title>
+	<style type="text/css">
+		body{
+			margin: 0;
+			padding: 0;
+			background-color: whitesmoke;
+		}
+		h3 {
+			font-size: 20px;
+		}
+		p {
+			font-size: 14px;
+			color: #4c4c4c;
+			margin: 0;
+		}
+		a {
+			text-decoration: none;
+			color: #4c4c4c;
+		}
+		.preview {
+        color: transparent;
+        display: none;
+        height: 0;
+        max-height: 0;
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        mso-hide: all;
+        visibility: hidden;
+        width: 0;
+		}
+		#container {
+			font-family: Helvetica Neue Light, Helvetica Light, Helvetica, Verdana, Arial, sans-serif;
+			background-color: whitesmoke;
+			padding: 50px;
+		}
+		#content_width {
+			{% block content_width %}width: 580px{% endblock %};
+			margin: 0 auto;
+		}
+		#content_container {
+			background-color: white;
+			border-radius: 5px;
+			border: thin solid #ececec;
+			padding: 20px;
+		}
+		#content_row {
+			margin: 35px 0;
+		}
+		#email_footer {
+			margin: 20px auto 0;
+			text-align: center;
+		}
+		.footer_content_row + .footer_content_row {
+			margin-top: 5px;
+		}
+		.footer_p {
+			font-size: 12px;
+			font-weight: 300;
+			color: #6e6e6e;
+		}
+		.footer_p a {
+			font-size: 12px;
+			font-weight: 300;
+			color: #6e6e6e;
+		}
+		{% block style %}{% endblock %}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<span class="preview">{% block preview %}{% endblock %}</span>
+		<div id="content_width">
+			<table>
+				<tr>
+					<td>
+						<div id="content_container">
+							<div id="title_row">
+								{% block title %}{% endblock %}
+							</div>
+							<div id="content_row">
+								{% block content %}{% endblock %}
+							</div>
+						</div>
+						<div id="email_footer">
+							<div class="footer_content_row">
+								<p class="footer_p">Tom's Dog Grooming, Melbourne, VIC 3000, Australia</p>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

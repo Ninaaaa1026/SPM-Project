@@ -6,6 +6,7 @@ from django.shortcuts               import render
 from .forms                         import *
 from .models                        import *
 from .utils                         import *
+from .tasks                         import thread_check_reminder_email
 
 def home_view(request):
     firstname = ''
@@ -20,10 +21,7 @@ def signin_view(request):
         user     = authenticate(username = email, password = password)
         if user is not None:
             login(request, user)
-            if user.is_superuser:
-                return HttpResponseRedirect('/groomer_home')
-            else:
-                return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/')
         else:
             print('Email or password not valid.')
     return render(request, 'registration/login.html')
@@ -34,10 +32,14 @@ def signup_view(request):
     elif request.method == 'POST':
         user_form = UserForm(request.POST)
         if user_form.is_valid():
-            new_user = User.objects.create_user(email       = user_form.cleaned_data['email'     ],
-                                                password    = user_form.cleaned_data['password'  ],
-                                                first_name  = user_form.cleaned_data['first_name'],
-                                                last_name   = user_form.cleaned_data['last_name' ])
+            new_user = User.objects.create_user(email               = user_form.cleaned_data['email'            ],
+                                                password            = user_form.cleaned_data['password'         ],
+                                                first_name          = user_form.cleaned_data['first_name'       ],
+                                                last_name           = user_form.cleaned_data['last_name'        ],
+                                                address_street      = user_form.cleaned_data['address_street'   ],
+                                                address_suburb      = user_form.cleaned_data['address_suburb'   ],
+                                                address_state       = user_form.cleaned_data['address_state'    ],
+                                                address_postcode    = user_form.cleaned_data['address_postcode' ])
             login(request, new_user)
             return HttpResponseRedirect('/')
         else:
@@ -46,24 +48,36 @@ def signup_view(request):
 
 @login_required
 def profile_view(request):
-    user           = request.user
-    contact_mobile = Contact    .objects.filter(user         = user, contact_type = 'mobile')
-    contact_home   = Contact    .objects.filter(user         = user, contact_type = 'home'  )
-    contact_work   = Contact    .objects.filter(user         = user, contact_type = 'work'  )
-    dogs           = Dog        .objects.filter(owner        = user                         )
-    appointments   = Appointment.objects.filter(subscriber   = user                         )
-    breeds         = DOG_TYPE
-    groom_types    = GROOM_TYPE
-    groom_time     = available_time()
-    return render(request, 'profile.html', {'user'          : user                                                                 ,
-                                            'mobile'        : contact_mobile.get().phone_number if contact_mobile.exists() else '' ,
-                                            'home'          : contact_home  .get().phone_number if contact_home  .exists() else '' ,
-                                            'work'          : contact_work  .get().phone_number if contact_work  .exists() else '' ,
-                                            'dogs'          : dogs                                                                 ,
-                                            'appointments'  : appointments                                                         ,
-                                            'breeds'        : breeds                                                               ,
-                                            'groom_types'   : groom_types                                                          ,
-                                            'available_time': groom_time                                                           })
+    if request.user.is_superuser:
+        appointments = list(Appointment.objects.all())
+        packs = []
+        for apt in appointments:
+            contact_objs = Contact.objects.filter(user = apt.subscriber  )
+            mobile       = contact_objs   .filter(contact_type = 'mobile').first()
+            home         = contact_objs   .filter(contact_type = 'home'  ).first()
+            work         = contact_objs   .filter(contact_type = 'work'  ).first()
+            packs.append((apt, mobile, home, work))
+        print('packs = ', packs)
+        return render(request, 'superuser_profile.html', {'appointments_all': packs})
+    else:
+        user = request.user
+        contact_mobile = Contact.objects.filter(user = user, contact_type = 'mobile')
+        contact_home = Contact.objects.filter(user = user, contact_type = 'home')
+        contact_work = Contact.objects.filter(user = user, contact_type = 'work')
+        dogs = Dog.objects.filter(owner = user)
+        appointments = Appointment.objects.filter(subscriber = user)
+        breeds = DOG_TYPE
+        groom_types = GROOM_TYPE
+        groom_time = available_time()
+        return render(request, 'profile.html', {'user'          : user                                                                 ,
+                                                'mobile'        : contact_mobile.get().phone_number if contact_mobile.exists() else '' ,
+                                                'home'          : contact_home  .get().phone_number if contact_home  .exists() else '' ,
+                                                'work'          : contact_work  .get().phone_number if contact_work  .exists() else '' ,
+                                                'dogs'          : dogs                                                                 ,
+                                                'appointments'  : appointments                                                         ,
+                                                'breeds'        : breeds                                                               ,
+                                                'groom_types'   : groom_types                                                          ,
+                                                'available_time': groom_time                                                           })
 
 @login_required
 def profile_update_view(request):
@@ -105,7 +119,7 @@ def contact_update_view(request):
 
 @login_required
 def dog_update_view(request):
-    dogs = Contact.objects.filter(id = request.POST.get('id'))
+    dogs = Dog.objects.filter(id = request.POST.get('id'))
     if not dogs.exists():
         Dog.objects.create(owner         = request.user,
                            dog_name      = request.POST.get('dog_name' ),
@@ -135,6 +149,7 @@ def appointment_update_view(request):
         appointment.groom_type           = request.POST.get('groom_type')
         appointment.comment              = request.POST.get('comment')
         appointment.appointment_datetime = request.POST.get('datetime')
+        appointment.reminded             = False
         appointment.save()
     return profile_view(request = request)
 
@@ -159,3 +174,6 @@ def groomer_view(request):
     query = show.values('subscriber__first_name','groom_dog','groom_type','comment',
                         'appointment_datetime','subscriber__address_street','subscriber__address_suburb')
     return render(request, 'groomer_home.html', {'events':query})
+
+
+thread_check_reminder_email.delay()

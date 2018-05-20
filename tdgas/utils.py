@@ -1,6 +1,6 @@
-from datetime import datetime, timedelta, date, time
+from datetime           import datetime, timedelta, date, time
 
-from .models import Appointment
+from .models            import Appointment
 
 MONDAY      =  0
 TUESDAY     =  1
@@ -58,3 +58,4 @@ def available_time():
         date_slot = datetime(date_slot.year, date_slot.month, date_slot.day, 8, 30, 0)
         date_slot = date_slot + timedelta(days = 1)
     return available_datetimes
+
