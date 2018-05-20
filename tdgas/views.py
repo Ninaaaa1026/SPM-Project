@@ -49,7 +49,7 @@ def signup_view(request):
 @login_required
 def profile_view(request):
     if request.user.is_superuser:
-        appointments = list(Appointment.objects.all())
+        appointments = list(Appointment.objects.all().order_by('appointment_datetime'))
         packs = []
         for apt in appointments:
             contact_objs = Contact.objects.filter(user = apt.subscriber  )
