@@ -118,3 +118,20 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(STATICFILES_DIRS[0], 'media')
 
 MEDIA_URL = '/media/'
+
+# For E-mails
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = True
+
+# Google SMTP server, 99 free emails per 24 hours
+EMAIL_HOST = 'smtp.gmail.com'
+
+# Change this to the sender address, e.g.: no-reply@aosgrp.com
+EMAIL_HOST_USER = 'ice.vilinon@gmail.com'
+
+# Password for the auto-mailing account
+EMAIL_HOST_PASSWORD = 'LVNoReply93'
+
+EMAIL_PORT = 587

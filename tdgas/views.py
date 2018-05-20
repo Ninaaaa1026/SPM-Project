@@ -127,11 +127,14 @@ def dog_update_view(request):
 def appointment_update_view(request):
     appointment = Appointment.objects.filter(id = request.POST.get('id'))
     if not appointment.exists():
-        Appointment.objects.create(subscriber           = request.user,
-                                   groom_dog            = Dog.objects.get(id = request.POST.get('dog_id')),
-                                   groom_type           = request.POST.get('groom_type'),
-                                   comment              = request.POST.get('comment'   ),
-                                   appointment_datetime = request.POST.get('datetime'  ))
+        new_appointment = Appointment.objects.create(subscriber           = request.user,
+                                                     groom_dog            = Dog.objects.get(id = request.POST.get('dog_id')),
+                                                     groom_type           = request.POST.get('groom_type'),
+                                                     comment              = request.POST.get('comment'   ),
+                                                     appointment_datetime = request.POST.get('datetime'  ))
+        # t = threading.Thread(target = send_reminder_email(receiver = request.user, appointment = new_appointment))
+        # t.daemon = True
+        # t.start()
     else:
         appointment                      = Appointment.objects.get(id = request.POST.get('id'))
         appointment.subscriber           = request.user
@@ -139,6 +142,7 @@ def appointment_update_view(request):
         appointment.groom_type           = request.POST.get('groom_type')
         appointment.comment              = request.POST.get('comment')
         appointment.appointment_datetime = request.POST.get('datetime')
+        appointment.reminded             = False
         appointment.save()
     return profile_view(request = request)
 
@@ -163,3 +167,9 @@ def groomer_view(request):
     query = show.values('subscriber__first_name','groom_dog','groom_type','comment',
                         'appointment_datetime','subscriber__address_street','subscriber__address_suburb')
     return render(request, 'groomer_home.html', {'events':query})
+
+@thread_task
+def thread_check_reminder_email():
+    while True:
+        check_reminder_email()
+        elapse_time.sleep(10)

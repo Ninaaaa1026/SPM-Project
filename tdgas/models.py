@@ -330,6 +330,7 @@ class Appointment(models.Model):
     groom_type              = models.CharField      (max_length = SHORT, choices = GROOM_TYPE)
     comment                 = models.CharField      (max_length = LONG , null = True, blank = True)
     appointment_datetime    = models.DateTimeField  ()
+    reminded                = models.BooleanField   (default = False)
 
     def __str__(self):
         return self.subscriber.first_name + ' - ' + self.groom_dog.dog_name + ' - ' + self.groom_type

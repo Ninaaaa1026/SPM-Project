@@ -1,0 +1,6 @@
+Hi {{ name }},
+
+This is an auto-generated e-mail to confirm your subscription to AOS's news. Thank you for your support!
+
+AOS official website: http://192.168.200.2:8000
+Unsubscribe: http://{{ url }}/unsubscribe_news/
