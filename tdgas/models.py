@@ -237,7 +237,8 @@ class CustomUserManager(BaseUserManager):
 
     use_in_migrations = True
 
-    def create_user(self, email, password = None, first_name = None, last_name = None):
+    def create_user(self, email, password = None, first_name = None, last_name = None,
+                    address_street = None, address_suburb = None, address_state = None, address_postcode = None):
         if not email:
             raise ValueError('Users must have a valid e-mail address.')
         user = self.model(
@@ -250,6 +251,15 @@ class CustomUserManager(BaseUserManager):
         if not last_name:
             raise ValueError('Users must enter lastname.' )
         user.last_name  = last_name
+        if address_street:
+            user.address_street = address_street
+        if address_suburb:
+            user.address_suburb = address_suburb
+        if address_state:
+            user.address_state = address_state
+        if address_postcode:
+            user.address_postcode = address_postcode
+        user.address_country = 'Australia'
         user.save(self._db)
         return user
 
