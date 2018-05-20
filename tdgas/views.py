@@ -109,7 +109,7 @@ def contact_update_view(request):
 
 @login_required
 def dog_update_view(request):
-    dogs = Contact.objects.filter(id = request.POST.get('id'))
+    dogs = Dog.objects.filter(id = request.POST.get('id'))
     if not dogs.exists():
         Dog.objects.create(owner         = request.user,
                            dog_name      = request.POST.get('dog_name' ),
