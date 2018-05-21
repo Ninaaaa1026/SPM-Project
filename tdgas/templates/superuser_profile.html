@@ -36,7 +36,7 @@
                 {% if appointment.0.subscriber.address_street %}<span>{{ appointment.0.subscriber.address_street }}, </span>{% endif %}
                 {% if appointment.0.subscriber.address_suburb %}<span>{{ appointment.0.subscriber.address_suburb }}, </span>{% endif %}
                 {% if appointment.0.subscriber.address_suburb %}<span>{{ appointment.0.subscriber.address_state }} </span>{% endif %}
-                {% if appointment.0.subscriber.address_postcode %}{{ appointment.0.subscriber.postcode }}, </span>{% endif %}
+                {% if appointment.0.subscriber.address_postcode %}<span>{{ appointment.0.subscriber.postcode }}, </span>{% endif %}
                 {{ appointment.0.subscriber.address_country }}</h6></div>
             </div>
           </div>
