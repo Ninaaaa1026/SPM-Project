@@ -209,10 +209,16 @@ $(document).on('click', '#user_update_btn', function() {
 
 /* Update dog info.
  * ***********************************************************************************************/
+var originalDogName;
+
 /* Display dog update form on click. */
 $(document).on('click', '.dog_modify_btn', function() {
     var modifyBtn     = $(this);
     var parentSection = modifyBtn.parents('.section');
+
+    /* Store original dog name. */
+    originalDogName = parentSection.find('.dog_name_input').val();
+
     modifyBtn.addClass('disabled');
     modifyBtn.hide();
     parentSection.find('.update_btn_container').show       (              );
@@ -230,6 +236,13 @@ $(document).on('click', '.dog_update_cancel_btn', function() {
     var cancelBtn               = $(this);
     var parentSection           = cancelBtn    .parents('.section');
     var modifyBtn               = parentSection.find('.modify_btn');
+
+    /* Restore original dog name. */
+    if (originalDogName !== '') {
+        parentSection.find('.dog_name_input').val(originalDogName);
+        originalDogName = '';
+    }
+
     modifyBtn.removeClass('disabled');
     modifyBtn.show();
     parentSection.find('.update_btn_container').hide       (              );
@@ -258,10 +271,16 @@ $(document).on('click', '.dog_update_btn', function() {
 
 /* Update appointment info.
  * ***********************************************************************************************/
+var originalComment;
+
 /* Display appointment update form on click. */
 $(document).on('click', '.appointment_modify_btn', function() {
     var modifyBtn     = $(this);
     var parentSection = modifyBtn.parents('.section');
+
+    /* Save original value. */
+    originalComment = parentSection.find('.appointment_comments').val();
+
     modifyBtn.addClass('disabled');
     modifyBtn.hide();
     parentSection.find('.update_btn_container'         ).show       (              );
@@ -281,6 +300,13 @@ $(document).on('click', '.appointment_update_cancel_btn', function() {
     var cancelBtn               = $(this);
     var parentSection           = cancelBtn    .parents('.section');
     var modifyBtn               = parentSection.find('.modify_btn');
+
+    /* Restore original value. */
+    if (originalComment !== '') {
+        parentSection.find('.appointment_comments').val(originalComment);
+        originalComment = '';
+    }
+
     modifyBtn.removeClass('disabled');
     modifyBtn.show();
     parentSection.find('.update_btn_container'         ).hide       (              );
