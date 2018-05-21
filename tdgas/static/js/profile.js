@@ -319,17 +319,6 @@ $(document).on('click', '.appointment_delete_btn', function() {
     parentSection.find('.appointment_update_cancel_btn').click();
 });
 
-/* Show add new form for dogs and appointments
- * ***********************************************************************************************/
-/* Display add form on click. */
-$(document).on('click', '.item_add_btn', function() {
-    var addBtn     = $(this);
-    var addSection = addBtn.parent().find('.section_add');
-
-    addBtn    .hide();
-    addSection.show();
-});
-
 /* Switch dog and appointment display.
  * ***********************************************************************************************/
 $(document).on('click', '#switch_btn', function() {
@@ -353,8 +342,22 @@ $(document).on('click', '#switch_btn', function() {
 $(document).on('click', '.btn_add', function() {
     var addBtn  = $(this);
     var addForm = $(this).parent().find('.section');
-    addBtn .hide();
-    addForm.show();
+
+    /* If user attempt to make appointments without valid address, remind them. */
+    if (addBtn.hasClass('appointment_add_btn')) {
+        if ($('#addr_street').text() == '' || $('#addr_suburb').text() == '') {
+            alert('You need a valid address to make appointments!');
+        }
+        else {
+            addBtn .hide();
+            addForm.show();
+        }
+    }
+    else {
+        addBtn .hide();
+        addForm.show();
+    }
+
 });
 
 // Restore add button on cancel.
