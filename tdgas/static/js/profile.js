@@ -272,6 +272,7 @@ $(document).on('click', '.appointment_modify_btn', function() {
     parentSection.find('.appointment_datetime_display' ).hide       (              );
     parentSection.find('.appointment_datetime_selector').show       (              );
     parentSection.find('.appointment_comments'         ).removeClass('input_trans' );
+    parentSection.find('.appointment_comments'         ).removeAttr ('readonly'    );
     parentSection.find('.appointment_comments'         ).addClass   ('update_input');
 });
 
@@ -290,6 +291,7 @@ $(document).on('click', '.appointment_update_cancel_btn', function() {
     parentSection.find('.appointment_datetime_display' ).show       (              );
     parentSection.find('.appointment_datetime_selector').hide       (              );
     parentSection.find('.appointment_comments'         ).addClass   ('input_trans' );
+    parentSection.find('.appointment_comments'         ).attr       ('readonly'    );
     parentSection.find('.appointment_comments'         ).removeClass('update_input');
 });
 
