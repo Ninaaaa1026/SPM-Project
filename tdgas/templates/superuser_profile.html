@@ -25,9 +25,22 @@
         <input class="appointment_id" title="Appointment Id" value="{{ appointment.0.id }}" hidden>
         <div class="col-12 col_ng">
           <div class="groom_row row align-items-start" style="margin-top: 10px">
-            <div class="col-4 col_ng"><h6>Datetime: </h6></div>
+            <div class="col-4 col_ng"><h6>Datetime:</h6></div>
             <div class="col-8 col_ng"><h6>{{ appointment.0.appointment_datetime }}</h6></div>
           </div>
+          {% if appointment.0.subscriber.address_street or appointment.0.subscriber.address_suburb %}
+          <div class="groom_row row align-items-start" style="margin-top: 10px">
+            <div class="col-4 col_ng"><h6>Address:</h6></div>
+            <div class="col-8 col_ng">
+              <div class="row"><h6>
+                {% if appointment.0.subscriber.address_street %}<span>{{ appointment.0.subscriber.address_street }}, </span>{% endif %}
+                {% if appointment.0.subscriber.address_suburb %}<span>{{ appointment.0.subscriber.address_suburb }}, </span>{% endif %}
+                {% if appointment.0.subscriber.address_suburb %}<span>{{ appointment.0.subscriber.address_state }} </span>{% endif %}
+                {% if appointment.0.subscriber.address_postcode %}{{ appointment.0.subscriber.postcode }}, </span>{% endif %}
+                {{ appointment.0.subscriber.address_country }}</h6></div>
+            </div>
+          </div>
+          {% endif %}
           <div class="user_row row align-items-start" style="margin-top: 10px;padding-top: 10px;border-top: thin dotted #8bc8c8">
             <div class="col-4 col_ng"><h6>Client:</h6></div>
             <div class="col-8 col_ng"><h6>Email:</h6></div>
